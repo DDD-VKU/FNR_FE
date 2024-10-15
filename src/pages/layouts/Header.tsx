@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
     return (
@@ -19,11 +20,24 @@ const Header = () => {
                     </div>
 
                     <nav className="nav hidden md:flex space-x-6">
-                        <a className="text-base font-semibold">Home</a>
-                        <a className="text-base font-semibold">Shop</a>
-                        <a className="text-base font-semibold">Blog</a>
-                        <a className="text-base font-semibold">About</a>
-                        <a className="text-base font-semibold">Contact</a>
+                        <Link className="text-base font-semibold"
+                            href="/"
+                        >
+                            Home
+                        </Link>
+
+                        <Link className="text-base font-semibold"
+                            href={"/products"}
+                        >Shop</Link>
+                        <Link className="text-base font-semibold"
+                            href={"/blog"}
+                        >Blog</Link>
+                        <Link className="text-base font-semibold"
+                            href={"/about"}
+                        >About</Link>
+                        <Link className="text-base font-semibold"
+                            href={"/contact"}
+                        >Contact</Link>
                     </nav>
 
                     <div className="flex space-x-6">
