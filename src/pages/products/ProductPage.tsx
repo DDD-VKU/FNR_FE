@@ -11,7 +11,9 @@ const ProductPage = () => {
     price: 100 + i * 10,
     discount_percent: 10 + i,
     price_before_discount: 150 + i * 10,
-}));
+  }));
+
+  
   return (
     <>
       <Header />
@@ -35,34 +37,34 @@ const ProductPage = () => {
               <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
                 {/* Add grid view icon  */}
                 <a href="">
-                <img
-                  src="/assets/icons/ci_grid-big-round.svg"
-                  width={28}
-                  height={28}
-                  alt=""
-                />
-              </a>
-                
+                  <img
+                    src="/assets/icons/ci_grid-big-round.svg"
+                    width={28}
+                    height={28}
+                    alt=""
+                  />
+                </a>
+
               </button>
               <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
                 {/* Add list view Icon */}
                 <a href="">
-                <img
-                  src="/assets/icons/bi_view-list.svg"
-                  width={28}
-                  height={28}
-                  alt=""
-                />
-              </a>
-                
+                  <img
+                    src="/assets/icons/bi_view-list.svg"
+                    width={28}
+                    height={28}
+                    alt=""
+                  />
+                </a>
+
               </button>
             </div>
           </div>
 
-          {/* Showing Results */}
+          
           <div className="text-gray-500">Showing 1-16 of 32 results</div>
 
-          {/* Show and Sort Options */}
+          {/* tìm kiếm  */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <span>Show</span>
@@ -84,22 +86,63 @@ const ProductPage = () => {
           </div>
         </div>
       </section>
+      {/* Products */}
       <section className="container mx-auto p-4 items-center justify-between">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-                    {products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            name={product.name}
-                            type={product.type}
-                            image={product.image}
-                            price={product.price}
-                            discount_percent={product.discount_percent}
-                            price_before_discount={product.price_before_discount}
-                        />
-                    ))}
-                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              name={product.name}
+              type={product.type}
+              image={product.image}
+              price={product.price}
+              discount_percent={product.discount_percent}
+              price_before_discount={product.price_before_discount}
+            />
+          ))}
+        </div>
 
-            </section>
+      </section>
+      {/* phân trang */}
+
+
+      {/* phần gần cuối */}
+      <section className="bg-gray-100 py-12">
+  <div className="container mx-auto flex justify-between">
+    <div className="flex items-center space-x-4">
+      <img src="/assets/icons/Group.svg" alt="Trophy Icon" className="w-16 h-16" />
+      <div>
+        <p className="font-semibold text-lg text-gray-800">High Quality</p>
+        <span className="text-gray-500 text-sm">crafted from top materials</span>
+      </div>
+    </div>
+
+    <div className="flex items-center space-x-4">
+      <img src="/assets/icons/Vector.svg" alt="Warranty Icon" className="w-16 h-16" />
+      <div>
+        <p className="font-semibold text-lg text-gray-800">Warranty Protection</p>
+        <span className="text-gray-500 text-sm">Over 2 years</span>
+      </div>
+    </div>
+
+    <div className="flex items-center space-x-4">
+      <img src="/assets/icons/shipping.svg" alt="Shipping Icon" className="w-16 h-16" />
+      <div>
+        <p className="font-semibold text-lg text-gray-800">Free Shipping</p>
+        <span className="text-gray-500 text-sm">Order over 150$</span>
+      </div>
+    </div>
+
+    <div className="flex items-center space-x-4">
+      <img src="/assets/icons/customer-support.svg" alt="Support Icon" className="w-16 h-16" />
+      <div>
+        <p className="font-semibold text-lg text-gray-800">24/7 Support</p>
+        <span className="text-gray-500 text-sm">Dedicated support</span>
+      </div>
+    </div>
+  </div>
+</section>
+
     </>
   );
 };
