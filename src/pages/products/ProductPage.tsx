@@ -1,5 +1,9 @@
 import ProductCard from "@/components/ProductCard";
 import Header from "../layouts/Header";
+import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
 
 
 const ProductPage = () => {
@@ -104,13 +108,19 @@ const ProductPage = () => {
 
       </section>
       {/* phân trang */}
-
-
+      <section className="flex justify-center items-center mt-12 mb-16">
+      <div className="App">
+        <Stack spacing={2}>
+          <Pagination count={10} variant="outlined" shape="rounded" />
+        </Stack>
+      </div>
+    </section>
+      
       {/* phần gần cuối */}
       <section className="bg-gray-100 py-12">
   <div className="container mx-auto flex justify-between">
     <div className="flex items-center space-x-4">
-      <img src="/assets/icons/Group.svg" alt="Trophy Icon" className="w-16 h-16" />
+      <img src="/assets/icons/Group.svg" alt="" className="w-16 h-16" />
       <div>
         <p className="font-semibold text-lg text-gray-800">High Quality</p>
         <span className="text-gray-500 text-sm">crafted from top materials</span>
@@ -118,7 +128,7 @@ const ProductPage = () => {
     </div>
 
     <div className="flex items-center space-x-4">
-      <img src="/assets/icons/Vector.svg" alt="Warranty Icon" className="w-16 h-16" />
+      <img src="/assets/icons/Vector.svg" alt="" className="w-16 h-16" />
       <div>
         <p className="font-semibold text-lg text-gray-800">Warranty Protection</p>
         <span className="text-gray-500 text-sm">Over 2 years</span>
@@ -126,7 +136,7 @@ const ProductPage = () => {
     </div>
 
     <div className="flex items-center space-x-4">
-      <img src="/assets/icons/shipping.svg" alt="Shipping Icon" className="w-16 h-16" />
+      <img src="/assets/icons/shipping.svg" alt="" className="w-16 h-16" />
       <div>
         <p className="font-semibold text-lg text-gray-800">Free Shipping</p>
         <span className="text-gray-500 text-sm">Order over 150$</span>
@@ -134,7 +144,7 @@ const ProductPage = () => {
     </div>
 
     <div className="flex items-center space-x-4">
-      <img src="/assets/icons/customer-support.svg" alt="Support Icon" className="w-16 h-16" />
+      <img src="/assets/icons/customer-support.svg" alt="" className="w-16 h-16" />
       <div>
         <p className="font-semibold text-lg text-gray-800">24/7 Support</p>
         <span className="text-gray-500 text-sm">Dedicated support</span>
