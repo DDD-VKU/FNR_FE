@@ -1,6 +1,17 @@
+import ProductCard from "@/components/ProductCard";
 import Header from "../layouts/Header";
 
+
 const ProductPage = () => {
+  const products = Array.from({ length: 16 }, (_, i) => ({
+    id: i,
+    name: `Product ${i + 1}`,
+    type: "Sample Type",
+    image: `/assets/images/products.png`,
+    price: 100 + i * 10,
+    discount_percent: 10 + i,
+    price_before_discount: 150 + i * 10,
+}));
   return (
     <>
       <Header />
@@ -14,7 +25,7 @@ const ProductPage = () => {
                   src="/assets/icons/system-uicons_filtering.svg"
                   width={28}
                   height={28}
-                  alt="Filter Icon"
+                  alt=""
                 />
               </a>
               <span>Filter</span>
@@ -28,10 +39,10 @@ const ProductPage = () => {
                   src="/assets/icons/ci_grid-big-round.svg"
                   width={28}
                   height={28}
-                  alt="Filter Icon"
+                  alt=""
                 />
               </a>
-                <span>Grid</span>
+                
               </button>
               <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
                 {/* Add list view Icon */}
@@ -40,10 +51,10 @@ const ProductPage = () => {
                   src="/assets/icons/bi_view-list.svg"
                   width={28}
                   height={28}
-                  alt="Filter Icon"
+                  alt=""
                 />
               </a>
-                <span>List</span>
+                
               </button>
             </div>
           </div>
@@ -73,6 +84,22 @@ const ProductPage = () => {
           </div>
         </div>
       </section>
+      <section className="container mx-auto p-4 items-center justify-between">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                    {products.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            name={product.name}
+                            type={product.type}
+                            image={product.image}
+                            price={product.price}
+                            discount_percent={product.discount_percent}
+                            price_before_discount={product.price_before_discount}
+                        />
+                    ))}
+                </div>
+
+            </section>
     </>
   );
 };
