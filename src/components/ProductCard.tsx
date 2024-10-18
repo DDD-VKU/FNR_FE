@@ -27,14 +27,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, type, image, price, dis
                         {discount_percent}%
                     </div>
                 </div>
-                <div className="bg-[#F4F5F7] mt-[-10px]">
-                    <div className="ml-5 p-2 mb-2">
-                        <p className="text-[24px] font-semibold mt-2">{name}</p>
-                        <p className="text-[16px] text-[#898989]">{type}</p>
-                        <div className="flex items-end">
-                            <p className="text-[20px] font-semibold text-[#898989]">${price}</p>
-                            <p className="ml-2 text-[16px] text-[#898989] line-through">{price_before_discount}</p>
-                        </div>
+
+            </div>
+            <div className="bg-[#F4F5F7] mt-[-10px]">
+                <div className="ml-5 p-2 mb-2">
+                    <p className="text-[24px] font-semibold mt-2">{name}</p>
+                    <p className="text-[16px] text-[#898989]">{type}</p>
+                    <div className="flex items-end">
+                        <p className="text-[20px] font-semibold text-[#898989]">${price}</p>
+                        <p className="ml-2 text-[16px] text-[#898989] line-through">{price_before_discount}</p>
                     </div>
                 </div>
             </div>
