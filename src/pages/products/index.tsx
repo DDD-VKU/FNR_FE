@@ -113,14 +113,9 @@ const ProductPage = () => {
 
       {/* phần gần cuối */}
       <section className="bg-gray-100 py-12">
-        <div className="container mx-auto flex justify-between">
-          <div className="flex items-center space-x-4">
-            <Image
-              src="/assets/icons/Group.svg"
-              alt=""
-              width={16}
-              height={16}
-            />
+        <div className="container mx-auto flex flex-col sm:flex-row sm:flex-wrap justify-between space-y-8 sm:space-y-0">
+          <div className="flex items-center space-x-4 sm:w-1/2 lg:w-auto">
+            <img src="/assets/icons/Group.svg" alt="" className="w-16 h-16" />
             <div>
               <p className="font-semibold text-lg text-gray-800">
                 High Quality
@@ -131,13 +126,8 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <Image
-              src="/assets/icons/Vector.svg"
-              alt=""
-              width={16}
-              height={16}
-            />
+          <div className="flex items-center space-x-4 sm:w-1/2 lg:w-auto">
+            <img src="/assets/icons/Vector.svg" alt="" className="w-16 h-16" />
             <div>
               <p className="font-semibold text-lg text-gray-800">
                 Warranty Protection
@@ -146,12 +136,11 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <Image
+          <div className="flex items-center space-x-4 sm:w-1/2 lg:w-auto">
+            <img
               src="/assets/icons/shipping.svg"
               alt=""
-              width={16}
-              height={16}
+              className="w-16 h-16"
             />
             <div>
               <p className="font-semibold text-lg text-gray-800">
@@ -161,12 +150,11 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <Image
+          <div className="flex items-center space-x-4 sm:w-1/2 lg:w-auto">
+            <img
               src="/assets/icons/customer-support.svg"
               alt=""
-              width={16}
-              height={16}
+              className="w-16 h-16"
             />
             <div>
               <p className="font-semibold text-lg text-gray-800">
