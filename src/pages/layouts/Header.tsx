@@ -63,7 +63,7 @@ const Header = () => {
                     <div className="md:hidden">
                         <button className="text-2xl">
                         <Image
-                                src={'/assets/icons/menu.png'}
+                                src={'/assets/images/menu.png'}
                                 width={28}
                                 height={28}
                                 alt="logo"

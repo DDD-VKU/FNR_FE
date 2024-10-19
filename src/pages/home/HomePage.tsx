@@ -16,17 +16,21 @@ const HomePage = () => {
     return (
         <>
             <section>
-                <div className="relative">
+                <div className="relative ">
                     <Image src={'/assets/images/MaskGroup.png'}
                      alt="Slideshow" 
                      height={716}
                      width={1440}
+                     quality={100}
                      className="w-full"
                     />
-                    <div className="absolute bottom-14 right-14 bg-[#FFF3E3] bg-opacity-80 p-10 mr-4">
-                        <h6 className="font-semibold">New Arrivals</h6>
-                        <h4 className="text-[52px] font-bold text-[#B88E2F]">Discover Our <br /> New Collection</h4>
-                        <h2 className="text-[18px] font-bold">Lorem ipsum dolor sit amet consectetur adipisicing eligendi!</h2>
+                    {/* New Arrivals */}
+                    <div className="absolute bottom-8 right-14 bg-[#FFF3E3] bg-opacity-80 p-8 mr-4 hidden md:block" >
+                        <h6 className="font-semibold ">New Arrivals</h6>
+                        <h4 className="text-[52px] font-bold text-[#B88E2F] 
+                                    ">Discover Our <br /> New Collection</h4>
+                        <h2 className="text-[18px] font-bold
+                                     ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br /> Ut elit tellus, luctus nec ullamcorper mattis.</h2>
                         <button className="bg-[#B88E2F] text-[16px] text-white px-12 py-4 mt-4 font-bold hover:bg-yellow-900 ">BUY NOW</button>
                     </div>
                 </div>
@@ -44,6 +48,7 @@ const HomePage = () => {
                             width={380}
                             height={480}
                             alt=""
+                            quality={100}
                         />
                         <h3 className="text-lg font-semibold">Dining</h3>
                     </div>
@@ -53,17 +58,18 @@ const HomePage = () => {
                             src={'/assets/images/living-room.png'}
                             width={380}
                             height={480}
+                            quality={100}
                             alt=""
                         />
                         <h3 className="text-lg font-semibold">Living</h3>
                     </div>
 
                     <div className="max-w-xs">
-                        {/* <img src="" alt="Bedroom" className="rounded-lg w-full mb-4"> */}
                         <Image
                             src={'/assets/images/bed-room.png'}
                             width={380}
                             height={480}
+                            quality={100}
                             alt=""
                         />
                         <h3 className="text-lg font-semibold">Bedroom</h3>
@@ -136,9 +142,14 @@ const HomePage = () => {
                     <h1 className="text-[20px] font-bold text-gray-400">Share your setup with</h1>
                     <h2 className="text-4xl text-gray-800 font-bold mt-2">#FuniroFurniture</h2>
                 </div>
-                    <Image src={'/assets/images/stay.png'} 
-                    alt="" 
-                    className="mx-auto"/>
+                <div className="container mx-auto">
+                    <Image src="/assets/images/stay.png" 
+                    height={700}
+                    width={1500}
+                    quality={100}
+                    unoptimized
+                    alt="" />
+                </div>
              </section>
 
         </>
