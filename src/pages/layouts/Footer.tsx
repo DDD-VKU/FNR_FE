@@ -91,7 +91,7 @@ const Footer = () => {
                                         className="w-4 h-4 text-gray-800"/>
                                         <a href="">
                                         <p className="font-semibold ml-1">
-                                        400 University Drive Suite 200 Coral Gables, FL 33134 USA</p>
+                                        428 Trần Đại Nghĩa, VKU university</p>
                                     </a>
                                 </div>
                                 <div className="flex items-center">
@@ -101,7 +101,7 @@ const Footer = () => {
                                         height={16}
                                         alt=""
                                         className="w-4 h-4 text-gray-800"/>
-                                 <p className="font-semibold ml-1">Phone: 1234567890</p>
+                                 <p className="font-semibold ml-1">Phone: 098262123</p>
                                 </div>
                                 <div className="flex items-center">
                                 <Image
