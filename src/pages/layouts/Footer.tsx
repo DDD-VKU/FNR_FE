@@ -49,9 +49,9 @@ const Footer = () => {
                 <section>
                     <div className="mx-auto text-center mt-5 md:text-start">
                         {/* Grid body row */}
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-9 mt-3">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-9 mt-3 ml-14">
                             {/* Grid column 1 */}
-                            <div className="mx-auto mb-4">
+                            <div className="container mx-auto mb-4">
                                 <h2 className="text-[24px] font-bold">Furino.</h2>
                                 <p className="text-[#9F9F9F]">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             </div>
