@@ -1,4 +1,5 @@
 import ProductCard from "@/components/ProductCard";
+import ShowMore from "@/components/ShowMore";
 import Image from "next/image";
 
 
@@ -22,6 +23,7 @@ const HomePage = () => {
                      height={716}
                      width={1440}
                      quality={100}
+                     unoptimized
                      className="w-full"
                     />
                     {/* New Arrivals */}
@@ -47,6 +49,7 @@ const HomePage = () => {
                             src={'/assets/images/dining.png'}
                             width={380}
                             height={480}
+                            unoptimized
                             alt=""
                             quality={100}
                         />
@@ -59,6 +62,7 @@ const HomePage = () => {
                             width={380}
                             height={480}
                             quality={100}
+                            unoptimized
                             alt=""
                         />
                         <h3 className="text-lg font-semibold">Living</h3>
@@ -70,6 +74,7 @@ const HomePage = () => {
                             width={380}
                             height={480}
                             quality={100}
+                            unoptimized
                             alt=""
                         />
                         <h3 className="text-lg font-semibold">Bedroom</h3>
@@ -95,6 +100,8 @@ const HomePage = () => {
 
             </section>
 
+            <ShowMore />
+
             {/* Room stay */}
             <section className="flex justify-center items-center bg-[#FCF8F3]">
                     <div className="mx-auto flex flex-col md:flex-row py-9">
@@ -112,6 +119,7 @@ const HomePage = () => {
                                 src={'/assets/images/Rectangle 24.png'}
                                 width={432}
                                 height={582}
+                                unoptimized
                                 alt=""
                                 className="w-full h-full object-cover"
                             />
@@ -128,6 +136,7 @@ const HomePage = () => {
                                     src={'/assets/icons/Right 16px.svg'}
                                     width={24}
                                     height={24}
+                                    unoptimized
                                     alt=""
                                     className="w-6 h-6 text-gray-800"/>
                                 </button>

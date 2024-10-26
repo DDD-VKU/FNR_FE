@@ -20,6 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, type, image, price, dis
                     src={image}
                     width={285}
                     height={300}
+                    unoptimized
                     alt=""
                     className="block object-cover"
                 />

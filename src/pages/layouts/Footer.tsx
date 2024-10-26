@@ -14,31 +14,36 @@ const Footer = () => {
                             src={'/assets/images/fb.png'}
                             width={16}
                             height={16}
-                            alt=""
+                            unoptimized
+                            alt="Facebook"
                             quality={100}
                             className="w-7 h-7 text-gray-800"/>
                         <Image
                             src={'/assets/images/github.png'}
                             width={16}
                             height={16}
-                            alt=""
+                            unoptimized
+                            alt="Github"
                             className="w-6 h-6 text-gray-800"/>
                         <Image
                             src={'/assets/images/twiter.png'}
                             width={16}
                             height={16}
-                            alt=""
+                            unoptimized
+                            alt="Twiter"
                             className="w-6 h-6 text-gray-800"/>
                         <Image
                             src={'/assets/images/ytb.png'}
                             width={16}
                             height={16}
-                            alt=""
+                            unoptimized
+                            alt="Youtube"
                             className="w-6 h-6 text-gray-800"/>
                         <Image
                             src={'/assets/images/whatapp.png'}
                             width={16}
                             height={16}
+                            unoptimized
                             alt=""
                             className="w-6 h-6 text-gray-800"/>
                     </div>
@@ -61,10 +66,10 @@ const Footer = () => {
                             <div className="mx-auto mb-4">
                                 <h2 className="text-[20px] text-[#9F9F9F] mb-3">Useful Links</h2>
                                 <ul className="list-none space-y-2 font-semibold">
-                                    <li><a href="">Home</a></li>
-                                    <li><a href="">Shop</a></li>
-                                    <li><a href="">About</a></li>
-                                    <li><a href="">Contact</a></li>
+                                    <li><a href="" className="hover:underline">Home</a></li>
+                                    <li><a href="" className="hover:underline">Shop</a></li>
+                                    <li><a href="" className="hover:underline">About</a></li>
+                                    <li><a href="" className="hover:underline">Contact</a></li>
                                 </ul>
                             </div>
 
@@ -82,11 +87,12 @@ const Footer = () => {
                             {/* Grid column 4 */}
                             <div className="mx-auto mb-4">
                                 <h2 className="text-[20px] text-[#9F9F9F] mb-3">Contact</h2>
-                                <div className="flex items-center">
+                                <div className="flex items-center hover:underline">
                                     <Image
                                         src={'/assets/icons/home1.svg'}
                                         width={16}
                                         height={16}
+                                        unoptimized
                                         alt=""
                                         className="w-4 h-4 text-gray-800"/>
                                         <a href="">
@@ -94,20 +100,22 @@ const Footer = () => {
                                         428 Trần Đại Nghĩa, VKU university</p>
                                     </a>
                                 </div>
-                                <div className="flex items-center">
+                                <div className="flex items-center hover:underline">
                                 <Image
                                         src={'/assets/images/phone.png'}
                                         width={16}
                                         height={16}
+                                        unoptimized
                                         alt=""
                                         className="w-4 h-4 text-gray-800"/>
                                  <p className="font-semibold ml-1">Phone: 098262123</p>
                                 </div>
-                                <div className="flex items-center">
+                                <div className="flex items-center hover:underline">
                                 <Image
-                                        src={'/assets/icons/email.png'}
+                                        src={'/assets/images/email.png'}
                                         width={16}
                                         height={16}
+                                        unoptimized
                                         alt=""
                                         className="w-4 h-4 text-gray-800"/>
                                     <p className="font-semibold ml-1"> Email:<a href=""> 3tQpV@example.com</a></p>

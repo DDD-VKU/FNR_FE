@@ -12,6 +12,7 @@ const Header = () => {
                             src={'/assets/images/logo.png'}
                             width={46}
                             height={40}
+                            unoptimized
                             alt="logo"
                             className="h-4"
                         />
@@ -25,12 +26,13 @@ const Header = () => {
                         <a className="text-base font-semibold">Contact</a>
                     </nav>
 
-                    <div className="flex space-x-6">
+                    <div className="hidden sm:flex space-x-4">
                         <a href="">
                             <Image
                                 src={'/assets/icons/mdi_account-alert-outline.svg'}
                                 width={28}
                                 height={28}
+                                unoptimized
                                 alt="logo"
                             />
                         </a>
@@ -39,6 +41,7 @@ const Header = () => {
                                 src={'/assets/icons/akar-icons_search.svg'}
                                 width={28}
                                 height={28}
+                                unoptimized
                                 alt="logo"
                             />
                         </a>
@@ -47,6 +50,7 @@ const Header = () => {
                                 src={'/assets/icons/akar-icons_heart.svg'}
                                 width={28}
                                 height={28}
+                                unoptimized
                                 alt="logo"
                             />
                         </a>
@@ -55,17 +59,19 @@ const Header = () => {
                                 src={'/assets/icons/ant-design_shopping-cart-outlined.svg'}
                                 width={28}
                                 height={28}
+                                unoptimized
                                 alt="logo"
                             />
                         </a>
                     </div>
 
                     <div className="md:hidden">
-                        <button className="text-2xl">
+                        <button className="text-2xl mt-3">
                         <Image
                                 src={'/assets/images/menu.png'}
                                 width={28}
                                 height={28}
+                                unoptimized
                                 alt="logo"
                             />
                         </button>
@@ -75,4 +81,4 @@ const Header = () => {
         </>);
 }
 
-export default Header;
+export default Header;  
