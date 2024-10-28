@@ -12,7 +12,7 @@ const HomePage = () => {
     discount_percent: 10 + i,
     price_before_discount: 150 + i * 10,
   }));
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -106,6 +106,7 @@ const HomePage = () => {
               price={product.price}
               discount_percent={product.discount_percent}
               price_before_discount={product.price_before_discount}
+              is_new_product={product.id % 2 === 0}
             />
           ))}
         </div>

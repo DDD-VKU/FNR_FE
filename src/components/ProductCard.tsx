@@ -8,6 +8,7 @@ interface ProductCardProps {
   price: number;
   discount_percent: number;
   price_before_discount: number;
+  is_new_product?: boolean;
   onClick?: () => void;
 }
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -17,6 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   discount_percent,
   price_before_discount,
+  is_new_product = false,
   onClick,
 }) => {
   return (
@@ -32,9 +34,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
             alt=""
             className="block object-cover"
           />
-          <div className="absolute top-3 right-2 bg-red-500 text-white rounded-full w-[40px] h-[0px] flex items-center justify-center font-semibold">
-            {discount_percent}%
-          </div>
+          {is_new_product == false ? (
+            <div className="text-sm p-4 absolute top-5 right-2 bg-red-500 text-white rounded-full w-[40px] h-[40px] flex items-center justify-center font-semibold">
+              {discount_percent}%
+            </div>
+          ) : (
+            <div className="text-sm p-4 absolute top-5 right-2 bg-green-500 text-white rounded-full w-[40px] h-[40px] flex items-center justify-center font-semibold">
+              New
+            </div>
+          )}
           {/* Hover Image */}
           <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transiton-opacity duration-500">
             <button
@@ -78,12 +86,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <div className="ml-5 p-2 mb-2">
             <p className="text-[24px] font-semibold mt-2">{name}</p>
             <p className="text-[16px] text-[#898989]">{type}</p>
-            <div className="flex items-end">
+            <div className="flex items-center">
               <p className="text-[20px] font-semibold text-[#3A3A3A]">
                 ${price}
               </p>
               <p className="ml-2 text-[16px] text-[#898989] line-through">
-                {price_before_discount}
+                ${price_before_discount}
               </p>
             </div>
           </div>
