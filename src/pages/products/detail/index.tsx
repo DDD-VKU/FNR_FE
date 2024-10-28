@@ -284,7 +284,7 @@ const App = () => {
 
         {/* Products */}
         <section className="container mx-auto p-4 items-center justify-between">
-                <h1 className="text-5xl font-bold mt-4 text-center items-center justify-center">Related Products</h1>
+            <h1 className="text-5xl font-bold mt-4 text-center items-center justify-center">Related Products</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                     {products.map((product) => (
                         <ProductCard

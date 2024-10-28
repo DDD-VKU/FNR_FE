@@ -97,7 +97,6 @@ const HomePage = () => {
                         />
                     ))}
                 </div>
-
             </section>
 
             <ShowMore />
