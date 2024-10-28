@@ -8,7 +8,7 @@ const ComparePage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="w-[90%] h-3/4 p-4 mx-auto my-auto p-4 flex flex-col">
+      <div className="w-[90%] h-3/4 p-4 mx-auto my-auto flex flex-col">
         <div className="flex justify-between items-start mb-8 w-full">
           {/* Left Section - 25% */}
           <div className="w-1/4 px-2">
