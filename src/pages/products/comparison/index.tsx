@@ -3,11 +3,14 @@ import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React from "react";
 import Button from "@/components/Button";
+import HeadImage from "@/components/HeadImage";
+import FeatureCard from "@/components/FeatureCard";
 
 const ComparePage: React.FC = () => {
   return (
     <>
       <Header />
+      <HeadImage/>
       <div className="w-[90%] h-3/4 p-4 mx-auto my-auto flex flex-col">
         <div className="flex justify-between items-start mb-8 w-full">
           {/* Left Section - 25% */}
@@ -247,6 +250,7 @@ const ComparePage: React.FC = () => {
           </table>
         </div>
       </div>
+      <FeatureCard/>
       <Footer />
     </>
   );

@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Image from "next/image";
 import Footer from "../layouts/Footer";
 import FeatureCard from "@/components/FeatureCard";
+import HeadImage from "@/components/HeadImage";
 
 const ProductPage = () => {
   const products = Array.from({ length: 16 }, (_, i) => ({
@@ -21,6 +22,7 @@ const ProductPage = () => {
   return (
     <>
       <Header />
+      <HeadImage/>
       <section className="w-full bg-[#F9F1E7] p-4 shadow rounded-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">

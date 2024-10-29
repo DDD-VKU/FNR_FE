@@ -12,7 +12,8 @@ const HomePage = () => {
     discount_percent: 10 + i,
     price_before_discount: 150 + i * 10,
   }));
-  var settings = {
+  
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -37,7 +38,7 @@ const HomePage = () => {
             width={1440}
             className="w-full"
           />
-          <div className="absolute bottom-14 right-14 bg-[#FFF3E3] bg-opacity-80 p-10 mr-4">
+          <div className="absolute bottom-14 right-14 bg-[#FFF3E3] bg-opacity-80 p-10 mr-4 hidden md:block">
             <h6 className="font-semibold">New Arrivals</h6>
             <h4 className="text-[52px] font-bold text-[#B88E2F]">
               Discover Our <br /> New Collection
@@ -156,6 +157,7 @@ const HomePage = () => {
               </button>
             </div>
           </div>
+
           <Slider className="" {...settings}>
             {listImageSlider.map((image, index) => (
               <div key={index}>
@@ -163,6 +165,7 @@ const HomePage = () => {
               </div>
             ))}
           </Slider>
+
         </div>
       </section>
       {/* Stay Furniture */}

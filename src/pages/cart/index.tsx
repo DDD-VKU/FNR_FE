@@ -2,6 +2,8 @@ import Cart from "@/components/Cart";
 import React, { useState } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
+import HeadImage from "@/components/HeadImage";
+import FeatureCard from "@/components/FeatureCard";
 
 
 // ví dụ 1sp
@@ -32,17 +34,22 @@ const CartPage: React.FC = () => {
   };
 
   return (
-    <><Header /><div className="min-h-screen bg-white">
-      <div className="container mx-auto py-8">
+    <>
+      <Header />
+      <HeadImage/>
+      <div className="min-h-screen bg-white">
+        <div className="container mx-auto py-8">
 
-        <Cart
-          items={items}
-          onUpdateQuantity={handleUpdateQuantity}
-          onRemoveItem={handleRemoveItem}
-          onCheckout={handleCheckout} />
+          <Cart
+            items={items}
+            onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={handleRemoveItem}
+            onCheckout={handleCheckout} />
+        </div>
       </div>
-    </div>
-    <Footer/></>
+      <FeatureCard/>
+      <Footer/>
+    </>
   );
 };
 

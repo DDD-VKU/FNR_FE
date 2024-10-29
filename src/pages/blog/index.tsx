@@ -4,6 +4,8 @@ import Header from "../layouts/Header";
 import Image from "next/image";
 import ShowMore from "@/components/ShowMore";
 import BlogCard from "./components/BlogCard";
+import HeadImage from "@/components/HeadImage";
+import FeatureCard from "@/components/FeatureCard";
 
 
 const Blogs = () => {
@@ -18,6 +20,7 @@ const Blogs = () => {
   return (
     <>
       <Header />
+      <HeadImage/>
       {/* Main Container */}
       <section className="container flex p-4 mx-auto">
         <div className="grid grid-cols-1 gap-6 mt-8 space-y-10 mx-auto">
@@ -153,7 +156,7 @@ const Blogs = () => {
           </div>
         </div>
       </section>
-
+      <FeatureCard />
       <Footer />
     </>);
 }

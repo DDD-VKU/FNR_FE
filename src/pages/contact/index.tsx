@@ -4,11 +4,14 @@ import InputField from "@/components/InputFieldProps";
 import Button from "@/components/Button";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
+import HeadImage from "@/components/HeadImage";
+import FeatureCard from "@/components/FeatureCard";
 
 const ContactPage: React.FC = () => {
   return (
     <>
       <Header />
+      <HeadImage />
       <div className=" flex flex-col items-center justify-center p-6">
         <div className="max-w-4xl w-full bg-white rounded-lg  p-8">
           <h2 className="text-3xl font-semibold text-center mb-6">
@@ -89,6 +92,7 @@ const ContactPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <FeatureCard />
       <Footer />
     </>
   );
