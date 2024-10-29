@@ -1,7 +1,8 @@
 import ProductCard from "@/components/ProductCard";
 import Image from "next/image";
-import React from "react";
-import Slider from "react-slick";
+import Carousel from "./components/carousel";
+import { useState } from "react";
+import { rooms } from "@/utils/constant";
 const HomePage = () => {
   const products = Array.from({ length: 8 }, (_, i) => ({
     id: i,
@@ -12,19 +13,8 @@ const HomePage = () => {
     discount_percent: 10 + i,
     price_before_discount: 150 + i * 10,
   }));
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  const [roomSelected, setRoomSelected] = useState(0);
 
-  const listImageSlider = [
-    "/assets/images/Rectangle_45.png",
-    "/assets/images/Rectangle_40.png",
-    "/assets/images/Rectangle_24.png",
-  ];
   return (
     <>
       {/* slideshow */}
@@ -112,60 +102,72 @@ const HomePage = () => {
         </div>
       </section>
       {/* Room stay */}
-      <section className="flex justify-center items-center bg-[#FCF8F3]">
-        <div className="mx-auto flex flex-col md:flex-row py-9">
-          {/* Left columns: text */}
-          <div className="float-left w-full md:w-1/2">
+      <section className="w-full mx-auto p-8 items-center justify-between bg-[#FCF8F3]">
+        <div className="container mx-auto flex flex-col md:flex-row py-9">
+          {/* Left column: text */}
+          <div className="w-full md:w-1/3 px-4">
             <h1 className="text-4xl font-bold">
-              50+ Beautiful rooms <br /> insporation
+              50+ Beautiful Rooms <br /> Inspiration
             </h1>
             <p className="text-gray-500 mt-4">
-              Our design alredy made a lot of beautiful <br /> prototipe of room
-              that inspire you
+              Our design already includes a lot of beautiful <br /> room
+              prototypes to inspire you.
             </p>
-            <button className="bg-yellow-400 text-white px-8 py-3 mt-4 font-bold hover:bg-yellow-600 ">
+            <button className="bg-yellow-400 text-white px-8 py-3 mt-4 font-bold hover:bg-yellow-600">
               Explore More
             </button>
           </div>
-          {/* Right columns: image */}
-          <div className="w-full md:w-1/2 flex items-center justify-center relative overflow-hidden">
-            {/* Main Images */}
+
+          {/* Center column: image */}
+          <div className="w-full md:w-1/3 flex items-center justify-center relative overflow-hidden px-4">
             <div className="flex-shrink-0">
               <Image
-                src={"/assets/images/Rectangle 24.png"}
+                src={rooms[roomSelected].image}
                 width={432}
                 height={582}
                 alt=""
-                className="w-full h-full object-cover"
+                unoptimized
               />
             </div>
             {/* Overlay */}
-            <div className="absolute bottom-4 left-4 bg-white bg-opacity-80 p-6">
-              <h4 className="text-2xl font-bold text-[#898989]">01-Bedroom</h4>
-              <h2 className="text-3xl font-bold">Inner Peace</h2>
+            <div className="absolute bottom-4 left-8 bg-white bg-opacity-80 p-6 rounded-lg">
+              <h4 className="text-2xl font-bold text-[#898989]">
+                {rooms[roomSelected].id}-{rooms[roomSelected].name}
+              </h4>
+              <h2 className="text-3xl font-bold">
+                {rooms[roomSelected].content}
+              </h2>
             </div>
-            {/* Overlay Arrows */}
-            <div className="absolute right-1/4 bottom-4  ">
-              <button className="bg-yellow-400 p-2">
+            {/* Right Arrow */}
+            <div className="absolute right-4 bottom-4">
+              <button
+                className="bg-yellow-400 p-2 rounded-full hover:bg-yellow-600"
+                onClick={() => {
+                  if (roomSelected < rooms.length - 1) {
+                    setRoomSelected(roomSelected + 1);
+                  } else {
+                    setRoomSelected(0);
+                  }
+                }}
+              >
                 <Image
                   src={"/assets/icons/right_16px.svg"}
                   width={24}
                   height={24}
-                  alt=""
+                  alt="Next"
                   className="w-6 h-6 text-gray-800"
                 />
               </button>
             </div>
           </div>
-          <Slider className="" {...settings}>
-            {listImageSlider.map((image, index) => (
-              <div key={index}>
-                <Image src={image} width={24} height={24} alt="" />
-              </div>
-            ))}
-          </Slider>
+
+          {/* Right column: Carousel */}
+          <div className="w-full md:w-1/3 flex items-center justify-center px-4">
+            <Carousel />
+          </div>
         </div>
       </section>
+
       {/* Stay Furniture */}
       <section className="bg-gray-50 p-8">
         <div className="text-center mb-8">
