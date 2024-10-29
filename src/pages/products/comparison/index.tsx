@@ -8,10 +8,10 @@ const ComparePage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="w-[90%] h-3/4 p-4 mx-auto my-auto flex flex-col">
-        <div className="flex justify-between items-start mb-8 w-full">
+      <div className="w-[90%] h-auto p-4 mx-auto my-auto flex flex-col">
+        <div className="flex flex-col lg:flex-row justify-between items-start mb-8 w-full">
           {/* Left Section - 25% */}
-          <div className="w-1/4 px-2">
+          <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
             <h2 className="text-lg font-semibold">
               Go to Product page for more Products
             </h2>
@@ -21,10 +21,10 @@ const ComparePage: React.FC = () => {
           </div>
 
           {/* Product 1 - 25% */}
-          <div className="w-1/4 px-2">
+          <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
             <div className="bg-[#FAF6F3] p-4 rounded-lg shadow-sm flex flex-col items-center">
               <Image
-                src="/assets/images/Group_157.png" // Replace with actual image path
+                src="/assets/images/Group_157.png"
                 alt=""
                 width={300}
                 height={200}
@@ -41,10 +41,10 @@ const ComparePage: React.FC = () => {
           </div>
 
           {/* Product 2 - 25% */}
-          <div className="w-1/4 px-2">
+          <div className="w-full lg:w-1/4 px-2 mb-4 lg:mb-0">
             <div className="bg-[#FAF6F3] p-4 rounded-lg shadow-sm flex flex-col items-center">
               <Image
-                src="/assets/images/Group_157.png" // Replace with actual image path
+                src="/assets/images/Group_157.png"
                 alt=""
                 width={300}
                 height={200}
@@ -61,19 +61,21 @@ const ComparePage: React.FC = () => {
           </div>
 
           {/* Add Product Section - 25% */}
-          <div className="w-1/4 px-2">
+          <div className="w-full lg:w-1/4 px-2">
             <h2 className="text-lg font-semibold mb-2">Add A Product</h2>
             <button className="bg-[#B88E2F] text-white px-4 py-2 rounded-md hover:bg-yellow-700">
               Choose a Product
             </button>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-4  flex-grow">
-          <table className=" table-auto text-left w-full">
+
+        {/* table in mobile */}
+        <div className="bg-white rounded-lg shadow-md p-4 flex-grow overflow-x-auto">
+          <table className="table-auto text-left w-full min-w-[800px]">
             <thead>
               <tr className="bg-gray-100">
                 <th className="p-2 w-1/4">General</th>
-                <th className="p-2 w-1/4 ">Asgaard Sofa</th>
+                <th className="p-2 w-1/4">Asgaard Sofa</th>
                 <th className="p-2 w-1/4">Outdoor Sofa Set</th>
                 <th className="p-2 w-1/4"></th>
               </tr>
@@ -82,50 +84,28 @@ const ComparePage: React.FC = () => {
               <tr>
                 <td className="p-2">Sales Package</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding1 sectional sofa with
-                  cushions and extra padding1 sectional sofa with cushions and
-                  extra padding1 sectional sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding1 sectional sofa with
-                  cushions and extra padding1 sectional sofa with cushions and
-                  extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
               <tr className="bg-gray-50">
                 <td className="p-2">Model Number</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding1 sectional sofa with
-                  cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
               <tr>
                 <td className="p-2">Secondary Material</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
-                </td>
-              </tr>
-              <tr className="bg-gray-50">
-                <td className="p-2">Upholstery Material</td>
-                <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
-                </td>
-                <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
             </tbody>
@@ -141,23 +121,19 @@ const ComparePage: React.FC = () => {
               <tr>
                 <td className="p-2">Filling Material</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
               <tr className="bg-gray-50">
                 <td className="p-2">Adjustable Headrest</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
             </tbody>
@@ -173,23 +149,19 @@ const ComparePage: React.FC = () => {
               <tr>
                 <td className="p-2">Width</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  21 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
               <tr className="bg-gray-50">
                 <td className="p-2">Height</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
             </tbody>
@@ -205,23 +177,19 @@ const ComparePage: React.FC = () => {
               <tr>
                 <td className="p-2">Warranty Summary</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
               <tr className="bg-gray-50">
                 <td className="p-2">Covered in Warranty</td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
                 <td className="p-2 max-w-xs break-words">
-                  1 sectional sofa with cushions and extra padding1 sectional
-                  sofa with cushions and extra padding
+                  1 sectional sofa with cushions and extra padding
                 </td>
               </tr>
               <tr className="bg-gray-50">
