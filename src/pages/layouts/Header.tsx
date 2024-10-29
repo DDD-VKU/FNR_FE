@@ -1,13 +1,24 @@
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
+
+  // Hàm đóng navbar khi nhấn vào overlay
+  const closeMobileNav = () => {
+    setIsMobileNavOpen(false);
+  };
+
   return (
     <>
       <header className="header py-3">
-        <div className="mx-[24px] p-4 flex items-center justify-between ">
+        <div className="mx-[24px] p-4 flex items-center justify-between">
           <div className="logo flex items-center space-x-2">
-            {/* <img src="logo.png" alt="logo" className="h-4" /> */}
             <Image
               src={"/assets/images/logo.png"}
               width={46}
@@ -19,21 +30,21 @@ const Header = () => {
             <span className="title font-bold text-[28px]">Furniro</span>
           </div>
 
+          {/* Navbar PC */}
           <nav className="nav hidden md:flex space-x-6">
-            <Link className="text-base font-semibold" href="/">
+            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/">
               Home
             </Link>
-
-            <Link className="text-base font-semibold" href={"/products"}>
+            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/products">
               Shop
             </Link>
-            <Link className="text-base font-semibold" href={"/blog"}>
+            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/blog">
               Blog
             </Link>
-            <Link className="text-base font-semibold" href={"/about"}>
+            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/about">
               About
             </Link>
-            <Link className="text-base font-semibold" href={"/contact"}>
+            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/contact">
               Contact
             </Link>
           </nav>
@@ -45,7 +56,7 @@ const Header = () => {
                 width={28}
                 height={28}
                 unoptimized
-                alt="logo"
+                alt="account"
               />
             </a>
             <a href="">
@@ -54,7 +65,7 @@ const Header = () => {
                 width={28}
                 height={28}
                 unoptimized
-                alt="logo"
+                alt="search"
               />
             </a>
             <a href="">
@@ -63,7 +74,7 @@ const Header = () => {
                 width={28}
                 height={28}
                 unoptimized
-                alt="logo"
+                alt="wishlist"
               />
             </a>
             <a href="">
@@ -72,24 +83,68 @@ const Header = () => {
                 width={28}
                 height={28}
                 unoptimized
-                alt="logo"
+                alt="cart"
               />
             </a>
           </div>
 
+          {/* Navbar Mobile Button */}
           <div className="md:hidden">
-            <button className="text-2xl mt-3">
+            <button onClick={toggleMobileNav} className="text-2xl mt-3">
               <Image
                 src={"/assets/images/menu.png"}
                 width={28}
                 height={28}
                 unoptimized
-                alt="logo"
+                alt="menu"
               />
             </button>
           </div>
         </div>
       </header>
+
+      {/* Overlay và Navbar Mobile */}
+      {isMobileNavOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            onClick={closeMobileNav}
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          ></div>
+
+          {/* Navbar Mobile */}
+          <nav className="fixed top-0 right-0 w-3/4 h-full bg-white bg-opacity-60 shadow-lg z-50">
+            <button onClick={toggleMobileNav} className="text-2xl mb-5 float-right text-white p-4">
+              ✕
+            </button>
+            <div className="text-2xl font-bold bg-yellow-500 text-white w-full p-4">
+                Furino
+              </div>
+            <div className="flex flex-col space-y-3 p-4 text-white">
+              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/">
+                Home
+              </Link>
+              <hr />
+              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/products">
+                Shop
+              </Link>
+              <hr />
+              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/blog">
+                Blog
+              </Link>
+              <hr />
+              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/about">
+                About
+              </Link>
+              <hr />
+              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/contact">
+                Contact
+              </Link>
+              <hr className="bg-slate-400" />
+            </div>
+          </nav>
+        </>
+      )}
     </>
   );
 };

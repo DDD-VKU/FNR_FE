@@ -63,6 +63,7 @@ import Image from "next/image";
                 </div>
                 <a href=""><p className="font-bold text-base hover:underline">Read More</p></a>
           </div>  
+          
         </>
     );
 };

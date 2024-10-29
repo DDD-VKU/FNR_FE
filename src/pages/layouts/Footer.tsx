@@ -7,7 +7,7 @@ const Footer = () => {
                 <section className="flex p-4 justify-between bg-[#F5F5F5]">
                     {/* Left head */}
                     <div className="flex items-center space-x-4">
-                        <span className="ml-8 font-semibold">
+                        <span className="lg:ml-[100px] font-semibold sm:mx-auto">
                             Get connected with us on social networks:
                         </span>
                         <Image
@@ -52,9 +52,9 @@ const Footer = () => {
 
                 {/* Body */}
                 <section>
-                    <div className="mx-auto text-center mt-5 md:text-start">
+                    <div className="container mx-auto text-center mt-5 md:text-start">
                         {/* Grid body row */}
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-9 mt-3 ml-14">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-9 mt-3">
                             {/* Grid column 1 */}
                             <div className="container mx-auto mb-4">
                                 <h2 className="text-[24px] font-bold">Furino.</h2>
@@ -127,9 +127,9 @@ const Footer = () => {
 
                 {/* Footer */}
                 <section>
-                    <div className=" p-5 md:text-start sm:text-center">
+                    <div className=" p-5 lg:text-start sm:text-center">
                         <hr className="ml-10 mr-10 bg-amber-100 h-1"/>
-                        <p className="text-[16px] font-bold mt-4 ml-8">© 2024 Copyright: <a href="#" className="underline">VKU.udn.vn</a></p>
+                        <p className="text-[16px] font-bold mt-8 text-center ">© 2024 Copyright: <a href="#" className="underline">VKU.udn.vn</a></p>
                     </div>
                 </section>
             </footer>

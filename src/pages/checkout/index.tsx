@@ -3,11 +3,14 @@ import InputField from "@/components/InputFieldProps";
 import PaymentMethod from "@/components/PaymentMethod";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
+import HeadImage from "@/components/HeadImage";
+import FeatureCard from "@/components/FeatureCard";
 
 const Checkout: React.FC = () => {
   return (
     <>
       <Header />
+      <HeadImage/>
       <div className="flex flex-col lg:flex-row p-6 space-y-6 lg:space-y-0 lg:space-x-8 max-w-5xl mx-auto">
         {/* Billing Details Section */}
         <div className="w-full lg:w-1/2 space-y-4">
@@ -85,6 +88,7 @@ const Checkout: React.FC = () => {
           </button>
         </div>
       </div>
+      <FeatureCard />
       <Footer />
     </>
   );
