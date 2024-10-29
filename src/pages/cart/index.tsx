@@ -14,7 +14,7 @@ const CartPage: React.FC = () => {
       name: "Asgaard sofa",
       price: 250.000,
       quantity: 1,
-      image: "",
+      image: "/assets/images/maskgroupcart.png",
     },
   ]);
   // nhận id và quantiny sp
