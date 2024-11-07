@@ -83,10 +83,10 @@ const HomePage = () => {
       </section>
       {/* our products */}
       <section className="container mx-auto p-4 items-center justify-between">
-        <h1 className="text-5xl font-bold mt-4 text-center items-center justify-center">
+        <h1 className="lg:text-5xl text-4xl font-bold mt-4 text-center items-center justify-center">
           Our Products
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -119,7 +119,7 @@ const HomePage = () => {
           </div>
 
           {/* Center column: image */}
-          <div className="w-full md:w-1/3 flex items-center justify-center relative overflow-hidden px-4">
+          <div className="w-full md:w-1/3 flex items-center justify-center relative overflow-hidden px-4 mt-4">
             <div className="flex-shrink-0">
               <Image
                 src={rooms[roomSelected].image}
@@ -162,8 +162,8 @@ const HomePage = () => {
           </div>
 
           {/* Right column: Carousel */}
-          <div className="w-full md:w-1/3 flex items-center justify-center px-4">
-            <Carousel />
+          <div className="w-full md:w-1/3 lg:flex hidden  items-center justify-center px-4">
+            <Carousel/>
           </div>
         </div>
       </section>

@@ -46,48 +46,51 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {/* Hover Image */}
           <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transiton-opacity duration-500">
             <button
-              className="bg-white text-[#B88E2F] py-2 px-4 font-semibold"
+              className="bg-white text-[#B88E2F] text-xs lg:text-sm lg:py-2 lg:px-4 py-2 px-3 font-semibold"
               onClick={onClick}
             >
               Add To Cart
             </button>
             <div className="flex space-x-2 text-white">
-              <button className="flex items-center space-x-2 mt-8 hover:text-[#e9bf5b]">
+              <button className="flex items-center lg:space-x-2 mt-8 hover:text-[#e9bf5b]">
                 <Image
                   src={"/assets/icons/gridicons_share.svg"}
                   width={16}
                   height={16}
                   alt=""
+                  className="hidden lg:block"
                 />
-                <p>Share</p>
+                <p >Share</p>
               </button>
-              <button className="flex items-center space-x-2 mt-8 hover:text-[#e9bf5b]">
+              <button className="flex items-center lg:space-x-2 mt-8 hover:text-[#e9bf5b]">
                 <Image
                   src={"/assets/icons/compare-svgrepo-com 1.svg"}
                   width={16}
                   height={16}
                   alt=""
+                  className="hidden lg:block"
                 />
-                <p>Compare</p>
+                <p className="" >Compare</p>
               </button>
-              <button className="flex items-center space-x-2 mt-8 hover:text-[#e9bf5b]">
+              <button className="flex items-center lg:space-x-2 mt-8 hover:text-[#e9bf5b]">
                 <Image
                   src={"/assets/icons/Heart.svg"}
                   width={16}
                   height={16}
                   alt=""
+                  className="hidden lg:block"
                 />
-                <p>Like</p>
+                <p >Like</p>
               </button>
             </div>
           </div>
         </div>
         <div className="bg-[#F4F5F7] mt-[-10px]">
           <div className="ml-5 p-2 mb-2">
-            <p className="text-[24px] font-semibold mt-2">{name}</p>
-            <p className="text-[16px] text-[#898989]">{type}</p>
+            <p className="lg:text-[24px] text-base font-semibold mt-2">{name}</p>
+            <p className="lg:text-[16px] text-sm text-[#898989]">{type}</p>
             <div className="flex items-center">
-              <p className="text-[20px] font-semibold text-[#3A3A3A]">
+              <p className="text-[20px] text-sm font-semibold text-[#3A3A3A]">
                 ${price}
               </p>
               <p className="ml-2 text-[16px] text-[#898989] line-through">
