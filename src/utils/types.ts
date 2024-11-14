@@ -16,3 +16,15 @@ export interface ICartItem {
   product: IProduct;
   quantity: number;
 }
+
+export interface IRegister {
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+}
+
+export interface ILogin {
+  email: string;
+  password: string;
+}
