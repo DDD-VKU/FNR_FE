@@ -1,20 +1,18 @@
 import { ILogin, IRegister } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { cookies } from "next/headers";
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.BASE_URL}auth`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}auth`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${cookies().get("token")?.value}`,
     },
   }),
   endpoints: (builder) => ({
     login: builder.mutation<any, ILogin>({
       query: (body) => ({
-        url: "/",
+        url: "/login",
         method: "POST",
         body,
       }),
@@ -30,4 +28,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;
