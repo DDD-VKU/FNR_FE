@@ -3,7 +3,7 @@ import Header from "@/pages/layouts/Header";
 import Button from '@mui/material/Button';
 import Image from "next/image";
 
-const LoginPage = () => {
+const SignupPage = () => {
     return (
         <>
             <Header />
@@ -27,11 +27,27 @@ const LoginPage = () => {
                             
                             {/* Right Section with Form */}
                             <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
-                                <h2 className="text-2xl font-semibold mb-6">Login to Exclusive </h2>
+                                <h2 className="text-2xl font-semibold mb-6">Create an account </h2>
                                 <p className="text-gray-600 mb-4">Enter your details below</p>
                                 <form className="space-y-4">
+                                     <div>
+                                        <label htmlFor="namne" className="text-sm font-medium text-gray-700">Name</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        />
+                                    </div>
                                     <div>
-                                        <label htmlFor="email" className="text-sm font-medium text-gray-700">Phone or Email</label>
+                                        <label htmlFor="email" className="text-sm font-medium text-gray-700">Phone</label>
+                                        <input
+                                            type="text"
+                                            id="email"
+                                            className="w-full mt-2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="text-sm font-medium text-gray-700">Email</label>
                                         <input
                                             type="text"
                                             id="email"
@@ -50,11 +66,17 @@ const LoginPage = () => {
                                         type="submit"
                                         className="w-full bg-red-500 text-white py-2 rounded-md mt-4 hover:bg-red-600 transition"
                                         >
-                                        Login
+                                        Create
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-white text-black py-2 border border-gray-300 rounded-md mt-4 hover:bg-red-600 transition"
+                                        >
+                                        Sign up with Google
                                     </button>
                                 </form>
                                 <div className="mt-4 text-center">
-                                    <p><a href="#" className="text-sm text-red-500 hover:underline">Forget a Password</a></p>
+                                    <p>Already have an account ? <a href="#" className="text-sm text-red-500 hover:underline">Login</a></p>
                                 </div>
                             </div>
                         </div>
@@ -66,4 +88,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default SignupPage;
