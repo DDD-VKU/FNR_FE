@@ -4,7 +4,7 @@ export async function getStaticProps() {
 }
 export type FormSubmit = FormEvent<HTMLFormElement>;
 export type InputChange = ChangeEvent<
-  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLSelectElement
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 >;
 // state
 export type AppState = {

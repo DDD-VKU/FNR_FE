@@ -32,25 +32,40 @@ const Header = () => {
 
           {/* Navbar PC */}
           <nav className="nav hidden md:flex space-x-6">
-            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/">
+            <Link
+              className="text-base font-semibold hover:text-yellow-500 duration-300"
+              href="/"
+            >
               Home
             </Link>
-            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/products">
+            <Link
+              className="text-base font-semibold hover:text-yellow-500 duration-300"
+              href="/products"
+            >
               Shop
             </Link>
-            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/blog">
+            <Link
+              className="text-base font-semibold hover:text-yellow-500 duration-300"
+              href="/blog"
+            >
               Blog
             </Link>
-            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/about">
+            <Link
+              className="text-base font-semibold hover:text-yellow-500 duration-300"
+              href="/about"
+            >
               About
             </Link>
-            <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/contact">
+            <Link
+              className="text-base font-semibold hover:text-yellow-500 duration-300"
+              href="/contact"
+            >
               Contact
             </Link>
           </nav>
 
           <div className="hidden sm:flex space-x-4">
-            <a href="">
+            <Link href="/account">
               <Image
                 src={"/assets/icons/mdi_account-alert-outline.svg"}
                 width={28}
@@ -58,8 +73,8 @@ const Header = () => {
                 unoptimized
                 alt="account"
               />
-            </a>
-            <a href="">
+            </Link>
+            <Link href="">
               <Image
                 src={"/assets/icons/akar-icons_search.svg"}
                 width={28}
@@ -67,8 +82,8 @@ const Header = () => {
                 unoptimized
                 alt="search"
               />
-            </a>
-            <a href="">
+            </Link>
+            <Link href="/wishlist">
               <Image
                 src={"/assets/icons/akar-icons_heart.svg"}
                 width={28}
@@ -76,8 +91,8 @@ const Header = () => {
                 unoptimized
                 alt="wishlist"
               />
-            </a>
-            <a href="">
+            </Link>
+            <Link href="/cart">
               <Image
                 src={"/assets/icons/ant-design_shopping-cart-outlined.svg"}
                 width={28}
@@ -85,7 +100,7 @@ const Header = () => {
                 unoptimized
                 alt="cart"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Navbar Mobile Button */}
@@ -114,30 +129,48 @@ const Header = () => {
 
           {/* Navbar Mobile */}
           <nav className="fixed top-0 right-0 w-3/4 h-full bg-white bg-opacity-60 shadow-lg z-50">
-            <button onClick={toggleMobileNav} className="text-2xl mb-5 float-right text-white p-4">
+            <button
+              onClick={toggleMobileNav}
+              className="text-2xl mb-5 float-right text-white p-4"
+            >
               ✕
             </button>
             <div className="text-2xl font-bold bg-yellow-500 text-white w-full p-4">
-                Furino
-              </div>
+              Furino
+            </div>
             <div className="flex flex-col space-y-3 p-4 text-white">
-              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/">
+              <Link
+                className="text-base font-semibold hover:text-yellow-500 duration-300"
+                href="/"
+              >
                 Home
               </Link>
               <hr />
-              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/products">
+              <Link
+                className="text-base font-semibold hover:text-yellow-500 duration-300"
+                href="/products"
+              >
                 Shop
               </Link>
               <hr />
-              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/blog">
+              <Link
+                className="text-base font-semibold hover:text-yellow-500 duration-300"
+                href="/blog"
+              >
                 Blog
               </Link>
               <hr />
-              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/about">
+              <Link
+                className="text-base font-semibold hover:text-yellow-500 duration-300"
+                href="/about"
+              >
                 About
               </Link>
               <hr />
-              <Link className="text-base font-semibold hover:text-yellow-500 duration-300" href="/contact">
+              <Link
+                className="text-base font-semibold hover:text-yellow-500 duration-300"
+                href="/contact"
+              >
                 Contact
               </Link>
               <hr className="bg-slate-400" />

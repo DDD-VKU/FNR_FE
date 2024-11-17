@@ -1,9 +1,12 @@
 import Cart from "@/components/Cart";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import HeadImage from "@/components/HeadImage";
 import FeatureCard from "@/components/FeatureCard";
+import { useSelector } from "react-redux";
+import { AppState } from "@/utils/types";
+import Router from "next/router";
 
 // ví dụ 1sp
 const CartPage: React.FC = () => {
@@ -31,6 +34,14 @@ const CartPage: React.FC = () => {
   const handleCheckout = () => {
     console.log("Proceeding to checkout...");
   };
+  const auth = useSelector((state: AppState) => state.auth);
+
+  useEffect(() => {
+    console.log(auth);
+    if (!auth.isAuthenticated) {
+      Router.push("/auth/login");
+    }
+  }, [auth.isAuthenticated]);
 
   return (
     <>
