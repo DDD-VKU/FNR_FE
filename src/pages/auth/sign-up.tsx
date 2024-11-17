@@ -136,7 +136,9 @@ const SignupPage = () => {
                     />
                   </div>
                   <div>
-                    <input
+                      <TextField
+                      required
+                      label="Password"
                       type="password"
                       id="password"
                       name="password"

@@ -1,6 +1,6 @@
 import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
-import { Input } from "@mui/material";
+import { Input, TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import Image from "next/image";
 import HttpsIcon from '@mui/icons-material/Https';
@@ -70,14 +70,15 @@ const LoginPage = () => {
                                 <p className="text-gray-600 mb-4">Enter your details below</p>
                                 <form className="space-y-4" onSubmit={handleSubmit}>
                                     <div className="relative">
-                                        <label htmlFor="email" className="text-sm font-medium text-gray-700">Phone or Email</label>
-                                        <Input
+                                        <TextField
+                                            required
+                                            label="Email"
                                             type="text"
                                             id="email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            error={!!emailError}
-                                            className="w-full mt-2 p-2 border border-white rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                            error={!!emailError} 
+                                            className="w-full mt-2 p-2 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                         />
                                         <div className="absolute top-1/2 right-3 transform -translate-y-1/2">
                                             <AccountCircleOutlinedIcon fontSize="large"/>
@@ -85,8 +86,9 @@ const LoginPage = () => {
                                         {emailError&&<p className="text-red-500 text-sm mt-1">{emailError}</p> }
                                     </div>
                                     <div className="relative">
-                                        <label htmlFor="password" className="text-sm font-medium text-gray-700">Password</label>
-                                        <Input
+                                        <TextField
+                                            required
+                                            label="Password"
                                             type="password"
                                             value={password}
                                             error={!!passwordError}
@@ -94,9 +96,6 @@ const LoginPage = () => {
                                             id="password"
                                             className="w-full mt-2 p-2 border border-white rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                         />
-                                        <div className="absolute top-1/2 right-3 transform -translate-y-1/2">
-                                            <LockOutlinedIcon fontSize="large"/>
-                                        </div>
                                         {passwordError&&<p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                                     </div>
                                     <Button
