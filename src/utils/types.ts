@@ -52,3 +52,7 @@ export interface ILogin {
   email: string;
   password: string;
 }
+
+export interface IProduct {
+  name: string;
+}
