@@ -7,22 +7,25 @@ import Footer from "../layouts/Footer";
 import FeatureCard from "@/components/FeatureCard";
 import HeadImage from "@/components/HeadImage";
 import { useGetProductsQuery } from "@/redux/api/productAPI";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { IProduct } from "@/utils/types";
 
 const ProductPage = () => {
   const productsRespon = useGetProductsQuery({});
+  const [products, setProducts] = useState<IProduct[]>([]);
+
   useEffect(() => {
-    console.log(productsRespon.data);
-  });
-  const products = Array.from({ length: 16 }, (_, i) => ({
-    id: i,
-    name: `Product ${i + 1}`,
-    type: "Sample Type",
-    image: `/assets/images/products.png`,
-    price: 100 + i * 10,
-    discount_percent: 10 + i,
-    price_before_discount: 150 + i * 10,
-  }));
+    setProducts(productsRespon.data);
+  }, [productsRespon.data]);
+  // const products = Array.from({ length: 16 }, (_, i) => ({
+  //   id: i,
+  //   name: `Product ${i + 1}`,
+  //   type: "Sample Type",
+  //   image: `/assets/images/products.png`,
+  //   price: 100 + i * 10,
+  //   discount_percent: 10 + i,
+  //   price_before_discount: 150 + i * 10,
+  // }));
 
   return (
     <>
@@ -96,7 +99,7 @@ const ProductPage = () => {
       {/* Products */}
       <section className="container mx-auto p-4 items-center justify-between">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-          {products.map((product) => (
+          {/* {products.map((product) => (
             <ProductCard
               key={product.id}
               name={product.name}
@@ -106,7 +109,7 @@ const ProductPage = () => {
               discount_percent={product.discount_percent}
               price_before_discount={product.price_before_discount}
             />
-          ))}
+          ))} */}
         </div>
       </section>
       {/* phân trang */}
