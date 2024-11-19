@@ -40,21 +40,21 @@ const SignupPage = () => {
   const handleOnSubmit = (e: FormSubmit) => {
     e.preventDefault();
     setLoading(true);
-    if (!validateForm()) {
-      toast.error("Please fill all the fields");
-      setLoading(false);
-      return;
-    }
+    // if (!validateForm()) {
+    //   toast.error("Please fill all the fields");
+    //   setLoading(false);
+    //   return;
+    // }
     setTimeout(() => {
       registerResponse(registerParams)
         .unwrap()
-        .then((payload) => {
-          if (payload.status != 200) {
-            toast.error(payload.message);
+        .then((data) => {
+          if (data.status != 200) {
+            toast.error(data.message);
           }
-          if (payload.status == 200) {
-            Cookies.set("token", payload.data.access_token);
-            toast.success(payload.message);
+          if (data.status == 200) {
+            Cookies.set("token", data.data.access_token);
+            toast.success(data.message);
           }
         })
         .catch((error) => {

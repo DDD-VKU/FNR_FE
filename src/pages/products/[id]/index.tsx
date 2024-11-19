@@ -13,8 +13,9 @@ const ProductDetail = () => {
   const [activeTab, setActiveTab] = useState("description");
   const productResponse = useGetProductsByIdQuery(id);
   const [product, setProduct] = useState<IProduct>();
+  
   useEffect(() => {
-    setProduct(productResponse.data);
+    setProduct(productResponse.data?.data);
   }, [productResponse.data]);
   const products = Array.from({ length: 4 }, (_, i) => ({
     id: i,
@@ -124,7 +125,7 @@ const ProductDetail = () => {
           {/* Detail Part */}
           <div className="lg:w-1/2 space-y-6">
             <h1 className="font-bold text-[42px]">{product?.name}</h1>
-            <p className="text-[#9F9F9F] text-[24px]">Rs. 1,00,000</p>
+            <p className="text-[#9F9F9F] text-[24px]">{product?.price}</p>
 
             <div className="flex items-center space-x-2">
               <div className="text-yellow-500 text-xl">★ ★ ★ ★ ★</div>
@@ -133,10 +134,7 @@ const ProductDetail = () => {
             </div>
 
             <p>
-              Setting the bar as one of the loudest speakers in its class, the
-              Kilburn is a compact, stout-hearted hero with a well-balanced
-              audio which boasts a clear midrange and extended highs for a
-              sound.
+              {product?.description}
             </p>
 
             {/* Size Selector */}
