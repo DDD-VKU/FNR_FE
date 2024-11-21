@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent } from "react";
 export async function getStaticProps() {
-  const baseUrl = process.env.BASE_URL;
-}
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  }
 export type FormSubmit = FormEvent<HTMLFormElement>;
 export type InputChange = ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 >;
 // state
+
 export type AppState = {
   auth: IAuthState;
   cart: ICart;
@@ -53,6 +54,26 @@ export interface ILogin {
   password: string;
 }
 
-export interface IProduct {
-  name: string;
+export interface IProductItem {
+  id: number; 
+  name: string; 
+  type: string; 
+  image: string; 
+  products_prices: IProductPrice;
+  created_at: string
+}
+
+export interface IProductPrice {
+  price: number;
+  sale_percent: number;
+}
+
+export interface IProductDuiDui {
+  id: number; 
+  name: string; 
+  type: string; 
+  image: string;
+  price : number;
+  sale_percent: number;
+  created_at: string
 }

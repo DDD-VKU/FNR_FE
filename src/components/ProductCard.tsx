@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { formatPrice } from "@/utils/appUtils";
 import Image from "next/image";
 
 interface ProductCardProps {
@@ -88,10 +89,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <p className="text-[16px] text-[#898989]">{type}</p>
             <div className="flex items-center">
               <p className="text-[20px] font-semibold text-[#3A3A3A]">
-                ${price}
+                ${formatPrice(price)}
               </p>
               <p className="ml-2 text-[16px] text-[#898989] line-through">
-                ${price_before_discount}
+                ${formatPrice(price_before_discount)}
               </p>
             </div>
           </div>
