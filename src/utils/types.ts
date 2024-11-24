@@ -1,7 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
-export async function getStaticProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-}
+
 export type FormSubmit = FormEvent<HTMLFormElement>;
 export type InputChange = ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -29,11 +27,30 @@ export interface ICart {
 }
 
 export interface IProduct {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   price: number;
-  images?: string[];
+  products_images: IImage;
+  categories: ICategories;
+  SKU?: string;
+  products_details?: IProductDetail;
+  tags: string[];
+}
+export interface IImage {
+  id: string;
+  images: string[];
+}
+export interface ICategories {
+  id: string;
+  name: string;
+  //   sku?: string;
+}
+
+export interface IProductDetail {
+  id: string;
+  sort_description: string;
+  long_description: string;
 }
 
 export interface ICartItem {
@@ -51,8 +68,4 @@ export interface IRegister {
 export interface ILogin {
   email: string;
   password: string;
-}
-
-export interface IProduct {
-  name: string;
 }
