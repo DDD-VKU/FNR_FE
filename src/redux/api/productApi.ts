@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { get } from "http";
 
 export const productApi = createApi({
   reducerPath: "productApi",
@@ -22,8 +23,18 @@ export const productApi = createApi({
         method: "GET",
       }),
     }),
+    getProductsByCategory: builder.query<any, any>({
+      query: (category) => ({
+        url: `/category/${category}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {} = productApi;
-export const { useGetProductsQuery, useGetProductsByIdQuery } = productApi;
+export const {
+  useGetProductsQuery,
+  useGetProductsByIdQuery,
+  useGetProductsByCategoryQuery,
+} = productApi;

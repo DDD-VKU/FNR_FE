@@ -16,6 +16,8 @@ const ProductDetail = () => {
   useEffect(() => {
     setProduct(productResponse.data);
   }, [productResponse.data]);
+
+  
   const products = Array.from({ length: 4 }, (_, i) => ({
     id: i,
     name: `Product ${i + 1}`,
