@@ -334,7 +334,7 @@ const ProductDetail = () => {
               key={relatedProducts.id}
               name={relatedProducts.name}
               type={relatedProducts.categories.name}
-              image={relatedProducts.product_images.image[0]}
+              image={relatedProducts.IProduct.}
               price={relatedProducts.price}
               discount_percent={0}
               price_before_discount={0}
