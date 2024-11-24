@@ -6,6 +6,7 @@ import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useGetProductsByIdQuery } from "@/redux/api/productAPI";
+import { useGetProductsByCategoryQuery } from "@/redux/api/productAPI";
 import { IProduct } from "@/utils/types";
 const ProductDetail = () => {
   const id = useRouter().query.id;
@@ -13,20 +14,24 @@ const ProductDetail = () => {
   const [activeTab, setActiveTab] = useState("description");
   const productResponse = useGetProductsByIdQuery(id);
   const [product, setProduct] = useState<IProduct>();
+
+  const relatedProductResponse = useGetProductsByCategoryQuery(product?.category?.id);
+  const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
+
   useEffect(() => {
     setProduct(productResponse.data);
   }, [productResponse.data]);
 
   
-  const products = Array.from({ length: 4 }, (_, i) => ({
-    id: i,
-    name: `Product ${i + 1}`,
-    type: "Sample Type",
-    image: `/assets/images/products.png`,
-    price: 100 + i * 10,
-    discount_percent: 10 + i,
-    price_before_discount: 150 + i * 10,
-  }));
+  // const products = Array.from({ length: 4 }, (_, i) => ({
+  //   id: i,
+  //   name: `Product ${i + 1}`,
+  //   type: "Sample Type",
+  //   image: `/assets/images/products.png`,
+  //   price: 100 + i * 10,
+  //   discount_percent: 10 + i,
+  //   price_before_discount: 150 + i * 10,
+  // }));
   return (
     <>
       <Header />
@@ -324,15 +329,15 @@ const ProductDetail = () => {
           Related Products
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-          {products.map((product) => (
+          {relatedProducts.map((relatedProducts: IProduct) => (
             <ProductCard
-              key={product.id}
-              name={product.name}
-              type={product.type}
-              image={product.image}
-              price={product.price}
-              discount_percent={product.discount_percent}
-              price_before_discount={product.price_before_discount}
+              key={relatedProducts.id}
+              name={relatedProducts.name}
+              type={relatedProducts.categories.name}
+              image={relatedProducts.product_images.image[0]}
+              price={relatedProducts.price}
+              discount_percent={0}
+              price_before_discount={0}
             />
           ))}
         </div>
