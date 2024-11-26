@@ -5,7 +5,7 @@ import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useGetProductsByIdQuery } from "@/redux/api/productAPI";
+import { useGetProductsByIdQuery } from "@/redux/api/productApi";
 import { IProduct } from "@/utils/types";
 const ProductDetail = () => {
   const id = useRouter().query.id;

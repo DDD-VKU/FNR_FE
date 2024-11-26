@@ -6,7 +6,7 @@ import Image from "next/image";
 import Footer from "../layouts/Footer";
 import FeatureCard from "@/components/FeatureCard";
 import HeadImage from "@/components/HeadImage";
-import { useGetProductsQuery } from "@/redux/api/productAPI";
+import { useGetProductsQuery } from "@/redux/api/productApi";
 import { useEffect, useState } from "react";
 import { IProduct } from "@/utils/types";
 
