@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent } from "react";
 export async function getStaticProps() {
-  const baseUrl = process.env.BASE_URL;
-}
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  }
 export type FormSubmit = FormEvent<HTMLFormElement>;
 export type InputChange = ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 >;
 // state
+
 export type AppState = {
   auth: IAuthState;
   cart: ICart;
@@ -53,6 +54,66 @@ export interface ILogin {
   password: string;
 }
 
-export interface IProduct {
+export interface IProductItem {
+  id: number; 
+  name: string; 
+  type: string; 
+  image: string; 
+  products_prices: IProductPrice;
+  created_at: string
+}
+
+export interface IProductPrice {
+  price: number;
+  sale_percent: number;
+}
+
+export interface IProductInShop {
+  id: number; 
+  name: string; 
+  type: string; 
+  image: string;
+  price : number;
+  sale_percent: number;
+  created_at: string
+}
+export interface IProductBase {
+  id: number;
   name: string;
+  price: number;
+  image: string;
+  rating: number;
+  reviews: number;
+}
+
+export interface IProductCompare extends IProductBase {
+  general: {
+    sales_package: string;
+    model_number: string;
+    secondary_material: string;
+    configuration: string;
+    upholstery_material: string;
+    upholstery_color: string;
+  };
+  
+  dimensions: {
+    width: string;
+    height: string;
+    depth: string;
+    weight: string;
+    seat_height: string;
+    leg_height: string;
+  };
+  
+  warranty: {
+    summary: string;
+    service_type: string;
+    covered_items: string;
+    excluded_items: string;
+    domestic_warranty: string;
+  };
+}
+
+export interface IComparePageProps {
+  products: IProductCompare[];
 }

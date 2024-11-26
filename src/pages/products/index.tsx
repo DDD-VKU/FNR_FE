@@ -8,25 +8,54 @@ import FeatureCard from "@/components/FeatureCard";
 import HeadImage from "@/components/HeadImage";
 import { useGetProductsQuery } from "@/redux/api/productApi";
 import { useEffect, useState } from "react";
-import { IProduct } from "@/utils/types";
+import { IProductInShop, IProductItem } from "@/utils/types";
 
 const ProductPage = () => {
-  const productsRespon = useGetProductsQuery({});
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const {
+    data: productsResponse,
+    isLoading,
+    isError,
+  } = useGetProductsQuery({});
+  const [products, setProducts] = useState<IProductInShop[]>([]);
+  const [page, setPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(8);
 
+  // Cập nhật danh sách sản phẩm khi nhận từ API
   useEffect(() => {
-    setProducts(productsRespon.data);
-  }, [productsRespon.data]);
-  // const products = Array.from({ length: 16 }, (_, i) => ({
-  //   id: i,
-  //   name: `Product ${i + 1}`,
-  //   type: "Sample Type",
-  //   image: `/assets/images/products.png`,
-  //   price: 100 + i * 10,
-  //   discount_percent: 10 + i,
-  //   price_before_discount: 150 + i * 10,
-  // }));
+    if (productsResponse) {
+      setProducts(productsResponse.data || []);
+    }
+  }, [productsResponse]);
 
+  //  Tính toán sản phẩm hiển thị theo trang
+  const indexOfLastProduct = page * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+  // Hàm kiểm tra là sản phẩm mới
+  function isNewProduct(created_at: string): boolean {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(
+      currentDate.setDate(currentDate.getDate() - 7)
+    );
+
+    const productDate = new Date(created_at);
+    return productDate > sevenDaysAgo;
+  }
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+  };
+
+  // Hiển thị trạng thái tải và lỗi
+  if (isLoading) return <div>Loading products...</div>;
+  if (isError)
+    return <div>Error loading products. Please try again later.</div>;
   return (
     <>
       <Header />
@@ -71,13 +100,17 @@ const ProductPage = () => {
           </div>
 
           <div className="text-gray-500 text-center lg:text-left">
-            Showing 1-16 of 32 results
+            {/* Showing {currentProducts.length} of {products.length} products */}
           </div>
 
           <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <div className="flex items-center space-x-2">
               <span>Show</span>
-              <select className="border border-gray-300 rounded p-2">
+              <select
+                className="border border-gray-300 rounded p-2"
+                value={productsPerPage}
+                onChange={(e) => setProductsPerPage(Number(e.target.value))}
+              >
                 <option value="16">16</option>
                 <option value="32">32</option>
                 <option value="64">64</option>
@@ -99,26 +132,40 @@ const ProductPage = () => {
       {/* Products */}
       <section className="container mx-auto p-4 items-center justify-between">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-          {/* {products.map((product) => (
+          {currentProducts.map((product) => (
             <ProductCard
               key={product.id}
               name={product.name}
               type={product.type}
               image={product.image}
-              price={product.price}
-              discount_percent={product.discount_percent}
-              price_before_discount={product.price_before_discount}
+              price={product.price * (1 - product.sale_percent / 100)}
+              discount_percent={product.sale_percent}
+              price_before_discount={product.price}
+              is_new_product={isNewProduct(product.created_at)}
             />
-          ))} */}
+          ))}
         </div>
       </section>
-      {/* phân trang */}
+      {/* phân trang
       <section className="flex justify-center items-center mt-12 mb-16">
         <div className="App">
           <Stack spacing={2}>
             <Pagination count={10} variant="outlined" shape="rounded" />
           </Stack>
         </div>
+      </section> */}
+
+      {/* phân trang */}
+      <section className="flex justify-center items-center mt-12 mb-16">
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(products.length / productsPerPage)}
+            page={page}
+            onChange={handlePageChange}
+            variant="outlined"
+            shape="rounded"
+          />
+        </Stack>
       </section>
 
       <FeatureCard />

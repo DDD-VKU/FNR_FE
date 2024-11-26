@@ -5,16 +5,21 @@ import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useGetProductsByIdQuery } from "@/redux/api/productApi";
 import { IProduct } from "@/utils/types";
+import {
+  useGetProductByCategoryIdQuery,
+  useGetProductsByIdQuery,
+} from "@/redux/api/productApi";
 const ProductDetail = () => {
   const id = useRouter().query.id;
 
   const [activeTab, setActiveTab] = useState("description");
   const productResponse = useGetProductsByIdQuery(id);
   const [product, setProduct] = useState<IProduct>();
+  const category = useGetProductByCategoryIdQuery(14);
   useEffect(() => {
     setProduct(productResponse.data);
+    console.log(category.data);
   }, [productResponse.data]);
   const products = Array.from({ length: 4 }, (_, i) => ({
     id: i,
