@@ -6,13 +6,13 @@ import Image from "next/image";
 import Footer from "../layouts/Footer";
 import FeatureCard from "@/components/FeatureCard";
 import HeadImage from "@/components/HeadImage";
-import { useGetProductsQuery } from "@/redux/api/productAPI";
 import { useEffect, useState } from "react";
-import { IProductDuiDui, IProductItem} from "@/utils/types";
+import {  IProductInShop, IProductItem} from "@/utils/types";
+import { useGetProductsQuery } from "@/redux/api/productApi";
 
 const ProductPage = () => {
  const { data: productsResponse, isLoading, isError } = useGetProductsQuery({});
- const [products, setProducts] = useState<IProductDuiDui[]>([]);
+ const [products, setProducts] = useState<IProductInShop[]>([]);
  const [page, setPage] = useState(1);
  const [productsPerPage, setProductsPerPage] = useState(8);
 

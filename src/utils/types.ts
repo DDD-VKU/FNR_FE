@@ -68,7 +68,7 @@ export interface IProductPrice {
   sale_percent: number;
 }
 
-export interface IProductDuiDui {
+export interface IProductInShop {
   id: number; 
   name: string; 
   type: string; 
@@ -76,4 +76,44 @@ export interface IProductDuiDui {
   price : number;
   sale_percent: number;
   created_at: string
+}
+export interface IProductBase {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  rating: number;
+  reviews: number;
+}
+
+export interface IProductCompare extends IProductBase {
+  general: {
+    sales_package: string;
+    model_number: string;
+    secondary_material: string;
+    configuration: string;
+    upholstery_material: string;
+    upholstery_color: string;
+  };
+  
+  dimensions: {
+    width: string;
+    height: string;
+    depth: string;
+    weight: string;
+    seat_height: string;
+    leg_height: string;
+  };
+  
+  warranty: {
+    summary: string;
+    service_type: string;
+    covered_items: string;
+    excluded_items: string;
+    domestic_warranty: string;
+  };
+}
+
+export interface IComparePageProps {
+  products: IProductCompare[];
 }
