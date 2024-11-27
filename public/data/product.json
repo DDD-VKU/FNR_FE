@@ -1,0 +1,161 @@
+[
+    {
+        "name": "Luxe Velvet L-Shaped Sofa",
+        "description": "A luxurious velvet L-shaped sofa designed for premium comfort and elegance. Available in Emerald Green and Sapphire Blue colors.",
+        "SKU": "LUXE-SOFA-L456",
+        "tags": [
+            "furniture",
+            "sofa",
+            "luxury",
+            "living room"
+        ],
+        "details": {
+            "long_description": "The Luxe Velvet L-Shaped Sofa offers unmatched comfort and a rich, elegant aesthetic. Upholstered in plush velvet with a sturdy solid wood frame, this sofa is a stunning centerpiece for any living room. Its deep seat cushions and high-density foam provide exceptional support for relaxation and entertaining.",
+            "sort_description": "Premium velvet L-shaped sofa, ideal for luxurious living spaces.",
+            "general": {
+                "sales_package": "1 sectional sofa.",
+                "model_number": "VEL456-LUX.",
+                "secondary_material": "Solid wood.",
+                "configuration": "L-shaped.",
+                "upholstery_material": "Velvet.",
+                "upholstery_color": "Emerald Green & Sapphire Blue."
+            },
+            "product": {
+                "filling_material": "High-density foam.",
+                "finish_type": "Matte finish.",
+                "adjustable_headrest": "No.",
+                "maximum_load_capacity": "300 KG.",
+                "origin_of_manufacture": "India."
+            },
+            "dimensions": {
+                "width": 290.0,
+                "height": 90.0,
+                "depth": 185.0,
+                "weight": 65.0,
+                "seat_height": 50.0,
+                "leg_height": 12.0
+            },
+            "warranty": {
+                "covered_in_warranty": "Manufacturing defects.",
+                "not_covered_in_warranty": "Wear and tear due to misuse.",
+                "domestic_warranty": "2 Years."
+            }
+        },
+        "prices": {
+            "price": 750.0,
+            "sale_percent": 15
+        },
+        "product_images": {
+            "images": [
+                "https://example.com/images/sofa1.jpg",
+                "https://example.com/images/sofa1-2.jpg"
+            ]
+        }
+    },
+    {
+        "name": "Modern Fabric L-Shaped Sofa",
+        "description": "A modern fabric sofa designed for functional living spaces. Available in Neutral Beige and Charcoal Grey.",
+        "SKU": "MODERN-SOFA-F789",
+        "tags": [
+            "furniture",
+            "sofa",
+            "modern",
+            "living room"
+        ],
+        "details": {
+            "long_description": "The Modern Fabric L-Shaped Sofa blends contemporary design with everyday functionality. Crafted with durable fabric and a robust wooden frame, it suits both casual and formal settings. Perfect for accommodating large gatherings or relaxing evenings.",
+            "sort_description": "Contemporary L-shaped sofa with durable fabric upholstery.",
+            "general": {
+                "sales_package": "1 sectional sofa.",
+                "model_number": "FAB789-MOD.",
+                "secondary_material": "Engineered wood.",
+                "configuration": "L-shaped.",
+                "upholstery_material": "Fabric.",
+                "upholstery_color": "Neutral Beige & Charcoal Grey."
+            },
+            "product": {
+                "filling_material": "Foam + Fiber.",
+                "finish_type": "Matte finish.",
+                "adjustable_headrest": "Yes.",
+                "maximum_load_capacity": "350 KG.",
+                "origin_of_manufacture": "India."
+            },
+            "dimensions": {
+                "width": 280.0,
+                "height": 85.0,
+                "depth": 180.0,
+                "weight": 70.0,
+                "seat_height": 45.0,
+                "leg_height": 15.0
+            },
+            "warranty": {
+                "covered_in_warranty": "Defects in materials.",
+                "not_covered_in_warranty": "Damage due to misuse.",
+                "domestic_warranty": "1 Year."
+            }
+        },
+        "prices": {
+            "price": 600.0,
+            "sale_percent": 10
+        },
+        "product_images": {
+            "images": [
+                "https://example.com/images/sofa2.jpg",
+                "https://example.com/images/sofa2-2.jpg"
+            ]
+        }
+    },
+    {
+        "name": "Scandinavian Minimalist Sofa",
+        "description": "A sleek Scandinavian-inspired L-shaped sofa with light tones and a minimalist design.",
+        "SKU": "SCAN-SOFA-M321",
+        "tags": [
+            "furniture",
+            "sofa",
+            "Scandinavian",
+            "minimalist"
+        ],
+        "details": {
+            "long_description": "The Scandinavian Minimalist Sofa embodies simplicity and elegance. Its clean lines and light wood accents make it a perfect addition to Nordic-style interiors. Crafted with soft fabric and firm cushions, it provides both style and comfort.",
+            "sort_description": "Minimalist L-shaped sofa with Scandinavian design.",
+            "general": {
+                "sales_package": "1 sectional sofa.",
+                "model_number": "MIN321-SCAN.",
+                "secondary_material": "Pine wood.",
+                "configuration": "L-shaped.",
+                "upholstery_material": "Fabric.",
+                "upholstery_color": "Light Grey & Off-White."
+            },
+            "product": {
+                "filling_material": "Foam + Cotton.",
+                "finish_type": "Natural wood finish.",
+                "adjustable_headrest": "No.",
+                "maximum_load_capacity": "300 KG.",
+                "origin_of_manufacture": "Denmark."
+            },
+            "dimensions": {
+                "width": 275.0,
+                "height": 80.0,
+                "depth": 175.0,
+                "weight": 55.0,
+                "seat_height": 48.0,
+                "leg_height": 18.0
+            },
+            "warranty": {
+                "covered_in_warranty": "Material defects.",
+                "not_covered_in_warranty": "Misuse or mishandling.",
+                "domestic_warranty": "3 Years."
+            }
+        },
+        "prices": {
+            "price": 700.0,
+            "sale_percent": 20
+        },
+        "product_images": {
+            "images": [
+                "https://example.com/images/sofa3.jpg",
+                "https://example.com/images/sofa3-2.jpg"
+            ]
+        }
+    }
+]

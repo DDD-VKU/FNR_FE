@@ -9,6 +9,8 @@ import HeadImage from "@/components/HeadImage";
 import { useGetProductsQuery } from "@/redux/api/productApi";
 import { useEffect, useState } from "react";
 import { IProductInShop, IProductItem } from "@/utils/types";
+import Loading from "@/components/Loading";
+import { useRouter } from "next/router";
 
 const ProductPage = () => {
   const {
@@ -52,8 +54,7 @@ const ProductPage = () => {
     setPage(value);
   };
 
-  // Hiển thị trạng thái tải và lỗi
-  if (isLoading) return <div>Loading products...</div>;
+  if (isLoading) return <Loading />;
   if (isError)
     return <div>Error loading products. Please try again later.</div>;
   return (
@@ -134,6 +135,7 @@ const ProductPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {currentProducts.map((product) => (
             <ProductCard
+              id={product.id}
               key={product.id}
               name={product.name}
               type={product.type}

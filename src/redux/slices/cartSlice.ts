@@ -29,7 +29,7 @@ const cartSlice = createSlice({
       );
     },
 
-    INCREMENT_CART: (state, action: PayloadAction<string>) => {
+    INCREMENT_CART: (state, action: PayloadAction<number>) => {
       const item = state.items.find(
         (item) => item.product._id === action.payload
       );
@@ -37,7 +37,7 @@ const cartSlice = createSlice({
         item.quantity += 1;
       }
     },
-    DECREMENT_CART: (state, action: PayloadAction<string>) => {
+    DECREMENT_CART: (state, action: PayloadAction<number>) => {
       const item = state.items.find(
         (item) => item.product._id === action.payload
       );

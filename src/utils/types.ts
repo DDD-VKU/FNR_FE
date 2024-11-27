@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent } from "react";
 export async function getStaticProps() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-  }
+}
 export type FormSubmit = FormEvent<HTMLFormElement>;
 export type InputChange = ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -30,7 +30,7 @@ export interface ICart {
 }
 
 export interface IProduct {
-  _id: string;
+  _id: number;
   name: string;
   description?: string;
   price: number;
@@ -55,12 +55,12 @@ export interface ILogin {
 }
 
 export interface IProductItem {
-  id: number; 
-  name: string; 
-  type: string; 
-  image: string; 
-  products_prices: IProductPrice;
-  created_at: string
+  _id: number;
+  name?: string;
+  type?: string;
+  image?: string;
+  price: IProductPrice;
+  created_at: string;
 }
 
 export interface IProductPrice {
@@ -69,13 +69,13 @@ export interface IProductPrice {
 }
 
 export interface IProductInShop {
-  id: number; 
-  name: string; 
-  type: string; 
+  id: number;
+  name: string;
+  type: string;
   image: string;
-  price : number;
+  price: number;
   sale_percent: number;
-  created_at: string
+  created_at: string;
 }
 export interface IProductBase {
   id: number;
@@ -95,7 +95,7 @@ export interface IProductCompare extends IProductBase {
     upholstery_material: string;
     upholstery_color: string;
   };
-  
+
   dimensions: {
     width: string;
     height: string;
@@ -104,7 +104,7 @@ export interface IProductCompare extends IProductBase {
     seat_height: string;
     leg_height: string;
   };
-  
+
   warranty: {
     summary: string;
     service_type: string;
