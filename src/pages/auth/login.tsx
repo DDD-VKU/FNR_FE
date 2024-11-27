@@ -70,6 +70,7 @@ const LoginPage = () => {
                 isAuthenticated: true,
               })
             );
+            // Go to homepage
             Router.push("/");
           } else {
             toast.error(res.message);

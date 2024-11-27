@@ -5,22 +5,28 @@ import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useGetProductsByIdQuery } from "@/redux/api/productAPI";
 import { IProduct } from "@/utils/types";
-import {
-  useGetProductByCategoryIdQuery,
-  useGetProductsByIdQuery,
-} from "@/redux/api/productApi";
+// import { ICategories} from "@/utils/types";
 const ProductDetail = () => {
   const id = useRouter().query.id;
 
   const [activeTab, setActiveTab] = useState("description");
   const productResponse = useGetProductsByIdQuery(id);
   const [product, setProduct] = useState<IProduct>();
-  const category = useGetProductByCategoryIdQuery(14);
+  const [mainImage, setMainImage] = useState<string>("");
+
   useEffect(() => {
-    setProduct(productResponse.data);
-    console.log(category.data);
+    setProduct(productResponse.data?.data);
   }, [productResponse.data]);
+
+  useEffect(() => {
+    if (productResponse.data?.data) {
+      setProduct(productResponse.data?.data);
+      setMainImage(productResponse.data?.data.products_images.images[0]); //mainImage = index[0]
+    }
+  }, [productResponse.data]);
+
   const products = Array.from({ length: 4 }, (_, i) => ({
     id: i,
     name: `Product ${i + 1}`,
@@ -40,96 +46,153 @@ const ProductDetail = () => {
 
         {/* Main Container */}
         <div className="flex flex-col lg:flex-row items-start gap-12 p-6 mt-5">
-          {/* Image Part */}
+          {/* Image Part in PC*/}
           <div className="flex flex-col items-center lg:w-1/2">
-            <div className="flex">
-              <div className="lg:w-1/5 hidden md:grid space-x-4 space-y-4 mr-12">
+            <div className="grid grid-cols-5 gap-4">
+              <div className="hidden md:grid col-span-1 space-y-4">
+                {/* Thumbnail Images */}
                 <Image
-                  src={"/assets/images/group95.png"}
+                  src={product?.products_images.images[1]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[1])
+                  }
                 />
                 <Image
-                  src={"/assets/images/group96.png"}
+                  src={product?.products_images.images[2]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[2])
+                  }
                 />
                 <Image
-                  src={"/assets/images/group97.png"}
+                  src={product?.products_images.images[3]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[3])
+                  }
                 />
                 <Image
-                  src={"/assets/images/group98.png"}
+                  src={product?.products_images.images[4]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[4])
+                  }
                 />
               </div>
               {/* Main Image */}
-              <div className="flex-1 flex justify-center items-center lg:w-4/5 h-[500px] rounded-lg  bg-[#F9F1E7]">
+              <div className="col-span-4 fle hidden md:flex justify-center items-center rounded-lg  bg-[#F9F1E7]">
                 <Image
-                  src={"/assets/images/asgaard_sofa.png"}
+                  src={mainImage}
                   width={481}
                   height={391}
                   unoptimized
-                  alt=""
+                  alt="mainImage"
                   quality={100}
-                  className="w-full rounded-lg object-cover"
+                  className="w-full h-full mx-auto rounded-lg object-cover"
                 />
               </div>
             </div>
           </div>
-          {/* Mobile Image Part */}
-          <div className="lg:w-1/5  md:hidden flex space-x-4 space-y-4 mr-12">
-            <Image
-              src={"/assets/images/group95.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border mt-4"
-            />
-            <Image
-              src={"/assets/images/group96.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
-            />
-            <Image
-              src={"/assets/images/group97.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
-            />
-            <Image
-              src={"/assets/images/group98.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
-            />
+          {/* Mobile Part */}
+          <div className="lg:hidden w-full">
+            <div className="flex flex-col items-center">
+              <div className="grid grid-cols-5 gap-4">
+                {/* Main Image */}
+                <div className="col-span-5 fle md:flex justify-center items-center rounded-lg  bg-[#F9F1E7]">
+                  <Image
+                    src={mainImage}
+                    width={481}
+                    height={391}
+                    unoptimized
+                    alt="mainImage"
+                    quality={100}
+                    className="w-full h-full mx-auto rounded-lg object-cover"
+                  />
+                </div>
+                {/* Thumbnail Images */}
+                <div className="flex space-x-9">
+                  <Image
+                    src={product?.products_images.images[1]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[1])
+                    }
+                  />
+                  <Image
+                    src={product?.products_images.images[2]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[2])
+                    }
+                  />
+                  <Image
+                    src={product?.products_images.images[3]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[3])
+                    }
+                  />
+                  <Image
+                    src={product?.products_images.images[4]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[4])
+                    }
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           {/* Detail Part */}
           <div className="lg:w-1/2 space-y-6">
-            <h1 className="font-bold text-[42px]">{product?.name}</h1>
-            <p className="text-[#9F9F9F] text-[24px]">Rs. 1,00,000</p>
+            <h1
+              className="font-bold text-[42px] lg:text-left text-center
+            "
+            >
+              {product?.name}
+            </h1>
+            <p className="text-[#9F9F9F] text-[24px]">{product?.price}</p>
 
             <div className="flex items-center space-x-2">
               <div className="text-yellow-500 text-xl">★ ★ ★ ★ ★</div>
@@ -137,12 +200,7 @@ const ProductDetail = () => {
               <p className="text-[#9F9F9F] ml-4">5 Customer Reviews</p>
             </div>
 
-            <p>
-              Setting the bar as one of the loudest speakers in its class, the
-              Kilburn is a compact, stout-hearted hero with a well-balanced
-              audio which boasts a clear midrange and extended highs for a
-              sound.
-            </p>
+            <p>{product?.description}</p>
 
             {/* Size Selector */}
             <div>
@@ -194,17 +252,17 @@ const ProductDetail = () => {
               <div className="flex items-center space-x-2">
                 <p>SKU</p>
                 <p className="">:</p>
-                <p className="text-[#9F9F9F]">ASG-001</p>
+                <p className="text-[#9F9F9F]">{product?.SKU}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Category</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">Sofas</p>
+                <p className="text-[#9F9F9F]">{product?.categories.name}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Tags</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">Sofas, Chair</p>
+                <p className="text-[#9F9F9F]">{product?.tags}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Share</p>
@@ -283,24 +341,17 @@ const ProductDetail = () => {
               <h2 className="text-xl font-semibold">Product Description</h2>
               <div className="flex">
                 <p className="text-[#9F9F9F]">
-                  Weighing in under 7 pounds, the Kilburn is a lightweight piece
-                  of vintage styled engineering. Setting the bar as one of the
-                  loudest speakers in its class, the Kilburn is a compact,
-                  stout-hearted hero with a well-balanced audio which boasts a
-                  clear midrange and extended highs for a sound that is both
-                  articulate and pronounced. The analogue knobs allow you to
-                  fine tune the controls to your personal preferences while the
-                  guitar-influenced leather strap enables easy and stylish
-                  travel.
+                  {product?.products_details?.long_description}
                 </p>
               </div>
               <Image
-                src={"/assets/images/double_sofa.png"}
-                width={1239}
-                height={348}
+                src={product?.products_images.images[1]}
+                width={481}
+                height={391}
+                quality={100}
                 unoptimized
                 alt=""
-                className="mt-5 mx-auto"
+                className="mt-5 mx-auto rounded-lg object-cover"
               />
             </div>
           )}
