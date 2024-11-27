@@ -6,6 +6,7 @@ export const carouselImages = [
   "/assets/images/carousel-5.png",
 ];
 
+//Slide Images
 export const rooms = [
   {
     id: 1,

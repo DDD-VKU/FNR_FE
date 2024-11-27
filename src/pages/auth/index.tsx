@@ -7,12 +7,32 @@ import HttpsIcon from "@mui/icons-material/Https";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useState } from "react";
+import Router from "next/router";
+import { AppState, ILogin, InputChange } from "@/utils/types";
+import { useLoginMutation } from "@/redux/api/authApi";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { LOGIN_SUCCESS } from "@/redux/slices/authSlice";
 
 const LoginPage = () => {
+  const initalState: ILogin = {
+    email: "",
+    password: "",
+  };
+  const [loginParams, setloginParams] = useState<ILogin>(initalState);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loginResponse] = useLoginMutation();
+  const auth = useSelector((state: AppState) => state.auth);
+  const dispatch = useDispatch();
+
+  const handleOnChange = (e: InputChange) => {
+    const { name, value } = e.target;
+    setloginParams({ ...loginParams, [name]: value });
+  };
 
   const validEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,24 +40,44 @@ const LoginPage = () => {
   };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
+    console.log(loginParams);
     e.preventDefault();
     let valid = true;
 
-    if (!validEmail(email)) {
+    if (!validEmail(loginParams.email)) {
       setEmailError("Email không hợp lệ");
       valid = false;
     } else {
       setEmailError("");
     }
 
-    if (password.length < 6) {
+    if (loginParams.password.length < 6) {
       setPasswordError("Pass không được ít hơn 6 kí tự");
       valid = false;
     } else {
       setPasswordError("");
     }
     if (valid) {
-      console.log("Form hợp lệ");
+      loginResponse(loginParams)
+        .unwrap()
+        .then((res) => {
+          if (res.status == 200) {
+            toast.success("Login successfully");
+            Cookies.set("token", res.data.access_token);
+            dispatch(
+              LOGIN_SUCCESS({
+                ...res.data,
+                isAuthenticated: true,
+              })
+            );
+            Router.push("/");
+          } else {
+            toast.error(res.message);
+          }
+        })
+        .catch((error) => {
+          toast.error(error.data.message);
+        });
     }
   };
 
@@ -75,9 +115,8 @@ const LoginPage = () => {
                       required
                       label="Email"
                       type="text"
-                      id="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      onChange={handleOnChange}
                       error={!!emailError}
                       className="w-full mt-2 p-2 rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     />
@@ -93,9 +132,9 @@ const LoginPage = () => {
                       required
                       label="Password"
                       type="password"
-                      value={password}
+                      name="password"
                       error={!!passwordError}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={handleOnChange}
                       id="password"
                       className="w-full mt-2 p-2 border border-white rounded-md focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                     />
@@ -118,9 +157,18 @@ const LoginPage = () => {
                   <p>
                     <a
                       href="#"
+                      className="text-sm text-red-500 hover:underline pr-2"
+                    >
+                      Forget a Password.
+                    </a>
+                    Create an account{" "}
+                    <a
+                      onClick={() => {
+                        Router.push("/auth/sign-up");
+                      }}
                       className="text-sm text-red-500 hover:underline"
                     >
-                      Forget a Password
+                      Sign up
                     </a>
                   </p>
                 </div>

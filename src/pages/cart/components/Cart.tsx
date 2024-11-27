@@ -1,6 +1,6 @@
-import React from 'react';
-import { Minus, Plus, Trash2 } from 'lucide-react';
-import Image from 'next/image';
+import React from "react";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import Image from "next/image";
 interface CartItem {
   id: string;
   name: string;
@@ -10,7 +10,7 @@ interface CartItem {
 }
 
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-US').format(price); // Sử dụng 'en-US' hoặc 'vi-VN' 
+  return new Intl.NumberFormat("en-US").format(price); // Sử dụng 'en-US' hoặc 'vi-VN'
 };
 
 interface CartItemRowProps {
@@ -26,27 +26,27 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
 }) => {
   return (
     <tr className="border-b border-gray-100">
-       {/* Phần hiển thị hình ảnh và tên sản phẩm */}
+      {/* Phần hiển thị hình ảnh và tên sản phẩm */}
       <td className="py-4">
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 bg-gray-50 rounded">
-          <Image
-                src={item.image}
-                alt={item.name}
-                width={500}
-                height={300} 
-                className="rounded" 
+            <Image
+              src={item.image}
+              alt={item.name}
+              width={500}
+              height={300}
+              className="rounded"
             />
           </div>
           <span className="font-medium">{item.name}</span>
         </div>
       </td>
-        {/* Phần hiển thị giá */}
+      {/* Phần hiển thị giá */}
       <td className="py-4">Rs. {formatPrice(item.price)}</td>
       <td className="py-4">
         <div className="flex items-center gap-2">
           {/* Phần điều chỉnh số lượng */}
-          <button 
+          <button
             onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
             disabled={item.quantity <= 1}
             className="p-1 hover:bg-gray-100 rounded disabled:opacity-50"
@@ -66,7 +66,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
             className="w-16 p-1 border border-gray-200 rounded text-center"
             min="1"
           />
-           {/* Nút tăng số lượng */}
+          {/* Nút tăng số lượng */}
           <button
             onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
             className="p-1 hover:bg-gray-100 rounded"
@@ -134,7 +134,10 @@ const Cart: React.FC<CartProps> = ({
   onRemoveItem,
   onCheckout,
 }) => {
-  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="flex flex-col md:flex-row gap-8 p-6 max-w-6xl mx-auto">

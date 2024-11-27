@@ -5,7 +5,7 @@ import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useGetProductsByIdQuery } from "@/redux/api/productAPI";
+import { useGetProductsByIdQuery } from "@/redux/api/productApi";
 import { IProduct } from "@/utils/types";
 import RelatedProduct from "@/components/RelatedProduct";
 // import { ICategories} from "@/utils/types";
@@ -47,7 +47,7 @@ const ProductDetail = () => {
               <div className="hidden md:grid col-span-1 space-y-4">
                 {/* Thumbnail Images */}
                 <Image
-                  src={product?.products_images.images[1]}
+                  src={product?.products_images.images[1] || ""}
                   width={83}
                   height={55}
                   alt=""
@@ -55,11 +55,11 @@ const ProductDetail = () => {
                   unoptimized
                   className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                   onClick={() =>
-                    setMainImage(product?.products_images.images[1])
+                    setMainImage(product?.products_images.images[1] || "")
                   }
                 />
                 <Image
-                  src={product?.products_images.images[2]}
+                  src={product?.products_images.images[2] || ""}
                   width={83}
                   height={55}
                   alt=""
@@ -67,11 +67,11 @@ const ProductDetail = () => {
                   unoptimized
                   className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                   onClick={() =>
-                    setMainImage(product?.products_images.images[2])
+                    setMainImage(product?.products_images.images[2] || "")
                   }
                 />
                 <Image
-                  src={product?.products_images.images[3]}
+                  src={product?.products_images.images[3] || ""}
                   width={83}
                   height={55}
                   alt=""
@@ -79,11 +79,11 @@ const ProductDetail = () => {
                   unoptimized
                   className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                   onClick={() =>
-                    setMainImage(product?.products_images.images[3])
+                    setMainImage(product?.products_images.images[3] || "")
                   }
                 />
                 <Image
-                  src={product?.products_images.images[4]}
+                  src={product?.products_images.images[4] || ""}
                   width={83}
                   height={55}
                   alt=""
@@ -91,7 +91,7 @@ const ProductDetail = () => {
                   unoptimized
                   className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                   onClick={() =>
-                    setMainImage(product?.products_images.images[4])
+                    setMainImage(product?.products_images.images[4] || "")
                   }
                 />
               </div>
@@ -128,7 +128,7 @@ const ProductDetail = () => {
                 {/* Thumbnail Images */}
                 <div className="flex space-x-9">
                   <Image
-                    src={product?.products_images.images[1]}
+                    src={product?.products_images.images[1] ?? ""}
                     width={83}
                     height={55}
                     alt=""
@@ -136,11 +136,11 @@ const ProductDetail = () => {
                     unoptimized
                     className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                     onClick={() =>
-                      setMainImage(product?.products_images.images[1])
+                      setMainImage(product?.products_images.images[1] ?? "")
                     }
                   />
                   <Image
-                    src={product?.products_images.images[2]}
+                    src={product?.products_images.images[2] ?? ""}
                     width={83}
                     height={55}
                     alt=""
@@ -148,11 +148,11 @@ const ProductDetail = () => {
                     unoptimized
                     className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                     onClick={() =>
-                      setMainImage(product?.products_images.images[2])
+                      setMainImage(product?.products_images.images[2] ?? "")
                     }
                   />
                   <Image
-                    src={product?.products_images.images[3]}
+                    src={product?.products_images.images[3] || ""}
                     width={83}
                     height={55}
                     alt=""
@@ -160,11 +160,11 @@ const ProductDetail = () => {
                     unoptimized
                     className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                     onClick={() =>
-                      setMainImage(product?.products_images.images[3])
+                      setMainImage(product?.products_images.images[3] ?? "")
                     }
                   />
                   <Image
-                    src={product?.products_images.images[4]}
+                    src={product?.products_images.images[4] || ""}
                     width={83}
                     height={55}
                     alt=""
@@ -172,7 +172,7 @@ const ProductDetail = () => {
                     unoptimized
                     className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                     onClick={() =>
-                      setMainImage(product?.products_images.images[4])
+                      setMainImage(product?.products_images.images[4] ?? "")
                     }
                   />
                 </div>
@@ -253,14 +253,12 @@ const ProductDetail = () => {
               <div className="flex items-center space-x-2">
                 <p>Category</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">{product?.categories.name}</p>
+                <p className="text-[#9F9F9F]">{product?.categories?.name}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Tags</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">
-                  {product?.tags.map((value) => value + " ")}
-                </p>
+                <p className="text-[#9F9F9F]">{product?.tags}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Share</p>
@@ -343,7 +341,7 @@ const ProductDetail = () => {
                 </p>
               </div>
               <Image
-                src={product?.products_images.images[1]}
+                src={product?.products_images.images[1] || ""}
                 width={481}
                 height={391}
                 quality={100}

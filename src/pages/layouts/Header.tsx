@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ShoppingCart from "@/components/ShoppingCart";
 
 const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -92,15 +93,7 @@ const Header = () => {
                 alt="wishlist"
               />
             </Link>
-            <Link href="/cart">
-              <Image
-                src={"/assets/icons/ant-design_shopping-cart-outlined.svg"}
-                width={28}
-                height={28}
-                unoptimized
-                alt="cart"
-              />
-            </Link>
+            <ShoppingCart />
           </div>
 
           {/* Navbar Mobile Button */}
