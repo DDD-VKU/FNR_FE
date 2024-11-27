@@ -59,7 +59,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
               onClick={() => {
                 dispatch(
                   ADD_TO_CART({
-                    product: { _id: id, name, images: [image], price },
+                    product: {
+                      id,
+                      name,
+                      products_images: {
+                        images: [image],
+                      },
+                    },
+                    price: price * (1 - discount_percent / 100),
                     quantity: 1,
                   })
                 );

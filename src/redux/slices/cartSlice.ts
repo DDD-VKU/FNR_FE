@@ -13,7 +13,7 @@ const cartSlice = createSlice({
     },
     ADD_TO_CART: (state, action: PayloadAction<ICartItem>) => {
       const existingItem = state.items.find(
-        (item) => item.product._id === action.payload.product._id
+        (item) => item.product.id === action.payload.product.id
       );
 
       if (!existingItem) {
@@ -24,14 +24,14 @@ const cartSlice = createSlice({
 
       state.numberOfItems = state.items.length;
       state.subTotal = state.items.reduce(
-        (total, item) => total + item.product.price * item.quantity,
+        (total, item) => total + item.price * item.quantity,
         0
       );
     },
 
     INCREMENT_CART: (state, action: PayloadAction<number>) => {
       const item = state.items.find(
-        (item) => item.product._id === action.payload
+        (item) => item.product.id === action.payload
       );
       if (item) {
         item.quantity += 1;
@@ -39,7 +39,7 @@ const cartSlice = createSlice({
     },
     DECREMENT_CART: (state, action: PayloadAction<number>) => {
       const item = state.items.find(
-        (item) => item.product._id === action.payload
+        (item) => item.product.id === action.payload
       );
       if (item) {
         if (item.quantity > 1) {
