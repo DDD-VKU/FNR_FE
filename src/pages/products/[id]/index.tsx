@@ -6,32 +6,31 @@ import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useGetProductsByIdQuery } from "@/redux/api/productAPI";
-import { useGetProductsByCategoryQuery } from "@/redux/api/productAPI";
 import { IProduct } from "@/utils/types";
+import RelatedProduct from "@/components/RelatedProduct";
+// import { ICategories} from "@/utils/types";
 const ProductDetail = () => {
   const id = useRouter().query.id;
-
   const [activeTab, setActiveTab] = useState("description");
-  const productResponse = useGetProductsByIdQuery(id);
   const [product, setProduct] = useState<IProduct>();
-
-  const relatedProductResponse = useGetProductsByCategoryQuery(product?.category?.id);
-  const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
+  const { data: productData, isLoading, error } = useGetProductsByIdQuery(id);
+  const [categoryId, setCategoryId] = useState<string>("");
+  const [mainImage, setMainImage] = useState<string>("");
 
   useEffect(() => {
-    setProduct(productResponse.data);
-  }, [productResponse.data]);
+    if (productData?.data) {
+      const currentProduct = productData.data;
 
-  
-  // const products = Array.from({ length: 4 }, (_, i) => ({
-  //   id: i,
-  //   name: `Product ${i + 1}`,
-  //   type: "Sample Type",
-  //   image: `/assets/images/products.png`,
-  //   price: 100 + i * 10,
-  //   discount_percent: 10 + i,
-  //   price_before_discount: 150 + i * 10,
-  // }));
+      setProduct(currentProduct);
+      setMainImage(currentProduct.products_images.images[0]);
+      setCategoryId(currentProduct.categories.id); // Cập nhật categoryId ngay lập tức
+    }
+  }, [productData]);
+
+  useEffect(() => {
+    console.log("Product:", product);
+    console.log("Category ID:", categoryId);
+  }, [product, categoryId]);
   return (
     <>
       <Header />
@@ -42,109 +41,162 @@ const ProductDetail = () => {
 
         {/* Main Container */}
         <div className="flex flex-col lg:flex-row items-start gap-12 p-6 mt-5">
-          {/* Image Part */}
+          {/* Image Part in PC*/}
           <div className="flex flex-col items-center lg:w-1/2">
-            <div className="flex">
-              <div className="lg:w-1/5 hidden md:grid space-x-4 space-y-4 mr-12">
+            <div className="grid grid-cols-5 gap-4">
+              <div className="hidden md:grid col-span-1 space-y-4">
+                {/* Thumbnail Images */}
                 <Image
-                  src={"/assets/images/group95.png"}
+                  src={product?.products_images.images[1]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[1])
+                  }
                 />
                 <Image
-                  src={"/assets/images/group96.png"}
+                  src={product?.products_images.images[2]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[2])
+                  }
                 />
                 <Image
-                  src={"/assets/images/group97.png"}
+                  src={product?.products_images.images[3]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[3])
+                  }
                 />
                 <Image
-                  src={"/assets/images/group98.png"}
+                  src={product?.products_images.images[4]}
                   width={83}
                   height={55}
                   alt=""
                   quality={100}
-                  className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
+                  unoptimized
+                  className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                  onClick={() =>
+                    setMainImage(product?.products_images.images[4])
+                  }
                 />
               </div>
               {/* Main Image */}
-              <div className="flex-1 flex justify-center items-center lg:w-4/5 h-[500px] rounded-lg  bg-[#F9F1E7]">
+              <div className="col-span-4 fle hidden md:flex justify-center items-center rounded-lg  bg-[#F9F1E7]">
                 <Image
-                  src={"/assets/images/asgaard_sofa.png"}
+                  src={mainImage}
                   width={481}
                   height={391}
                   unoptimized
-                  alt=""
+                  alt="mainImage"
                   quality={100}
-                  className="w-full rounded-lg object-cover"
+                  className="w-full h-full mx-auto rounded-lg object-cover"
                 />
               </div>
             </div>
           </div>
-          {/* Mobile Image Part */}
-          <div className="lg:w-1/5  md:hidden flex space-x-4 space-y-4 mr-12">
-            <Image
-              src={"/assets/images/group95.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border mt-4"
-            />
-            <Image
-              src={"/assets/images/group96.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
-            />
-            <Image
-              src={"/assets/images/group97.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
-            />
-            <Image
-              src={"/assets/images/group98.png"}
-              width={83}
-              height={55}
-              alt=""
-              quality={100}
-              className="w-20 h-20 mx-auto object-cover rounded-lg cursor-pointer border"
-            />
+          {/* Mobile Part */}
+          <div className="lg:hidden w-full">
+            <div className="flex flex-col items-center">
+              <div className="grid grid-cols-5 gap-4">
+                {/* Main Image */}
+                <div className="col-span-5 fle md:flex justify-center items-center rounded-lg  bg-[#F9F1E7]">
+                  <Image
+                    src={mainImage}
+                    width={481}
+                    height={391}
+                    unoptimized
+                    alt="mainImage"
+                    quality={100}
+                    className="w-full h-full mx-auto rounded-lg object-cover"
+                  />
+                </div>
+                {/* Thumbnail Images */}
+                <div className="flex space-x-9">
+                  <Image
+                    src={product?.products_images.images[1]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[1])
+                    }
+                  />
+                  <Image
+                    src={product?.products_images.images[2]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[2])
+                    }
+                  />
+                  <Image
+                    src={product?.products_images.images[3]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[3])
+                    }
+                  />
+                  <Image
+                    src={product?.products_images.images[4]}
+                    width={83}
+                    height={55}
+                    alt=""
+                    quality={100}
+                    unoptimized
+                    className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
+                    onClick={() =>
+                      setMainImage(product?.products_images.images[4])
+                    }
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           {/* Detail Part */}
           <div className="lg:w-1/2 space-y-6">
-            <h1 className="font-bold text-[42px]">{product?.name}</h1>
-            <p className="text-[#9F9F9F] text-[24px]">Rs. 1,00,000</p>
-
+            <h1
+              className="font-bold text-[42px] lg:text-left text-center
+            "
+            >
+              {product?.name}
+            </h1>
+            <p className="text-[#9F9F9F] text-[24px]">
+              {product?.price?.price}
+            </p>
             <div className="flex items-center space-x-2">
               <div className="text-yellow-500 text-xl">★ ★ ★ ★ ★</div>
               <p className="text-[#9F9F9F] text-xl">|</p>
               <p className="text-[#9F9F9F] ml-4">5 Customer Reviews</p>
             </div>
 
-            <p>
-              Setting the bar as one of the loudest speakers in its class, the
-              Kilburn is a compact, stout-hearted hero with a well-balanced
-              audio which boasts a clear midrange and extended highs for a
-              sound.
-            </p>
+            <p>{product?.description}</p>
 
             {/* Size Selector */}
             <div>
@@ -196,17 +248,19 @@ const ProductDetail = () => {
               <div className="flex items-center space-x-2">
                 <p>SKU</p>
                 <p className="">:</p>
-                <p className="text-[#9F9F9F]">ASG-001</p>
+                <p className="text-[#9F9F9F]">{product?.SKU}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Category</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">Sofas</p>
+                <p className="text-[#9F9F9F]">{product?.categories.name}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Tags</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">Sofas, Chair</p>
+                <p className="text-[#9F9F9F]">
+                  {product?.tags.map((value) => value + " ")}
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Share</p>
@@ -285,24 +339,17 @@ const ProductDetail = () => {
               <h2 className="text-xl font-semibold">Product Description</h2>
               <div className="flex">
                 <p className="text-[#9F9F9F]">
-                  Weighing in under 7 pounds, the Kilburn is a lightweight piece
-                  of vintage styled engineering. Setting the bar as one of the
-                  loudest speakers in its class, the Kilburn is a compact,
-                  stout-hearted hero with a well-balanced audio which boasts a
-                  clear midrange and extended highs for a sound that is both
-                  articulate and pronounced. The analogue knobs allow you to
-                  fine tune the controls to your personal preferences while the
-                  guitar-influenced leather strap enables easy and stylish
-                  travel.
+                  {product?.products_details?.long_description}
                 </p>
               </div>
               <Image
-                src={"/assets/images/double_sofa.png"}
-                width={1239}
-                height={348}
+                src={product?.products_images.images[1]}
+                width={481}
+                height={391}
+                quality={100}
                 unoptimized
                 alt=""
-                className="mt-5 mx-auto"
+                className="mt-5 mx-auto rounded-lg object-cover"
               />
             </div>
           )}
@@ -316,32 +363,57 @@ const ProductDetail = () => {
           {activeTab === "additional-info" && (
             <div>
               <h2 className="text-xl font-semibold">Additional Information</h2>
-              <p>Material: 100% genuine leather, Oak wood frame.</p>
-              <p>Dimensions: 200cm x 90cm x 85cm</p>
+              <p>Dimensions:</p>
+              <p>
+                Height:&nbsp;
+                <strong>
+                  {product?.products_details?.dimensions.height ?? " Null "}
+                  cm
+                </strong>
+              </p>
+              <p>
+                width:&nbsp;
+                <strong>
+                  {product?.products_details?.dimensions.width ?? " Null "}
+                  cm
+                </strong>
+              </p>
+              <p>
+                weight:&nbsp;
+                <strong>
+                  {product?.products_details?.dimensions.weight ?? " Null "}
+                  cm
+                </strong>
+              </p>
+              <p>
+                Depth:&nbsp;
+                <strong>
+                  {product?.products_details?.dimensions.depth ?? " Null "}
+                  cm
+                </strong>
+              </p>
+              <p>
+                Seat height:&nbsp;
+                <strong>
+                  {product?.products_details?.dimensions.seat_height ??
+                    " Null "}
+                  cm
+                </strong>
+              </p>
+              <p>
+                Leg height:&nbsp;
+                <strong>
+                  {product?.products_details?.dimensions.leg_height ?? " Null "}
+                  cm
+                </strong>
+              </p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Products */}
-      <section className="container mx-auto p-4 items-center justify-between">
-        <h1 className="text-5xl font-bold mt-4 text-center items-center justify-center">
-          Related Products
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-          {relatedProducts.map((relatedProducts: IProduct) => (
-            <ProductCard
-              key={relatedProducts.id}
-              name={relatedProducts.name}
-              type={relatedProducts.categories.name}
-              image={relatedProducts.IProduct.}
-              price={relatedProducts.price}
-              discount_percent={0}
-              price_before_discount={0}
-            />
-          ))}
-        </div>
-      </section>
+      {/* Products with same category */}
+      <RelatedProduct categoryId={categoryId} productId={product?.id} />
       <ShowMore />
       <Footer />
     </>

@@ -32,7 +32,7 @@ export interface IProduct {
   id: string;
   name: string;
   description?: string;
-  price: number;
+  price: IProducts_Prices;
   products_images: IImage;
   categories: ICategories;
   SKU?: string;
@@ -53,6 +53,25 @@ export interface IProductDetail {
   id: string;
   sort_description: string;
   long_description: string;
+  dimensions: IDimensions;
+}
+
+export interface IProducts_Prices {
+  id: string;
+  price: number;
+  sale_percent: number;
+  products_id: number;
+}
+
+export interface IDimensions {
+  id: string;
+  width: number;
+  height: number;
+  depth: number;
+  weight: number;
+  seat_height?: number;
+  leg_height?: number;
+  products_dimensions_details_id: number;
 }
 
 export interface ICartItem {
