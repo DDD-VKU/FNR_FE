@@ -1,42 +1,31 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
+import HeadImage from "@/components/HeadImage";
+import FeatureCard from "@/components/FeatureCard";
+import { useSelector } from "react-redux";
+import { AppState, ICart, ICartItem } from "@/utils/types";
+import Router from "next/router";
+import Cart from "./components/Cart";
+import { useGetCartQuery } from "@/redux/api/cartApi";
 
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
+const CartPage: React.FC = () => {
+  const { data, isLoading, isError } = useGetCartQuery({});
+  const [items, setItems] = useState<ICartItem[]>([]);
+  const handleUpdateQuantity = (id: number, quantity: number) => {};
+  const handleRemoveItem = (id: number) => {};
 
-const ShoppingCart = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/images/asgaard-sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Casaliving Wood",
-      price: 270000,
-      image: "/images/casaliving-wood.png",
-      quantity: 1,
-    },
-  ]);
-
-  const toggleCart = () => setIsOpen(!isOpen);
-
-  const removeItem = (id: number) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleCheckout = () => {
+    console.log("Proceeding to checkout...");
   };
+  const auth = useSelector((state: AppState) => state.auth);
 
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  useEffect(() => {
+    console.log(auth);
+    if (!auth.isAuthenticated) {
+      Router.push("/auth/login");
+    }
+  }, [auth.isAuthenticated]);
 
   return (
     <>
@@ -115,8 +104,10 @@ const ShoppingCart = () => {
           </div>
         </div>
       </div>
+      <FeatureCard />
+      <Footer />
     </>
   );
 };
 
-export default ShoppingCart;
+export default CartPage;

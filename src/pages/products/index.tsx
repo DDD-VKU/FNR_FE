@@ -10,7 +10,6 @@ import { useGetProductsQuery } from "@/redux/api/productApi";
 import { useEffect, useState } from "react";
 import { IProductInShop, IProductItem } from "@/utils/types";
 import Loading from "@/components/Loading";
-import { useRouter } from "next/router";
 
 const ProductPage = () => {
   const {

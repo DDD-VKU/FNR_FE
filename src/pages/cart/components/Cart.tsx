@@ -1,22 +1,16 @@
 import React from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { ICartItem } from "@/utils/types";
 
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-US").format(price); // Sử dụng 'en-US' hoặc 'vi-VN'
 };
 
 interface CartItemRowProps {
-  item: CartItem;
-  onUpdateQuantity: (id: string, quantity: number) => void; // Hàm cập nhật số lượng nút tăng/giảm
-  onRemoveItem: (id: string) => void; // Hàm xóa item
+  item: ICartItem;
+  onUpdateQuantity: (id: number, quantity: number) => void; // Hàm cập nhật số lượng nút tăng/giảm
+  onRemoveItem: (id: number) => void; // Hàm xóa item
 }
 
 const CartItemRow: React.FC<CartItemRowProps> = ({
@@ -31,23 +25,23 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 bg-gray-50 rounded">
             <Image
-              src={item.image}
-              alt={item.name}
+              src={item.image ?? ""}
+              alt={item.product.name}
               width={500}
               height={300}
               className="rounded"
             />
           </div>
-          <span className="font-medium">{item.name}</span>
+          <span className="font-medium">{item.product.name}</span>
         </div>
       </td>
       {/* Phần hiển thị giá */}
-      <td className="py-4">Rs. {formatPrice(item.price)}</td>
+      <td className="py-4">$. {formatPrice(item.price)}</td>
       <td className="py-4">
         <div className="flex items-center gap-2">
           {/* Phần điều chỉnh số lượng */}
           <button
-            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+            onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
             disabled={item.quantity <= 1}
             className="p-1 hover:bg-gray-100 rounded disabled:opacity-50"
           >
@@ -60,7 +54,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
             onChange={(e) => {
               const value = parseInt(e.target.value);
               if (!isNaN(value) && value >= 1) {
-                onUpdateQuantity(item.id, value);
+                onUpdateQuantity(item.product.id, value);
               }
             }}
             className="w-16 p-1 border border-gray-200 rounded text-center"
@@ -68,7 +62,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
           />
           {/* Nút tăng số lượng */}
           <button
-            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+            onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
             className="p-1 hover:bg-gray-100 rounded"
           >
             <Plus size={16} />
@@ -76,11 +70,11 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
         </div>
       </td>
       {/* Phần hiển thị tổng tiền của item */}
-      <td className="py-4">Rs. {formatPrice(item.price * item.quantity)}</td>
+      <td className="py-4">$. {formatPrice(item.price * item.quantity)}</td>
       <td className="py-4">
         {/* Nút xóa item */}
         <button
-          onClick={() => onRemoveItem(item.id)}
+          onClick={() => onRemoveItem(item.product.id)}
           className="p-1 hover:bg-gray-100 rounded text-red-500"
         >
           <Trash2 size={16} />
@@ -92,7 +86,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
 
 interface CartTotalsProps {
   subtotal: number;
-  onCheckout: () => void; // Hàm xử lý checkout, nút checkout sẽ gọi khi bấm vào, chuyển sang quy trình thanh toán.
+  onCheckout: () => void;
 }
 
 const CartTotals: React.FC<CartTotalsProps> = ({ subtotal, onCheckout }) => {
@@ -102,12 +96,12 @@ const CartTotals: React.FC<CartTotalsProps> = ({ subtotal, onCheckout }) => {
         <h2 className="text-xl font-semibold mb-6">Cart Total</h2>
         <div className="space-y-4">
           <div className="flex justify-between">
-            <span>Subtotl</span>
-            <span>Rs. {formatPrice(subtotal)}</span>
+            <span>Subtotal</span>
+            <span>$. {formatPrice(subtotal)}</span>
           </div>
           <div className="flex justify-between font-semibold">
             <span>Total</span>
-            <span>Rs. {formatPrice(subtotal)}</span>
+            <span>$. {formatPrice(subtotal)}</span>
           </div>
           <button
             onClick={onCheckout}
@@ -122,9 +116,9 @@ const CartTotals: React.FC<CartTotalsProps> = ({ subtotal, onCheckout }) => {
 };
 
 interface CartProps {
-  items: CartItem[];
-  onUpdateQuantity: (id: string, quantity: number) => void;
-  onRemoveItem: (id: string) => void;
+  items: ICartItem[];
+  onUpdateQuantity: (id: number, quantity: number) => void;
+  onRemoveItem: (id: number) => void;
   onCheckout: () => void;
 }
 
@@ -156,7 +150,7 @@ const Cart: React.FC<CartProps> = ({
           <tbody>
             {items.map((item) => (
               <CartItemRow
-                key={item.id}
+                key={item.product.id}
                 item={item}
                 onUpdateQuantity={onUpdateQuantity}
                 onRemoveItem={onRemoveItem}
