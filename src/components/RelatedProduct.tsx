@@ -1,4 +1,4 @@
-import { useGetProductsByCategoryQuery } from "@/redux/api/productAPI";
+import { useGetProductsByCategoryQuery } from "@/redux/api/productApi";
 import ProductCard from "./ProductCard";
 import React, { useState } from "react";
 
@@ -37,10 +37,11 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({
             key={product.id}
             name={product.name}
             type={product.type}
-            image={product.image}
-            price={product.price}
-            discount_percent={product.discount_percent}
-            price_before_discount={product.price_before_discount}
+            image={product.products_images}
+            price={product.price - (product.price * product.sale_percent) / 100}
+            discount_percent={product.sale_percent}
+            price_before_discount={product.price}
+            id={product.id}
           />
         ))}
       </div>

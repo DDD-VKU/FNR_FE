@@ -1,3 +1,6 @@
 export function formatPrice(amount: number): string {
-    return  amount.toLocaleString('en-US');
+  if (amount === undefined) {
+    return "";
+  }
+  return amount.toLocaleString("en-US");
 }

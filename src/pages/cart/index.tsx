@@ -78,7 +78,7 @@ const ShoppingCart = () => {
                 <div className="flex-1 px-4">
                   <h3 className="text-sm font-medium">{item.name}</h3>
                   <p className="text-gray-500 text-sm">
-                    {item.quantity} x Rs. {item.price.toLocaleString()}
+                    {item.quantity} x Rs. {item.price.toLocaleString("en-US")}
                   </p>
                 </div>
                 <button
@@ -99,7 +99,7 @@ const ShoppingCart = () => {
           <div className="flex justify-between mb-4">
             <span className="text-gray-600">Subtotal:</span>
             <span className="font-semibold">
-              Rs. {subtotal.toLocaleString()}
+              Rs. {subtotal.toLocaleString("en-US")}
             </span>
           </div>
           <div className="space-y-2">

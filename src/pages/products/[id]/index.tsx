@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useGetProductsByIdQuery } from "@/redux/api/productApi";
 import { IProduct } from "@/utils/types";
 import RelatedProduct from "@/components/RelatedProduct";
+import Loading from "@/components/Loading";
 // import { ICategories} from "@/utils/types";
 const ProductDetail = () => {
   const id = useRouter().query.id;
@@ -31,6 +32,8 @@ const ProductDetail = () => {
     console.log("Product:", product);
     console.log("Category ID:", categoryId);
   }, [product, categoryId]);
+
+  if (isLoading) return <Loading />;
   return (
     <>
       <Header />
@@ -188,7 +191,7 @@ const ProductDetail = () => {
               {product?.name}
             </h1>
             <p className="text-[#9F9F9F] text-[24px]">
-              {product?.price?.price}
+              Rs&nbsp;{product?.products_prices?.price}
             </p>
             <div className="flex items-center space-x-2">
               <div className="text-yellow-500 text-xl">★ ★ ★ ★ ★</div>
@@ -258,7 +261,7 @@ const ProductDetail = () => {
               <div className="flex items-center space-x-2">
                 <p>Tags</p>
                 <p>:</p>
-                <p className="text-[#9F9F9F]">{product?.tags}</p>
+                <p className="text-[#9F9F9F]">{product?.tags?.join(", ")}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <p>Share</p>

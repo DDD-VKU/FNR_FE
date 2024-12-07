@@ -93,7 +93,7 @@ const Header = () => {
                 alt="wishlist"
               />
             </Link>
-            <ShoppingCart />
+            {/* <ShoppingCart /> */}
           </div>
 
           {/* Navbar Mobile Button */}

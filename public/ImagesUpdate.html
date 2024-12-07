@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Images</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+      }
+      .file-input {
+        margin: 20px 0;
+      }
+      .btn {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .json-output {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-top: 20px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Upload Images to Cloudinary</h2>
+      <p>Select up to 5 images to upload:</p>
+      <input
+        type="file"
+        id="fileInput"
+        class="file-input"
+        accept="image/*"
+        multiple
+      />
+      <button id="uploadBtn" class="btn" disabled>Upload</button>
+      <div id="jsonOutput" class="json-output"></div>
+    </div>
+
+    <script>
+      const fileInput = document.getElementById("fileInput");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const jsonOutput = document.getElementById("jsonOutput");
+
+      fileInput.addEventListener("change", () => {
+        const files = fileInput.files;
+        uploadBtn.disabled = files.length === 0 || files.length > 5;
+      });
+
+      uploadBtn.addEventListener("click", async () => {
+        const files = Array.from(fileInput.files);
+        if (files.length > 5) {
+          alert("Please select up to 5 files.");
+          return;
+        }
+
+        uploadBtn.disabled = true;
+        jsonOutput.textContent = "Uploading...";
+
+        const uploadedLinks = [];
+        const uploadPreset = "funiro";
+        const apiKey = "671279165276347";
+        const cloudinaryUrl =
+          "https://api.cloudinary.com/v1_1/dmodnm4xp/upload";
+
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", uploadPreset);
+          formData.append("api_key", apiKey);
+
+          try {
+            const response = await fetch(cloudinaryUrl, {
+              method: "POST",
+              body: formData,
+            });
+            const data = await response.json();
+            uploadedLinks.push(data.secure_url);
+          } catch (error) {
+            console.error("Error uploading file:", error);
+            alert("Error uploading some files. Check console for details.");
+          }
+        }
+
+        uploadBtn.disabled = false;
+
+        if (uploadedLinks.length > 0) {
+          jsonOutput.textContent = JSON.stringify(uploadedLinks, null, 2);
+        } else {
+          jsonOutput.textContent = "No files uploaded.";
+        }
+      });
+    </script>
+  </body>
+</html>

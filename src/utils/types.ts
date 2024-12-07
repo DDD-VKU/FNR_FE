@@ -33,7 +33,7 @@ export interface IProduct {
   id: number;
   name: string;
   description?: string;
-  price?: number;
+  products_prices?: IProducts_Prices;
   products_images: IImage;
   categories?: ICategories;
   SKU?: string;
