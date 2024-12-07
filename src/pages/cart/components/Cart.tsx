@@ -25,7 +25,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 bg-gray-50 rounded">
             <Image
-              src={item.product.products_images.images[0]}
+              src={item.image ?? ""}
               alt={item.product.name}
               width={500}
               height={300}
