@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useUpdateCartMutation } from "@/redux/api/cartApi";
 import { ADD_TO_CART } from "@/redux/slices/cartSlice";
 import { formatPrice } from "@/utils/appUtils";
+import { ICartItem, ICartItemResquest } from "@/utils/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
@@ -26,10 +28,34 @@ const ProductCard: React.FC<ProductCardProps> = ({
   discount_percent,
   price_before_discount,
   is_new_product = false,
-  onClick,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [updateCart] = useUpdateCartMutation();
+
+  const handleAddToCart = async (product: ICartItemResquest) => {
+    try {
+      const res = await updateCart(product);
+      if (res.data) {
+        dispatch(
+          ADD_TO_CART({
+            price: product.price,
+            quantity: product.quantity,
+            product: {
+              id: product.product_id,
+              name: name,
+              products_images: { images: [image] },
+              price: product.price,
+            },
+          })
+        );
+        toast.success("Thêm sản phẩm vào giỏ hàng thành công");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Thêm sản phẩm vào giỏ hàng không thành công");
+    }
+  };
   return (
     <div className="flex justify-center">
       <div className="mt-5 w-[285px] realative group">
@@ -56,22 +82,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transiton-opacity duration-500">
             <button
               className="bg-white text-[#B88E2F] py-2 px-4 font-semibold"
-              onClick={() => {
-                dispatch(
-                  ADD_TO_CART({
-                    product: {
-                      id,
-                      name,
-                      products_images: {
-                        images: [image],
-                      },
-                    },
-                    price: price * (1 - discount_percent / 100),
-                    quantity: 1,
-                  })
-                );
-                toast.success("Added product to cart successfully");
-              }}
+              onClick={() =>
+                handleAddToCart({
+                  product_id: id,
+                  action: "add",
+                  quantity: 1,
+                  price: price - price * (discount_percent / 100),
+                })
+              }
             >
               Add To Cart
             </button>
@@ -109,8 +127,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="bg-[#F4F5F7] mt-[-10px]">
           <div className="ml-5 p-2 mb-2">
             <p
-              className="text-[24px] font-semibold mt-2"
-              onClick={() => router.push(`/product/${id}`)}
+              className="text-[24px] font-semibold mt-2 cursor-pointer hover:text-[#B88E2F] duration-300"
+              onClick={() => router.push(`/products/${id}`)}
             >
               {name}
             </p>

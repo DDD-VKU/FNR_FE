@@ -34,7 +34,7 @@ export interface IProduct {
   name: string;
   description?: string;
   price?: number;
-  products_images: IImage;
+  products_images?: IImage;
   categories?: ICategories;
   SKU?: string;
   products_details?: IProductDetail;
@@ -76,9 +76,12 @@ export interface IDimensions {
 }
 
 export interface ICartItem {
+  id?: number;
   product: IProduct;
   quantity: number;
   price: number;
+  name?: string;
+  image?: string;
 }
 
 export interface IRegister {
@@ -155,4 +158,11 @@ export interface IProductCompare extends IProductBase {
 
 export interface IComparePageProps {
   products: IProductCompare[];
+}
+
+export interface ICartItemResquest {
+  product_id: number;
+  quantity: number;
+  price: number;
+  action: string;
 }
