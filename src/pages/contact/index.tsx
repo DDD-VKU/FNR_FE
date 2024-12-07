@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import InputField from "@/components/InputFieldProps";
+import InputField from "@/components/InputField";
 import Button from "@/components/Button";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
