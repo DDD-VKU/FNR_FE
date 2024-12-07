@@ -88,7 +88,7 @@ const ProductDetail = () => {
                   }
                 />
                 <Image
-                  src={product?.products_images.images[4] || ""}
+                  src={product?.products_images.images[0] || ""}
                   width={83}
                   height={55}
                   alt=""
@@ -96,7 +96,7 @@ const ProductDetail = () => {
                   unoptimized
                   className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                   onClick={() =>
-                    setMainImage(product?.products_images.images[4] || "")
+                    setMainImage(product?.products_images.images[0] || "")
                   }
                 />
               </div>
@@ -169,7 +169,7 @@ const ProductDetail = () => {
                     }
                   />
                   <Image
-                    src={product?.products_images.images[4] || ""}
+                    src={product?.products_images.images[0] || ""}
                     width={83}
                     height={55}
                     alt=""
@@ -177,7 +177,7 @@ const ProductDetail = () => {
                     unoptimized
                     className="w-full h-auto mx-auto object-cover rounded-lg cursor-pointer border"
                     onClick={() =>
-                      setMainImage(product?.products_images.images[4] ?? "")
+                      setMainImage(product?.products_images.images[0] ?? "")
                     }
                   />
                 </div>

@@ -1,5 +1,6 @@
 import { ILogin, IRegister } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -25,7 +26,18 @@ export const authApi = createApi({
         body,
       }),
     }),
+
+    checkToken: builder.query<any, any>({
+      query: () => ({
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        url: "/check-token",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useCheckTokenQuery } =
+  authApi;

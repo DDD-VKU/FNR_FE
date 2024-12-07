@@ -2,13 +2,15 @@ import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
 import { useRegisterMutation } from "@/redux/api/authApi";
 import { toast } from "react-hot-toast";
-import { FormSubmit, IRegister, InputChange } from "@/utils/types";
+import { AppState, FormSubmit, IRegister, InputChange } from "@/utils/types";
 import { CircularProgress, TextField } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { LOGIN_SUCCESS } from "@/redux/slices/authSlice";
 const SignupPage = () => {
   const initalState: IRegister = {
     phone: "",
@@ -20,12 +22,16 @@ const SignupPage = () => {
   const [isLoading, setLoading] = useState(false);
   const [registerParams, setRegisterParams] = useState<IRegister>(initalState);
   const [registerResponse] = useRegisterMutation();
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-  //   const isAuthenticated = useSelector((state: AppState) => state.auth);
+  const isAuthenticated = useSelector((state: AppState) => state.auth);
 
-  //   useEffect(() => {
-  //     console.log(`${process.env.NEXT_PUBLIC_API_URL}`);
-  //   }, []);
+  useEffect(() => {
+    if (isAuthenticated.isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
 
   const validateForm = () => {
     // check valid phone
@@ -55,9 +61,18 @@ const SignupPage = () => {
           if (data.status == 200) {
             Cookies.set("token", data.data.access_token);
             toast.success(data.message);
+            console.log(data);
+            dispatch(
+              LOGIN_SUCCESS({
+                ...data.data.result,
+                isAuthenticated: true,
+              })
+            );
+            router.push("/");
           }
         })
         .catch((error) => {
+          console.log(error);
           toast.error(error.data.message);
         });
       setLoading(false);
@@ -136,7 +151,7 @@ const SignupPage = () => {
                     />
                   </div>
                   <div>
-                      <TextField
+                    <TextField
                       required
                       label="Password"
                       type="password"

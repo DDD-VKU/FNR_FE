@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useGetCartQuery } from "@/redux/api/cartApi";
+import Loading from "./Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "@/utils/types";
+import { SET_CART } from "@/redux/slices/cartSlice";
 
 interface CartItem {
   id: number;
@@ -11,86 +17,56 @@ interface CartItem {
 
 const ShoppingCart = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/assets/images/asgaard_sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/assets/images/asgaard_sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/assets/images/asgaard_sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/assets/images/asgaard_sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/assets/images/asgaard_sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 1,
-      name: "Asgaard sofa",
-      price: 250000,
-      image: "/assets/images/asgaard_sofa.png", // Đường dẫn ảnh
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Casaliving Wood",
-      price: 270000,
-      image: "/assets/images/double_sofa.png",
-      quantity: 1,
-    },
-  ]);
+  const { data: cartResponse, isLoading, isError } = useGetCartQuery({});
+  const dispatch = useDispatch();
+  const cartState = useSelector((state: AppState) => state.cart);
+  const authState = useSelector((state: AppState) => state.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (cartResponse && Array.isArray(cartResponse.data)) {
+      dispatch(
+        SET_CART({
+          items: cartResponse.data,
+          numberOfItems: cartResponse.total,
+          subTotal: cartResponse.data.reduce(
+            (total: number, item: { price: number; quantity: number }) =>
+              total + item.price * item.quantity,
+            0
+          ),
+        })
+      );
+    }
+  }, [cartResponse, dispatch]);
+
+  if (isLoading) return <Loading />;
+  if (authState.isAuthenticated === undefined) return null;
 
   const toggleCart = () => setIsOpen(!isOpen);
 
-  const removeItem = (id: number) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
   return (
     <>
-      {/* Icon mở giỏ hàng */}
-      <Image
-        src={"/assets/icons/ant-design_shopping-cart-outlined.svg"}
-        width={28}
-        height={28}
-        unoptimized
-        alt="cart"
-        onClick={toggleCart}
-      />
+      <div className="relative" onClick={toggleCart}>
+        <Image
+          src={"/assets/icons/ant-design_shopping-cart-outlined.svg"}
+          width={28}
+          height={28}
+          unoptimized
+          alt="cart"
+          priority
+        />
+        {cartState.numberOfItems > 0 && cartState.items.length > 0 && (
+          <span className="absolute top-[-10px] right-[-10px] w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+            {cartState.numberOfItems}
+          </span>
+        )}
+      </div>
+
       <div
         className={`fixed top-0 right-0 h-auto max-h-[90vh] w-80 bg-white shadow-lg z-50 transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 flex flex-col`}
       >
-        {/* Header */}
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-xl font-bold">Shopping Cart</h2>
           <button onClick={toggleCart} className="text-gray-600 text-2xl">
@@ -98,44 +74,49 @@ const ShoppingCart = () => {
           </button>
         </div>
 
-        {/* Danh sách sản phẩm */}
-        <div className="flex-1 overflow-y-auto max-h-[60vh] p-4 space-y-4">
-          {cartItems.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between bg-gray-50 p-2 rounded-lg shadow-sm"
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-16 h-16 rounded-md object-cover"
-              />
-              <div className="flex-1 px-3">
-                <h3 className="font-semibold text-gray-700">{item.name}</h3>
-                <p className="text-gray-500">
-                  {item.quantity} x Rs. {item.price.toLocaleString()}
-                </p>
-              </div>
-              <button
-                onClick={() => removeItem(item.id)}
-                className="text-red-500 hover:text-red-700"
+        {authState.isAuthenticated === false && (
+          <p className="text-gray-600">Please log in to view your cart.</p>
+        )}
+        {cartState.numberOfItems === 0 && authState.isAuthenticated ? (
+          <p className="text-gray-600">Your cart is empty.</p>
+        ) : (
+          <>
+            {cartState.items.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between bg-gray-50 p-2 rounded-lg shadow-sm"
               >
-                &times;
-              </button>
-            </div>
-          ))}
-        </div>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-16 h-16 rounded-md object-cover"
+                />
+                <div className="flex-1 px-3">
+                  <h3 className="font-semibold text-gray-700">{item.name}</h3>
+                  <p className="text-gray-500">
+                    {item.quantity} x ${item.price.toLocaleString()}
+                  </p>
+                </div>
+                <button className="text-red-500 hover:text-red-700">
+                  &times;
+                </button>
+              </div>
+            ))}
+          </>
+        )}
 
-        {/* Subtotal và nút chức năng */}
         <div className="p-4 border-t">
           <div className="flex justify-between items-center mb-4">
             <span className="text-gray-600">Subtotal:</span>
             <span className="font-semibold text-lg">
-              Rs. {subtotal.toLocaleString()}
+              ${cartState.subTotal.toLocaleString()}
             </span>
           </div>
           <div className="flex space-x-2">
-            <button className="flex-1 border border-gray-500 text-gray-700 py-2 rounded-lg hover:bg-gray-100">
+            <button
+              className="flex-1 border border-gray-500 text-gray-700 py-2 rounded-lg hover:bg-gray-100"
+              onClick={() => router.push("/cart")}
+            >
               Cart
             </button>
             <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">

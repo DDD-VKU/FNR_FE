@@ -6,7 +6,7 @@ import Image from "next/image";
 import HttpsIcon from "@mui/icons-material/Https";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Router from "next/router";
 import { AppState, ILogin, InputChange } from "@/utils/types";
 import { useLoginMutation } from "@/redux/api/authApi";
@@ -70,6 +70,7 @@ const LoginPage = () => {
                 isAuthenticated: true,
               })
             );
+            // Go to homepage
             Router.push("/");
           } else {
             toast.error(res.message);
@@ -80,6 +81,12 @@ const LoginPage = () => {
         });
     }
   };
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      Router.push("/");
+    }
+  }, [auth.isAuthenticated]);
 
   return (
     <>
