@@ -125,7 +125,10 @@ const ShoppingCart = () => {
             >
               Cart
             </button>
-            <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+            <button
+              className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+              onClick={() => router.push("/checkout")}
+            >
               Checkout
             </button>
           </div>

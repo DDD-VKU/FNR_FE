@@ -24,6 +24,7 @@ export interface IUser {
 }
 
 export interface ICart {
+  total: ReactNode;
   items: ICartItem[];
   numberOfItems: number;
   subTotal: number;
