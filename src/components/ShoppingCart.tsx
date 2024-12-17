@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/utils/types";
 import { SET_CART } from "@/redux/slices/cartSlice";
+import Link from "next/link";
 
 interface CartItem {
   id: number;
@@ -75,7 +76,12 @@ const ShoppingCart = () => {
         </div>
 
         {authState.isAuthenticated === false && (
-          <p className="text-gray-600">Please log in to view your cart.</p>
+          <p className="text-gray-600">
+            Please log in to view your cart.{" "}
+            <Link className="text-blue-600" href={"/auth/login"}>
+              Login
+            </Link>
+          </p>
         )}
         {cartState.numberOfItems === 0 && authState.isAuthenticated ? (
           <p className="text-gray-600">Your cart is empty.</p>

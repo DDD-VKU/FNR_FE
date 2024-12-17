@@ -2,11 +2,11 @@
 import { useUpdateCartMutation } from "@/redux/api/cartApi";
 import { ADD_TO_CART } from "@/redux/slices/cartSlice";
 import { formatPrice } from "@/utils/appUtils";
-import { ICartItem, ICartItemResquest } from "@/utils/types";
+import { AppState, ICartItem, ICartItemResquest } from "@/utils/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface ProductCardProps {
   id: number;

@@ -19,15 +19,12 @@ const cartSlice = createSlice({
       return state;
     },
     ADD_TO_CART: (state, action: PayloadAction<ICartItem>) => {
-      if (!Array.isArray(state.items)) {
-        state.items = [];
-      }
-
       const existingItem = state.items.find(
-        (item) => item.id === action.payload.id
+        (item) => item.product.id === action.payload.product.id
       );
 
       if (!existingItem) {
+        console.log("Adding new item", action.payload);
         state.items.push(action.payload);
       } else {
         existingItem.quantity += action.payload.quantity;
@@ -64,7 +61,16 @@ const cartSlice = createSlice({
       cartApi.endpoints.updateCart.matchFulfilled,
       (state, action) => {
         console.log(action.payload);
-        state.items = action.payload.data;
+        state.items = action.payload.data.map((item: any) => {
+          return {
+            id: item.id,
+            product: {
+              id: item.product_id,
+              name: item.name,
+            },
+            ...item,
+          };
+        });
         state.numberOfItems = action.payload.total;
         state.subTotal = action.payload.data.reduce(
           (total: number, item: { price: number; quantity: number }) =>
