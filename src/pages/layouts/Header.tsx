@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ShoppingCart from "@/components/ShoppingCart";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -14,12 +15,17 @@ const Header = () => {
   const closeMobileNav = () => {
     setIsMobileNavOpen(false);
   };
-
+  const route = useRouter();
   return (
     <>
       <header className="header py-3">
         <div className="mx-[24px] p-4 flex items-center justify-between">
-          <div className="logo flex items-center space-x-2">
+          <div
+            className="logo flex items-center space-x-2 cursor-pointer"
+            onClick={() => {
+              route.push("/");
+            }}
+          >
             <Image
               src={"/assets/images/logo.png"}
               width={46}

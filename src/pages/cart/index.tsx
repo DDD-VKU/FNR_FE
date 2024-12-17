@@ -18,8 +18,6 @@ const CartPage: React.FC = () => {
     console.log("Proceeding to checkout...");
   };
   const auth = useSelector((state: AppState) => state.auth);
-  const cart = useSelector((state: AppState) => state.cart);
-  const cartItems = cart.items;
 
   useEffect(() => {
     console.log(auth);
@@ -27,7 +25,6 @@ const CartPage: React.FC = () => {
       Router.push("/auth/login");
     }
   }, [auth.isAuthenticated]);
-  console.log("CartItems", cartItems);
   return (
     <>
       <Header />
