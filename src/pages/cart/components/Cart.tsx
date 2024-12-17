@@ -1,16 +1,23 @@
+"use client";
+
 import React from "react";
-import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { ICartItem } from "@/utils/types";
+import { Trash2 } from "lucide-react";
+import { useSelector } from "react-redux";
+import { AppState, ICartItem } from "@/utils/types";
 
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-US").format(price); // Sử dụng 'en-US' hoặc 'vi-VN'
+  return new Intl.NumberFormat("en-IN", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price);
 };
 
 interface CartItemRowProps {
   item: ICartItem;
-  onUpdateQuantity: (id: number, quantity: number) => void; // Hàm cập nhật số lượng nút tăng/giảm
-  onRemoveItem: (id: number) => void; // Hàm xóa item
+  onUpdateQuantity: (id: number, quantity: number) => void;
+  onRemoveItem: (id: number) => void;
 }
 
 const CartItemRow: React.FC<CartItemRowProps> = ({
@@ -19,68 +26,44 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
   onRemoveItem,
 }) => {
   return (
-    <tr className="border-b border-gray-100">
-      {/* Phần hiển thị hình ảnh và tên sản phẩm */}
-      <td className="py-4">
-        <div className="flex items-center gap-4">
-          <div className="w-20 h-20 bg-gray-50 rounded">
-            <Image
-              src={item.image ?? ""}
-              alt={item.product.name}
-              width={500}
-              height={300}
-              className="rounded"
-            />
-          </div>
-          <span className="font-medium">{item.product.name}</span>
-        </div>
-      </td>
-      {/* Phần hiển thị giá */}
-      <td className="py-4">$. {formatPrice(item.price)}</td>
-      <td className="py-4">
-        <div className="flex items-center gap-2">
-          {/* Phần điều chỉnh số lượng */}
-          <button
-            onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-            disabled={item.quantity <= 1}
-            className="p-1 hover:bg-gray-100 rounded disabled:opacity-50"
-          >
-            <Minus size={16} />
-          </button>
-          {/* Input số lượng */}
-          <input
-            type="number"
-            value={item.quantity}
-            onChange={(e) => {
-              const value = parseInt(e.target.value);
-              if (!isNaN(value) && value >= 1) {
-                onUpdateQuantity(item.product.id, value);
-              }
-            }}
-            className="w-16 p-1 border border-gray-200 rounded text-center"
-            min="1"
+    <div className="grid grid-cols-[2fr,1fr,1fr,1fr,auto] items-center gap-4 py-4 text-sm">
+      <div className="flex items-center gap-4">
+        <div className="w-24 h-24 bg-[#FAF4F4] rounded-lg overflow-hidden">
+          <Image
+            src={item.image ?? ""}
+            alt={item.name ?? ""}
+            width={96}
+            height={96}
+            className="object-cover w-full h-full"
           />
-          {/* Nút tăng số lượng */}
-          <button
-            onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-            className="p-1 hover:bg-gray-100 rounded"
-          >
-            <Plus size={16} />
-          </button>
         </div>
-      </td>
-      {/* Phần hiển thị tổng tiền của item */}
-      <td className="py-4">$. {formatPrice(item.price * item.quantity)}</td>
-      <td className="py-4">
-        {/* Nút xóa item */}
-        <button
-          onClick={() => onRemoveItem(item.product.id)}
-          className="p-1 hover:bg-gray-100 rounded text-red-500"
-        >
-          <Trash2 size={16} />
-        </button>
-      </td>
-    </tr>
+        <span className="font-medium">{item.name}</span>
+      </div>
+      <div>Rs. {formatPrice(item.price)}</div>
+      <div>
+        <input
+          type="number"
+          value={item.quantity}
+          onChange={(e) => {
+            const value = parseInt(e.target.value);
+            if (!isNaN(value) && value >= 1) {
+              onUpdateQuantity(item.id!, value);
+            }
+          }}
+          className="w-16 border border-gray-200 rounded px-2 py-1 text-center"
+          min="1"
+        />
+      </div>
+      <div className="font-medium">
+        Rs. {formatPrice(item.price * item.quantity)}
+      </div>
+      <button
+        onClick={() => onRemoveItem(item.id!)}
+        className="p-2 hover:text-red-500 transition-colors"
+      >
+        <Trash2 size={20} />
+      </button>
+    </div>
   );
 };
 
@@ -91,75 +74,85 @@ interface CartTotalsProps {
 
 const CartTotals: React.FC<CartTotalsProps> = ({ subtotal, onCheckout }) => {
   return (
-    <div className="w-full md:w-80 bg-[#F9F1E7] ">
-      <div className="bg-gray- rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-6">Cart Total</h2>
-        <div className="space-y-4">
-          <div className="flex justify-between">
-            <span>Subtotal</span>
-            <span>$. {formatPrice(subtotal)}</span>
-          </div>
-          <div className="flex justify-between font-semibold">
-            <span>Total</span>
-            <span>$. {formatPrice(subtotal)}</span>
-          </div>
-          <button
-            onClick={onCheckout}
-            className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Check Out
-          </button>
+    <div className="bg-[#FAF4F4] p-8 rounded-lg space-y-6">
+      <h2 className="text-2xl font-semibold">Cart Totals</h2>
+      <div className="space-y-4">
+        <div className="flex justify-between">
+          <span>Subtotal</span>
+          <span className="text-gray-600">Rs. {formatPrice(subtotal)}</span>
+        </div>
+        <div className="flex justify-between font-medium">
+          <span>Total</span>
+          <span className="text-[#B88E2F]">Rs. {formatPrice(subtotal)}</span>
         </div>
       </div>
+      <button
+        onClick={onCheckout}
+        className="w-full border-2 border-black rounded-lg py-3 px-6 hover:bg-black hover:text-white transition-colors"
+      >
+        Check Out
+      </button>
     </div>
   );
 };
 
 interface CartProps {
-  items: ICartItem[];
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemoveItem: (id: number) => void;
   onCheckout: () => void;
 }
 
 const Cart: React.FC<CartProps> = ({
-  items,
   onUpdateQuantity,
   onRemoveItem,
   onCheckout,
 }) => {
-  const subtotal = items.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const items = useSelector((state: AppState) => state.cart.items);
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 p-6 max-w-6xl mx-auto">
-      <div className="flex-grow">
-        <table className="w-full ">
-          {/* Phần đầu  */}
-          <thead>
-            <tr className="border-b border-gray-200 bg-[#F9F1E7]">
-              <th className="text-left py-4">Product</th>
-              <th className="text-left py-4">Price</th>
-              <th className="text-left py-4">Quantity</th>
-              <th className="text-left py-4">Subtotal</th>
-              <th className="py-4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <CartItemRow
-                key={item.product.id}
-                item={item}
-                onUpdateQuantity={onUpdateQuantity}
-                onRemoveItem={onRemoveItem}
-              />
-            ))}
-          </tbody>
-        </table>
+    <div className="container mx-auto p-6 max-w-7xl">
+      <div className="grid md:grid-cols-[2fr,1fr] gap-8">
+        {/* Cart Items Section */}
+        <div className="space-y-6">
+          <div className="grid grid-cols-[2fr,1fr,1fr,1fr,auto] gap-4 bg-[#FAF4F4] py-4 px-6 rounded-lg text-sm font-medium">
+            <div>Product</div>
+            <div>Price</div>
+            <div>Quantity</div>
+            <div>Subtotal</div>
+            <div></div>
+          </div>
+
+          {items.length > 0 ? (
+            <div className="divide-y divide-gray-200">
+              {items.map((item) => (
+                <CartItemRow
+                  key={item.id}
+                  item={item}
+                  onUpdateQuantity={onUpdateQuantity}
+                  onRemoveItem={onRemoveItem}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-500 py-10">
+              Your cart is empty. Add some products!
+            </p>
+          )}
+        </div>
+
+        {/* Totals Section */}
+        {items.length > 0 && (
+          <div>
+            <CartTotals
+              subtotal={items.reduce(
+                (total, item) => total + item.price * item.quantity,
+                0
+              )}
+              onCheckout={onCheckout}
+            />
+          </div>
+        )}
       </div>
-      <CartTotals subtotal={subtotal} onCheckout={onCheckout} />
     </div>
   );
 };

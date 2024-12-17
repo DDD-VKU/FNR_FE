@@ -35,6 +35,7 @@ const ShoppingCart = () => {
               total + item.price * item.quantity,
             0
           ),
+          total: undefined,
         })
       );
     }
