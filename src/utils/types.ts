@@ -24,7 +24,7 @@ export interface IUser {
 }
 
 export interface ICart {
-  total: ReactNode;
+  total: number;
   items: ICartItem[];
   numberOfItems: number;
   subTotal: number;
@@ -166,4 +166,9 @@ export interface ICartItemResquest {
   quantity: number;
   price: number;
   action: string;
+}
+
+export enum UpdateQuantityType {
+  INCREMENT = "increment",
+  DECREMENT = "decrement",
 }

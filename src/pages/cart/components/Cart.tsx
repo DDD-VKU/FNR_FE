@@ -3,8 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
-import { useSelector } from "react-redux";
-import { AppState, ICartItem } from "@/utils/types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState, ICartItem, UpdateQuantityType } from "@/utils/types";
 
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-IN", {
@@ -16,7 +16,7 @@ const formatPrice = (price: number) => {
 
 interface CartItemRowProps {
   item: ICartItem;
-  onUpdateQuantity: (id: number, quantity: number) => void;
+  onUpdateQuantity: (id: number, type: UpdateQuantityType) => void;
   onRemoveItem: (id: number) => void;
 }
 
@@ -25,6 +25,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
   onUpdateQuantity,
   onRemoveItem,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className="grid grid-cols-[2fr,1fr,1fr,1fr,auto] items-center gap-4 py-4 text-sm">
       <div className="flex items-center gap-4">
@@ -40,19 +41,58 @@ const CartItemRow: React.FC<CartItemRowProps> = ({
         <span className="font-medium">{item.name}</span>
       </div>
       <div>Rs. {formatPrice(item.price)}</div>
-      <div>
+      <div className="flex items-center space-x-2">
+        <button
+          onClick={() =>
+            // dispatch(DECREMENT_CART(item.id!))
+            onUpdateQuantity(item.id!, UpdateQuantityType.DECREMENT)
+          }
+          className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-100"
+        >
+          <span className="sr-only">Decrease quantity</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 12h-15"
+            />
+          </svg>
+        </button>
         <input
-          type="number"
+          type="text"
           value={item.quantity}
-          onChange={(e) => {
-            const value = parseInt(e.target.value);
-            if (!isNaN(value) && value >= 1) {
-              onUpdateQuantity(item.id!, value);
-            }
-          }}
-          className="w-16 border border-gray-200 rounded px-2 py-1 text-center"
+          className="w-12 border border-gray-200 rounded px-2 py-1 text-center"
           min="1"
         />
+        <button
+          onClick={() =>
+            onUpdateQuantity(item.id!, UpdateQuantityType.INCREMENT)
+          }
+          className="w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-100"
+        >
+          <span className="sr-only">Increase quantity</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+        </button>
       </div>
       <div className="font-medium">
         Rs. {formatPrice(item.price * item.quantity)}
@@ -97,7 +137,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ subtotal, onCheckout }) => {
 };
 
 interface CartProps {
-  onUpdateQuantity: (id: number, quantity: number) => void;
+  onUpdateQuantity: (id: number, type: UpdateQuantityType) => void;
   onRemoveItem: (id: number) => void;
   onCheckout: () => void;
 }

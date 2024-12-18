@@ -38,17 +38,13 @@ const cartSlice = createSlice({
     },
 
     INCREMENT_CART: (state, action: PayloadAction<number>) => {
-      const item = state.items.find(
-        (item) => item.product.id === action.payload
-      );
+      const item = state.items.find((item) => item.id === action.payload);
       if (item) {
         item.quantity += 1;
       }
     },
     DECREMENT_CART: (state, action: PayloadAction<number>) => {
-      const item = state.items.find(
-        (item) => item.product.id === action.payload
-      );
+      const item = state.items.find((item) => item.id === action.payload);
       if (item) {
         if (item.quantity > 1) {
           item.quantity -= 1;
