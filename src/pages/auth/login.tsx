@@ -1,12 +1,12 @@
 import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
-import { Input, TextField } from "@mui/material";
+// import { Input, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Image from "next/image";
-import HttpsIcon from "@mui/icons-material/Https";
+// import HttpsIcon from "@mui/icons-material/Https";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import React, { use, useEffect, useState } from "react";
+// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { AppState, ILogin, InputChange } from "@/utils/types";
 import { useLoginMutation } from "@/redux/api/authApi";
@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_SUCCESS } from "@/redux/slices/authSlice";
+import TextField from "@mui/material/TextField";
 
 const LoginPage = () => {
   const initalState: ILogin = {
@@ -21,9 +22,9 @@ const LoginPage = () => {
     password: "",
   };
   const [loginParams, setloginParams] = useState<ILogin>(initalState);
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginResponse] = useLoginMutation();
   const auth = useSelector((state: AppState) => state.auth);
@@ -191,6 +192,6 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-function setEmailError(arg0: string) {
-  throw new Error("Function not implemented.");
-}
+// function setEmailError(arg0: string) {
+//   throw new Error("Function not implemented.");
+// }

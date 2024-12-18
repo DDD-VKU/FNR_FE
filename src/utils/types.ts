@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, ReactNode } from "react";
 export async function getStaticProps() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 }
@@ -166,4 +166,24 @@ export interface ICartItemResquest {
   quantity: number;
   price: number;
   action: string;
+}
+
+export enum TypePayment {
+  CREDIT_CARD = "CREDIT_CARD",
+  PAYPAL = "PAYPAL",
+  CASH = "CASH",
+  BANK_TRANSFER = "BANK_TRANSFER",
+}
+
+export interface ICreateOrderDetail {
+  quantity: number;
+  price: number;
+  product_id: number;
+}
+
+export interface ICreateOrder {
+  payment_method: TypePayment;
+  subtotal: number;
+  addressId: number;
+  orderDetails: ICreateOrderDetail[];
 }
