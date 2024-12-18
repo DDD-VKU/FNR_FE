@@ -187,3 +187,17 @@ export interface ICreateOrder {
   addressId: number;
   orderDetails: ICreateOrderDetail[];
 }
+
+export interface ICreateAddress {
+  firstName: "";
+  lastName: "";
+  companyName: "";
+  country: "";
+  streetAddress: "";
+  city: "";
+  province: "";
+  zipCode: "";
+  phone: "";
+  email: "";
+  paymentMethod: "";
+}

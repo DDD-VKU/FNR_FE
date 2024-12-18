@@ -6,7 +6,7 @@ import Footer from "../layouts/Footer";
 import HeadImage from "@/components/HeadImage";
 import FeatureCard from "@/components/FeatureCard";
 import { useSelector } from "react-redux";
-import { AppState } from "@/utils/types";
+import { AppState, ICreateAddress } from "@/utils/types";
 import { formatPrice } from "@/utils/appUtils";
 import toast from "react-hot-toast";
 import Router from "next/router";
@@ -14,10 +14,10 @@ import { useCreateOrderMutation } from "@/redux/api/orderApi";
 
 const Checkout: React.FC = () => {
   const cartState = useSelector((state: AppState) => state.cart);
-  const [createOrderRespon] = useCreateOrderMutation();
+  // const [createOrderRespon] = useCreateOrderMutation();
 
   console.log(cartState);
-  const InitialStateForm = {
+  const InitialStateForm: ICreateAddress = {
     firstName: "",
     lastName: "",
     companyName: "",
@@ -74,7 +74,7 @@ const Checkout: React.FC = () => {
 
     if (validateForm()) {
       toast.success("Order placed successfully");
-      createOrderRespon();
+      // createOrderRespon();
       Router.push("/");
     } else {
       toast.error("Please fill in all required fields");

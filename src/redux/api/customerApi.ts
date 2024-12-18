@@ -1,4 +1,4 @@
-import { ILogin, IRegister } from "@/utils/types";
+import { ICreateAddress, ILogin, IRegister } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 
@@ -11,7 +11,15 @@ export const customerApi = createApi({
       Authorization: `Bearer ${Cookies.get("token")}`,
     },
   }),
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    createAddress: builder.mutation<any, ICreateAddress>({
+      query: (body) => ({
+        url: "/address",
+        method: "POST",
+        body,
+      }),
+    }),
+  }),
 });
 
 export const {} = customerApi;
