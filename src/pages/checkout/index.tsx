@@ -15,7 +15,7 @@ const Checkout: React.FC = () => {
   return (
     <>
       <Header />
-      <HeadImage />
+      <HeadImage title="Checkout" link="Checkout" />
       <form action="POST">
         <div className="flex flex-col lg:flex-row p-6 space-y-6 lg:space-y-0 lg:space-x-8 max-w-5xl mx-auto">
           {/* Billing Details Section */}

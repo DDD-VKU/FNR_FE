@@ -59,7 +59,7 @@ const ProductPage = () => {
   return (
     <>
       <Header />
-      <HeadImage />
+      <HeadImage title="Products" link="Products" />
       <section className="w-full bg-[#F9F1E7] p-4 shadow rounded-md">
         <div className="flex flex-col lg:flex-row items-center lg:justify-between space-y-4 lg:space-y-0">
           <div className="flex items-center space-x-4">

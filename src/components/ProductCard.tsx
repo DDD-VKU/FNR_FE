@@ -32,9 +32,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const router = useRouter();
   const dispatch = useDispatch();
   const [updateCart] = useUpdateCartMutation();
+  const authState = useSelector((state: AppState) => state.auth);
 
   const handleAddToCart = async (product: ICartItemResquest) => {
     try {
+      if (!authState.isAuthenticated) {
+        toast.error("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng");
+        return;
+      }
       const res = await updateCart(product);
       if (res.data) {
         dispatch(

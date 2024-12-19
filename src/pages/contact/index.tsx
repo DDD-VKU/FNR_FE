@@ -11,7 +11,7 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <Header />
-      <HeadImage />
+      <HeadImage title="Contact" link="Contact" />
       <div className=" flex flex-col items-center justify-center p-6">
         <div className="max-w-4xl w-full bg-white rounded-lg  p-8">
           <h2 className="text-3xl font-semibold text-center mb-6">

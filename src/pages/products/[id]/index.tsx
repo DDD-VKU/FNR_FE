@@ -39,7 +39,9 @@ const ProductDetail = () => {
       <Header />
       <section>
         <div className="bg-[#F9F1E7] p-6">
-          <p>Link</p>
+          <p>
+            Home / {product?.categories.name} / {product?.name}
+          </p>
         </div>
 
         {/* Main Container */}
