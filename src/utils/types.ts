@@ -46,8 +46,9 @@ export interface IImage {
   images: string[];
 }
 export interface ICategories {
-  id: string;
+  id?: string;
   name: string;
+  created_at?: string;
   //   sku?: string;
 }
 
@@ -165,10 +166,17 @@ export interface ICartItemResquest {
   product_id: number;
   quantity: number;
   price: number;
-  action: string;
+  action: CartAction;
 }
 
 export enum UpdateQuantityType {
   INCREMENT = "increment",
   DECREMENT = "decrement",
+}
+
+export enum CartAction {
+  ADD = "add",
+  REMOVE = "remove",
+  UPDATE = "update",
+  CLEAR = "clear",
 }

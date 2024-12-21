@@ -11,9 +11,11 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@heroicons/react": "^2.2.0",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.4",
     "@reduxjs/toolkit": "^2.3.0",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "dotenv": "^16.4.5",
     "fnr_fe": "file:",
     "js-cookie": "^3.0.5",
@@ -42,5 +44,9 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   }
 }

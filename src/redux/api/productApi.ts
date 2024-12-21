@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import Cookies from "js-cookie";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
@@ -28,6 +28,42 @@ export const productApi = createApi({
         method: "GET",
       }),
     }),
+    getAllCategory: builder.query<any, any>({
+      query: () => ({
+        url: `/category`,
+        method: "GET",
+      }),
+    }),
+    createCategory: builder.mutation<any, any>({
+      query: (body) => ({
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        url: `/category`,
+        method: "POST",
+        body,
+      }),
+    }),
+    updateCategory: builder.mutation<any, any>({
+      query: (body) => ({
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        url: `/category/${body.id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
+
+    deleteCategory: builder.mutation<any, any>({
+      query: (id) => ({
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        url: `/category/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -36,4 +72,8 @@ export const {
   useGetProductsQuery,
   useGetProductsByIdQuery,
   useGetProductsByCategoryQuery,
+  useGetAllCategoryQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
 } = productApi;

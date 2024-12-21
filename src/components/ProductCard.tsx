@@ -2,7 +2,12 @@
 import { useUpdateCartMutation } from "@/redux/api/cartApi";
 import { ADD_TO_CART } from "@/redux/slices/cartSlice";
 import { formatPrice } from "@/utils/appUtils";
-import { AppState, ICartItem, ICartItemResquest } from "@/utils/types";
+import {
+  AppState,
+  CartAction,
+  ICartItem,
+  ICartItemResquest,
+} from "@/utils/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
@@ -44,8 +49,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
       if (res.data) {
         dispatch(
           ADD_TO_CART({
-            price: product.price,
-            quantity: product.quantity,
+            price: product.price ?? 0,
+            quantity: product.quantity ?? 0,
             product: {
               id: product.product_id,
               name: name,
@@ -90,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               onClick={() =>
                 handleAddToCart({
                   product_id: id,
-                  action: "add",
+                  action: CartAction.ADD,
                   quantity: 1,
                   price: price - price * (discount_percent / 100),
                 })
@@ -132,11 +137,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="bg-[#F4F5F7] mt-[-10px]">
           <div className="ml-5 p-2 mb-2">
             <p
-              className="text-[24px] font-semibold mt-2 cursor-pointer hover:text-[#B88E2F] duration-300"
+              className="text-[24px] font-semibold mt-2 cursor-pointer hover:text-[#B88E2F] duration-300 overflow-hidden text-ellipsis whitespace-normal"
+              style={{
+                height: "56px",
+                lineHeight: "28px",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+              }}
               onClick={() => router.push(`/products/${id}`)}
             >
               {name}
             </p>
+
             <p className="text-[16px] text-[#898989]">{type}</p>
             <div className="flex items-center">
               <p className="text-[20px] font-semibold text-[#3A3A3A]">

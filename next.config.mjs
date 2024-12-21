@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['res.cloudinary.com'], // Thêm tên miền của Cloudinary
+    domains: ["res.cloudinary.com"],
   },
 };
 
