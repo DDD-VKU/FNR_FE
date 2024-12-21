@@ -18,7 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useGetProductsQuery } from "@/redux/api/productApi";
 import Loading from "@/components/Loading";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 
 export default function ProductsPage() {
   const {
@@ -30,7 +30,7 @@ export default function ProductsPage() {
     refetchOnMountOrArgChange: true,
   });
 
-  const history = useHistory(); // Hook for navigation
+  const router = useRouter();
 
   if (isLoading) {
     return <Loading />;
@@ -57,8 +57,7 @@ export default function ProductsPage() {
   ];
 
   const handleViewProduct = (productId: number) => {
-    // Navigate to the product details page
-    history.push(`/products/${productId}`);
+    router.push(`/admin/products/${productId}`);
   };
 
   return (
