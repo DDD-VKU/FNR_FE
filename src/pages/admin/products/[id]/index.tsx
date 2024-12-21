@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate"; // Import add image icon
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import {
   useGetProductsByIdQuery,
   useUpdateProductMutation,
@@ -134,7 +134,7 @@ const ProductDetailPage = () => {
               multiline
               rows={3}
               name="short_description"
-              value={product?.products_details?.sort_description || ""}
+              value={product?.products_details?.short_description || ""}
               onChange={handleChange}
             />
 
@@ -170,138 +170,113 @@ const ProductDetailPage = () => {
               onChange={handleChange}
             />
 
-            {/* Categories */}
-            <FormControl fullWidth>
-              <InputLabel>Categories</InputLabel>
-              <Select
-                label="Categories"
-                name="categories_id"
-                value={product?.categories_id || ""}
+            {/* Dimensions Fields */}
+            <Typography variant="h6">Dimensions</Typography>
+            <Stack direction="row" spacing={2}>
+              <TextField
+                label="Width"
+                variant="outlined"
+                fullWidth
+                name="width"
+                value={product?.dimensions?.width || ""}
                 onChange={handleChange}
-              >
-                <MenuItem value={1}>Default</MenuItem>
-                {/* Add more categories dynamically if needed */}
-              </Select>
-            </FormControl>
+              />
+              <TextField
+                label="Height"
+                variant="outlined"
+                fullWidth
+                name="height"
+                value={product?.dimensions?.height || ""}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Depth"
+                variant="outlined"
+                fullWidth
+                name="depth"
+                value={product?.dimensions?.depth || ""}
+                onChange={handleChange}
+              />
+            </Stack>
+            <Stack direction="row" spacing={2}>
+              <TextField
+                label="Weight"
+                variant="outlined"
+                fullWidth
+                name="weight"
+                value={product?.dimensions?.weight || ""}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Seat Height"
+                variant="outlined"
+                fullWidth
+                name="seat_height"
+                value={product?.dimensions?.seat_height || ""}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Leg Height"
+                variant="outlined"
+                fullWidth
+                name="leg_height"
+                value={product?.dimensions?.leg_height || ""}
+                onChange={handleChange}
+              />
+            </Stack>
 
-            {/* Product Images */}
-            <Typography variant="h6">Product Images</Typography>
-            <Box sx={{ display: "flex", gap: 2 }}>
-              {product?.products_images?.images?.map(
-                (img: string, index: number) => (
-                  <Box key={index} sx={{ position: "relative" }}>
-                    <img
-                      src={img}
-                      alt={`Product Image ${index + 1}`}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                        borderRadius: "8px",
-                      }}
-                    />
-                    <Tooltip title="Delete Image">
-                      <IconButton
-                        onClick={() => handleDeleteImage(img)}
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          backgroundColor: "rgba(0, 0, 0, 0.5)",
-                          color: "white",
-                          "&:hover": {
-                            backgroundColor: "rgba(0, 0, 0, 0.7)",
-                          },
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Box>
-                )
-              )}
-            </Box>
-            {/* Add New Image */}
-            {product?.products_images?.images?.length < 4 && (
-              <Box>
-                <TextField
-                  label="New Image URL"
-                  variant="outlined"
-                  fullWidth
-                  value={newImage}
-                  onChange={(e) => setNewImage(e.target.value)}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleAddImage}
-                  sx={{ marginTop: 2 }}
-                  startIcon={<AddPhotoAlternateIcon />}
-                >
-                  Add Image
-                </Button>
-              </Box>
-            )}
-
-            {/* Variants (Size & Color) */}
-            <Typography variant="h6">Variants</Typography>
-            <div>
-              <p>Sizes: {product?.products_variants?.size.join(", ")}</p>
-              <p>Colors: {product?.products_variants?.color.join(", ")}</p>
-            </div>
-
-            {/* Warranty Information */}
-            <Typography variant="h6">Warranty Information</Typography>
+            {/* General Fields */}
+            <Typography variant="h6">General Information</Typography>
+            <Stack direction="row" spacing={2}>
+              <TextField
+                label="Sales Package"
+                variant="outlined"
+                fullWidth
+                name="sales_package"
+                value={product?.general?.sales_package || ""}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Model Number"
+                variant="outlined"
+                fullWidth
+                name="model_number"
+                value={product?.general?.model_number || ""}
+                onChange={handleChange}
+              />
+            </Stack>
+            <Stack direction="row" spacing={2}>
+              <TextField
+                label="Secondary Material"
+                variant="outlined"
+                fullWidth
+                name="secondary_material"
+                value={product?.general?.secondary_material || ""}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Configuration"
+                variant="outlined"
+                fullWidth
+                name="configuration"
+                value={product?.general?.configuration || ""}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Upholstery Material"
+                variant="outlined"
+                fullWidth
+                name="upholstery_material"
+                value={product?.general?.upholstery_material || ""}
+                onChange={handleChange}
+              />
+            </Stack>
             <TextField
-              label="Warranty Summary"
+              label="Upholstery Color"
               variant="outlined"
               fullWidth
-              name="warranty_summary"
-              value={
-                product?.products_details?.warrantys?.warranty_summary || ""
-              }
-              onChange={handleChange}
-            />
-            <TextField
-              label="Warranty Service Type"
-              variant="outlined"
-              fullWidth
-              name="warranty_service_type"
-              value={
-                product?.products_details?.warrantys?.warranty_service_type ||
-                ""
-              }
-              onChange={handleChange}
-            />
-            <TextField
-              label="Covered in Warranty"
-              variant="outlined"
-              fullWidth
-              name="covered_in_warranty"
-              value={
-                product?.products_details?.warrantys?.covered_in_warranty || ""
-              }
-              onChange={handleChange}
-            />
-            <TextField
-              label="Not Covered in Warranty"
-              variant="outlined"
-              fullWidth
-              name="not_covered_in_warranty"
-              value={
-                product?.products_details?.warrantys?.not_covered_in_warranty ||
-                ""
-              }
-              onChange={handleChange}
-            />
-            <TextField
-              label="Domestic Warranty"
-              variant="outlined"
-              fullWidth
-              name="domestic_warranty"
-              value={
-                product?.products_details?.warrantys?.domestic_warranty || ""
-              }
+              name="upholstery_color"
+              value={product?.general?.upholstery_color || ""}
               onChange={handleChange}
             />
 
