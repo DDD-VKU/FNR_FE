@@ -6,46 +6,53 @@ import Footer from "../layouts/Footer";
 import HeadImage from "@/components/HeadImage";
 import FeatureCard from "@/components/FeatureCard";
 import { useSelector } from "react-redux";
-import { AppState, ICreateAddress } from "@/utils/types";
+import {
+  AppState,
+  ICreateAddress,
+  InputChange,
+  TypePayment,
+} from "@/utils/types";
 import { formatPrice } from "@/utils/appUtils";
 import toast from "react-hot-toast";
 import Router from "next/router";
-import { useCreateOrderMutation } from "@/redux/api/orderApi";
+// import { useCreateOrderMutation } from "@/redux/api/orderApi";
+import { useCreateAddressMutation } from "@/redux/api/customerApi";
 
 const Checkout: React.FC = () => {
   const cartState = useSelector((state: AppState) => state.cart);
-  // const [createOrderRespon] = useCreateOrderMutation();
 
   console.log(cartState);
   const InitialStateForm: ICreateAddress = {
-    firstName: "",
-    lastName: "",
-    companyName: "",
+    first_name: "",
+    last_name: "",
+    // companyName: "",
     country: "",
-    streetAddress: "",
+    // streetAddress: "",
     city: "",
     province: "",
-    zipCode: "",
+    zipcode: "",
     phone: "",
     email: "",
-    paymentMethod: "",
+    // paymentMethod: TypePayment.BANK_TRANSFER,
   };
-  const [formData, setFormData] = useState(InitialStateForm);
+  const [formData, setFormData] = useState<ICreateAddress>(InitialStateForm);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  // const [createOrderRespon] = useCreateOrderMutation();
+  const [createAddressRespon] = useCreateAddressMutation();
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!formData.firstName.trim())
+    if (!formData.first_name.trim())
       newErrors.firstName = "First name is required.";
-    formData.firstName.replace(/[^a-zA-Z0-9\s]/g, "");
-    if (!formData.lastName.trim())
-      newErrors.lastName = "Last name is required.";
-    formData.lastName.replace(/[^a-zA-Z0-9\s]/g, "");
-    if (!formData.streetAddress.trim())
-      newErrors.streetAddress = "Street address is required.";
+    formData.first_name.replace(/[^a-zA-Z0-9\s]/g, "");
+    if (!formData.last_name.trim())
+      newErrors.last_name = "Last name is required.";
+    formData.last_name.replace(/[^a-zA-Z0-9\s]/g, "");
+    // if (!formData.streetAddress.trim())
+    //   newErrors.streetAddress = "Street address is required.";
     if (!formData.city.trim()) newErrors.city = "City is required.";
-    if (!formData.zipCode.trim()) newErrors.zipCode = "Zipcode is required.";
+    if (!formData.zipcode.trim()) newErrors.zipCode = "Zipcode is required.";
     if (
       !formData.email.trim() ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
@@ -64,18 +71,42 @@ const Checkout: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: InputChange) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(formData);
 
     if (validateForm()) {
-      toast.success("Order placed successfully");
-      // createOrderRespon();
-      Router.push("/");
+      const addressBody: ICreateAddress = {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        // companyName: "",
+        country: formData.country,
+        // streetAddress: "",
+        city: formData.city,
+        province: formData.province,
+        zipcode: formData.zipcode,
+        phone: formData.phone,
+        email: formData.email,
+      };
+      createAddressRespon(addressBody)
+        .unwrap()
+        .then((res) => {
+          if (res.status == 201) {
+            toast.success("Order placed successfully");
+            console.log(res);
+            Router.push("/");
+          } else {
+            toast.error("Cannot create order");
+          }
+        })
+        .catch((error) => {
+          toast.error("An error occurred. Please try again.");
+          console.error(error);
+        });
     } else {
       toast.error("Please fill in all required fields");
     }
@@ -92,16 +123,16 @@ const Checkout: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <InputField
                 onChange={handleOnChange}
-                name="firstName"
+                name="first_name"
                 label="First Name"
-                error={errors.firstName}
+                error={errors.first_name}
                 isRequired
               />
               <InputField
                 onChange={handleOnChange}
-                name="lastName"
+                name="last_name"
                 label="Last Name"
-                error={errors.lastName}
+                error={errors.last_name}
                 isRequired
               />
             </div>
@@ -160,7 +191,7 @@ const Checkout: React.FC = () => {
               isRequired
             />
             <InputField
-              name="zipCode"
+              name="zipcode"
               onChange={handleOnChange}
               label="Zip Code"
               isRequired
@@ -208,7 +239,7 @@ const Checkout: React.FC = () => {
             <h2 className="text-lg font-semibold">Payment Method</h2>
             <PaymentMethod
               selectedMethod={formData.paymentMethod}
-              onChange={(method: string) =>
+              onChange={(method: TypePayment) =>
                 setFormData({ ...formData, paymentMethod: method })
               }
               error={errors.paymentMethod}

@@ -1,4 +1,4 @@
-import { ICreateAddress, ILogin, IRegister } from "@/utils/types";
+import { ICreateAddress } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 
@@ -22,4 +22,4 @@ export const customerApi = createApi({
   }),
 });
 
-export const {} = customerApi;
+export const { useCreateAddressMutation } = customerApi;

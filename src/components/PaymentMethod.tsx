@@ -1,8 +1,9 @@
+import { TypePayment } from "@/utils/types";
 import React from "react";
 
 interface PaymentMethodProps {
-  selectedMethod: string;
-  onChange: (method: string) => void;
+  selectedMethod: TypePayment;
+  onChange: (method: TypePayment) => void;
   error?: string;
 }
 
@@ -17,9 +18,9 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({
         type="radio"
         id="bank"
         name="payment"
-        value="bank"
-        checked={selectedMethod === "bank"}
-        onChange={() => onChange("bank")}
+        value={TypePayment.BANK_TRANSFER}
+        checked={selectedMethod === TypePayment.BANK_TRANSFER}
+        onChange={() => onChange(TypePayment.BANK_TRANSFER)}
       />
       <label htmlFor="bank" className="text-sm font-medium">
         Direct Bank Transfer
@@ -36,9 +37,9 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({
         type="radio"
         id="creditCard"
         name="payment"
-        value="creditCard"
-        checked={selectedMethod === "creditCard"}
-        onChange={() => onChange("creditCard")}
+        value={TypePayment.CREDIT_CARD}
+        checked={selectedMethod === TypePayment.CREDIT_CARD}
+        onChange={() => onChange(TypePayment.CREDIT_CARD)}
       />
       <label htmlFor="creditCard" className="text-sm font-medium">
         Credit Card
@@ -50,12 +51,25 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({
         type="radio"
         id="cod"
         name="payment"
-        value="cod"
-        checked={selectedMethod === "cod"}
-        onChange={() => onChange("cod")}
+        value={TypePayment.COD}
+        checked={selectedMethod === TypePayment.COD}
+        onChange={() => onChange(TypePayment.COD)}
       />
       <label htmlFor="cod" className="text-sm font-medium">
         Cash On Delivery
+      </label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <input
+        type="radio"
+        id="pp"
+        name="payment"
+        value={TypePayment.PAYPAL}
+        checked={selectedMethod === TypePayment.PAYPAL}
+        onChange={() => onChange(TypePayment.PAYPAL)}
+      />
+      <label htmlFor="cod" className="text-sm font-medium">
+        PayPal
       </label>
     </div>
     {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

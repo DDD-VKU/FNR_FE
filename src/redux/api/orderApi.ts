@@ -1,4 +1,4 @@
-import { ICreateOrder, ILogin, IRegister } from "@/utils/types";
+import { ICreateOrder } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 
