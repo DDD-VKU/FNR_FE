@@ -1,7 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
-export async function getStaticProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-}
+
 export type FormSubmit = FormEvent<HTMLFormElement>;
 export type InputChange = ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -31,15 +29,33 @@ export interface ICart {
 }
 
 export interface IProduct {
-  id: number;
+  created_at?: string;
+  id?: number;
   name: string;
   description?: string;
   price?: number;
+  products_prices?: IProducts_Prices;
   products_images?: IImage;
   categories?: ICategories;
   SKU?: string;
   products_details?: IProductDetail;
   tags?: string[];
+  categories_id?: number;
+  products_variants?: IProductsVariants;
+}
+
+export interface IProductsVariants {
+  id?: string;
+  color: string[];
+  size: string[];
+}
+export interface IGeneral {
+  sales_package: string;
+  model_number: string;
+  secondary_material: string;
+  configuration: string;
+  upholstery_material: string;
+  upholstery_color: string;
 }
 export interface IImage {
   id?: string;
@@ -53,28 +69,37 @@ export interface ICategories {
 }
 
 export interface IProductDetail {
-  id: string;
+  id?: string;
   sort_description: string;
   long_description: string;
   dimensions: IDimensions;
+  general: IGeneral;
+  warranty: IWarranty;
 }
 
+export interface IWarranty {
+  warranty_summary: string;
+  warranty_service_type: string;
+  covered_in_warranty: string;
+  not_covered_in_warranty: string;
+  domestic_warranty: string;
+}
 export interface IProducts_Prices {
-  id: string;
+  id?: string;
   price: number;
   sale_percent: number;
-  products_id: number;
+  products_id?: number;
 }
 
 export interface IDimensions {
-  id: string;
+  id?: string;
   width: number;
   height: number;
   depth: number;
   weight: number;
   seat_height?: number;
   leg_height?: number;
-  products_dimensions_details_id: number;
+  products_dimensions_details_id?: number;
 }
 
 export interface ICartItem {
