@@ -18,6 +18,8 @@ export const customerApi = createApi({
         url: "/address",
         method: "POST",
         body,
+      }),
+    }),
     getAllCustomer: builder.query<any, IUser>({
       query: () => ({
         url: "/",
