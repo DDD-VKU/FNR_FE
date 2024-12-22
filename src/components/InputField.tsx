@@ -9,6 +9,9 @@ interface InputFieldProps {
   className?: string;
   isRequired?: boolean;
   isEmail?: boolean;
+  name?: string;
+  error?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -20,17 +23,25 @@ const InputField: React.FC<InputFieldProps> = ({
   className,
   isRequired = false,
   isEmail = false,
+  name,
+  error,
+  onChange,
 }) => (
   <div className={`w-full ${className}`}>
     <label className="block text-sm font-medium text-gray-700">{label}</label>
     {type === "input" ? (
-      <input
-        type={isEmail ? "email" : "text"}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        className="mt-1 p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black break-words"
-        required={isRequired}
-      />
+      <>
+        <input
+          type={isEmail ? "email" : "text"}
+          onChange={onChange}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          className="mt-1 p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black break-words"
+          required={isRequired}
+          name={name}
+        />
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      </>
     ) : (
       <select
         defaultValue={defaultValue}

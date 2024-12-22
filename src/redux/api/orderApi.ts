@@ -1,20 +1,20 @@
-import { ICreateAddress, ILogin, IRegister } from "@/utils/types";
+import { ICreateOrder, ILogin, IRegister } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 
-export const customerApi = createApi({
-  reducerPath: "customerApi",
+export const orderApi = createApi({
+  reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}customer`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}order`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${Cookies.get("token")}`,
     },
   }),
   endpoints: (builder) => ({
-    createAddress: builder.mutation<any, ICreateAddress>({
+    createOrder: builder.mutation<any, ICreateOrder>({
       query: (body) => ({
-        url: "/address",
+        url: "/",
         method: "POST",
         body,
       }),
@@ -22,4 +22,4 @@ export const customerApi = createApi({
   }),
 });
 
-export const {} = customerApi;
+export const { useCreateOrderMutation } = orderApi;

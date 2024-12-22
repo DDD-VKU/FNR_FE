@@ -205,3 +205,37 @@ export enum CartAction {
   UPDATE = "update",
   CLEAR = "clear",
 }
+
+export enum TypePayment {
+  CREDIT_CARD = "CREDIT_CARD",
+  PAYPAL = "PAYPAL",
+  CASH = "CASH",
+  BANK_TRANSFER = "BANK_TRANSFER",
+}
+
+export interface ICreateOrderDetail {
+  quantity: number;
+  price: number;
+  product_id: number;
+}
+
+export interface ICreateOrder {
+  payment_method: TypePayment;
+  subtotal: number;
+  addressId: number;
+  orderDetails: ICreateOrderDetail[];
+}
+
+export interface ICreateAddress {
+  firstName: "";
+  lastName: "";
+  companyName: "";
+  country: "";
+  streetAddress: "";
+  city: "";
+  province: "";
+  zipCode: "";
+  phone: "";
+  email: "";
+  paymentMethod: "";
+}
