@@ -75,7 +75,7 @@ const Checkout: React.FC = () => {
     if (validateForm()) {
       toast.success("Order placed successfully");
       // createOrderRespon();
-      Router.push("/");
+      // Router.push("/");
     } else {
       toast.error("Please fill in all required fields");
     }
@@ -83,7 +83,7 @@ const Checkout: React.FC = () => {
   return (
     <>
       <Header />
-      <HeadImage />
+      <HeadImage title={"Checkout"} link={"Checkout"} />
       <form action="POST" onSubmit={handleSubmit}>
         <div className="flex flex-col lg:flex-row p-6 space-y-6 lg:space-y-0 lg:space-x-8 max-w-5xl mx-auto">
           {/* Billing Details Section */}
