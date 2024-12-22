@@ -232,7 +232,7 @@ export interface ICreateAddress {
   last_name: string;
   companyName?: string;
   country: string;
-  streetAddress?: string;
+  street?: string;
   city: string;
   province: string;
   zipcode: string;
@@ -241,4 +241,8 @@ export interface ICreateAddress {
   paymentMethod?: TypePayment;
 }
 
-// record of type must be same schena and name in input input=record=schema
+export interface ICustomerProfile {
+  name: string;
+  email: string;
+  phone: string;
+}

@@ -57,6 +57,11 @@ const cartSlice = createSlice({
         updateCartSummary(state);
       }
     },
+    CLEAR_CART: (state) => {
+      state.items = [];
+      state.numberOfItems = 0;
+      state.subTotal = 0;
+    },
 
     // Giảm số lượng sản phẩm
     DECREMENT_CART: (state, action: PayloadAction<number>) => {
@@ -96,5 +101,10 @@ const cartSlice = createSlice({
 
 export default cartSlice.reducer;
 
-export const { SET_CART, ADD_TO_CART, INCREMENT_CART, DECREMENT_CART } =
-  cartSlice.actions;
+export const {
+  SET_CART,
+  ADD_TO_CART,
+  INCREMENT_CART,
+  DECREMENT_CART,
+  CLEAR_CART,
+} = cartSlice.actions;

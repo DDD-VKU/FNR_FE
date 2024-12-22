@@ -73,7 +73,7 @@ const ProductDetail = () => {
       toast.error("Thêm sản phẩm vào giỏ hàng không thành công");
     }
   };
-
+  if (isLoading) return <Loading />;
   return (
     <>
       <Header />

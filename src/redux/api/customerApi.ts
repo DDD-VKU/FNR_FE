@@ -36,8 +36,22 @@ export const customerApi = createApi({
         method: "DELETE",
       }),
     }),
+
+    getAddressById: builder.query<any, any>({
+      query: () => ({
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+        url: `/address/find/${localStorage.getItem("addressId")}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllCustomerQuery, useDeleteCustomerMutation } =
-  customerApi;
+export const {
+  useGetAllCustomerQuery,
+  useDeleteCustomerMutation,
+  useCreateAddressMutation,
+  useGetAddressByIdQuery,
+} = customerApi;

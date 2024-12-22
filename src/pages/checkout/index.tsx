@@ -1,45 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "@/components/InputField";
 import PaymentMethod from "@/components/PaymentMethod";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import HeadImage from "@/components/HeadImage";
 import FeatureCard from "@/components/FeatureCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AppState,
   ICreateAddress,
+  ICreateOrder,
   InputChange,
   TypePayment,
 } from "@/utils/types";
-import { formatPrice } from "@/utils/appUtils";
+import { formatPrice, rerdirectTo } from "@/utils/appUtils";
 import toast from "react-hot-toast";
-import Router from "next/router";
-// import { useCreateOrderMutation } from "@/redux/api/orderApi";
-import { useCreateAddressMutation } from "@/redux/api/customerApi";
+import { useCreateOrderMutation } from "@/redux/api/orderApi";
+import {
+  useCreateAddressMutation,
+  useGetAddressByIdQuery,
+} from "@/redux/api/customerApi";
+import { useRouter } from "next/router";
+import { CLEAR_CART } from "@/redux/slices/cartSlice";
+import Loading from "@/components/Loading";
 
 const Checkout: React.FC = () => {
-  const cartState = useSelector((state: AppState) => state.cart);
-
-  console.log(cartState);
   const InitialStateForm: ICreateAddress = {
     first_name: "",
     last_name: "",
-    // companyName: "",
     country: "",
-    // streetAddress: "",
     city: "",
     province: "",
     zipcode: "",
     phone: "",
     email: "",
-    // paymentMethod: TypePayment.BANK_TRANSFER,
+    street: "",
+    paymentMethod: TypePayment.BANK_TRANSFER,
   };
   const [formData, setFormData] = useState<ICreateAddress>(InitialStateForm);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  // const [createOrderRespon] = useCreateOrderMutation();
+  const [createOrderRespon] = useCreateOrderMutation();
   const [createAddressRespon] = useCreateAddressMutation();
+  const [isLoading, setIsLoading] = useState(false);
+  const route = useRouter();
+  const dispatch = useDispatch();
+  const cartState = useSelector((state: AppState) => state.cart);
 
+  const { data: addressRespon, isLoading: isLoadingAddress } =
+    useGetAddressByIdQuery({});
+
+  useEffect(() => {
+    const addressId = localStorage.getItem("addressId");
+    if (addressId != undefined) {
+      setFormData({
+        ...formData,
+        first_name: addressRespon?.data.first_name || "",
+        last_name: addressRespon?.data.last_name || "",
+        city: addressRespon?.data.city || "",
+        zipcode: addressRespon?.data.zipcode || "",
+        email: addressRespon?.data.email || "",
+        phone: addressRespon?.data.phone || "",
+        street: addressRespon?.data.street || "",
+      });
+    }
+  }, [addressRespon]);
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -49,8 +73,6 @@ const Checkout: React.FC = () => {
     if (!formData.last_name.trim())
       newErrors.last_name = "Last name is required.";
     formData.last_name.replace(/[^a-zA-Z0-9\s]/g, "");
-    // if (!formData.streetAddress.trim())
-    //   newErrors.streetAddress = "Street address is required.";
     if (!formData.city.trim()) newErrors.city = "City is required.";
     if (!formData.zipcode.trim()) newErrors.zipCode = "Zipcode is required.";
     if (
@@ -77,7 +99,12 @@ const Checkout: React.FC = () => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+
+    if (cartState.items.length === 0) {
+      toast.error("Cart is empty");
+      rerdirectTo("/");
+      return;
+    }
 
     if (validateForm()) {
       const addressBody: ICreateAddress = {
@@ -85,20 +112,44 @@ const Checkout: React.FC = () => {
         last_name: formData.last_name,
         // companyName: "",
         country: formData.country,
-        // streetAddress: "",
+        street: formData.street,
         city: formData.city,
         province: formData.province,
         zipcode: formData.zipcode,
         phone: formData.phone,
         email: formData.email,
       };
+      setIsLoading(true);
       createAddressRespon(addressBody)
         .unwrap()
         .then((res) => {
           if (res.status == 201) {
             toast.success("Order placed successfully");
-            console.log(res);
-            Router.push("/");
+            // push order
+            localStorage.setItem("addressId", res.data.id);
+            const orderBody: ICreateOrder = {
+              addressId: res.data.id,
+              payment_method:
+                formData.paymentMethod ?? TypePayment.BANK_TRANSFER,
+              subtotal: cartState.subTotal,
+              orderDetails: cartState.items.map((item: any) => ({
+                product_id: item.product_id,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+            };
+            createOrderRespon(orderBody)
+              .unwrap()
+              .then((res) => {
+                if (res.status == 201) {
+                  toast.success("Order placed successfully");
+                  dispatch(CLEAR_CART());
+                  route.push("/");
+                }
+              })
+              .catch((error) => {
+                toast.error("An error occurred. Please try again.");
+              });
           } else {
             toast.error("Cannot create order");
           }
@@ -107,10 +158,14 @@ const Checkout: React.FC = () => {
           toast.error("An error occurred. Please try again.");
           console.error(error);
         });
+      setIsLoading(false);
     } else {
+      if (isLoading == true) setIsLoading(false);
       toast.error("Please fill in all required fields");
     }
   };
+
+  if (isLoading || isLoadingAddress) return <Loading />;
   return (
     <>
       <Header />
@@ -125,6 +180,7 @@ const Checkout: React.FC = () => {
                 onChange={handleOnChange}
                 name="first_name"
                 label="First Name"
+                defaultValue={formData.first_name}
                 error={errors.first_name}
                 isRequired
               />
@@ -132,6 +188,7 @@ const Checkout: React.FC = () => {
                 onChange={handleOnChange}
                 name="last_name"
                 label="Last Name"
+                defaultValue={formData.last_name}
                 error={errors.last_name}
                 isRequired
               />
@@ -139,7 +196,6 @@ const Checkout: React.FC = () => {
             <InputField
               name="companyName"
               label="Company Name (Optional)"
-              isRequired
               onChange={handleOnChange}
             />
             <InputField
@@ -148,7 +204,7 @@ const Checkout: React.FC = () => {
               name="country"
               label="Country / Region"
               type="select"
-              defaultValue="Vietnam"
+              defaultValue={formData.country ?? "Viet Nam"}
               options={[
                 "Viet Nam",
                 "United States",
@@ -159,15 +215,17 @@ const Checkout: React.FC = () => {
               ]}
             />
             <InputField
-              name="streetAddress"
+              name="street"
               label="Street address"
               isRequired
+              defaultValue={formData.street}
               onChange={handleOnChange}
             />
             <InputField
               name="city"
               label="Town / City"
               isRequired
+              defaultValue={formData.city}
               onChange={handleOnChange}
             />
             <InputField
@@ -175,7 +233,7 @@ const Checkout: React.FC = () => {
               name="province"
               type="select"
               onChange={handleOnChange}
-              defaultValue="Western Province"
+              defaultValue={formData.province ?? "Hanoi"}
               options={[
                 "Hanoi",
                 "Ho Chi Minh",
@@ -189,17 +247,20 @@ const Checkout: React.FC = () => {
               name="email"
               onChange={handleOnChange}
               label="Email Address"
+              defaultValue={formData.email}
               isEmail
               isRequired
             />
             <InputField
               name="zipcode"
+              defaultValue={formData.zipcode}
               onChange={handleOnChange}
               label="Zip Code"
               isRequired
             />
             <InputField
               name="phone"
+              defaultValue={formData.phone}
               onChange={handleOnChange}
               label="Phone Number"
               isRequired

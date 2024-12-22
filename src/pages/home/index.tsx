@@ -3,18 +3,28 @@ import Image from "next/image";
 import Carousel from "./components/carousel";
 import { useState } from "react";
 import { rooms } from "@/utils/constant";
+import { useRouter } from "next/router";
+import { useGetProductsQuery } from "@/redux/api/productApi";
+import Loading from "@/components/Loading";
 const HomePage = () => {
-  const products = Array.from({ length: 8 }, (_, i) => ({
-    id: i,
-    name: `Product ${i + 1}`,
-    type: "Sample Type",
-    image: `/assets/images/products.png`,
-    price: 100 + i * 10,
-    discount_percent: 10 + i,
-    price_before_discount: 150 + i * 10,
-  }));
-  const [roomSelected, setRoomSelected] = useState(0);
+  const { data: productResponse, isLoading, error } = useGetProductsQuery({});
+  const products =
+    Array.isArray(productResponse?.data) && productResponse?.data.length > 0
+      ? [...productResponse.data].sort(() => Math.random() - 0.5).slice(0, 8)
+      : Array.from({ length: 8 }, (_, i) => ({
+          id: i,
+          name: `Product ${i + 1}`,
+          type: "Sample Type",
+          image: `/assets/images/products.png`,
+          price: 100 + i * 10,
+          discount_percent: 10 + i,
+          price_before_discount: 150 + i * 10,
+        }));
 
+  const [roomSelected, setRoomSelected] = useState(0);
+  const route = useRouter();
+
+  if (isLoading) return <Loading />;
   return (
     <>
       {/* slideshow */}
@@ -35,7 +45,12 @@ const HomePage = () => {
             <h2 className="text-[18px] font-bold">
               Lorem ipsum dolor sit amet consectetur adipisicing eligendi!
             </h2>
-            <button className="bg-[#B88E2F] text-[16px] text-white px-12 py-4 mt-4 font-bold hover:bg-yellow-900 ">
+            <button
+              className="bg-[#B88E2F] text-[16px] text-white px-12 py-4 mt-4 font-bold hover:bg-yellow-900 "
+              onClick={() => {
+                route.push("/products");
+              }}
+            >
               BUY NOW
             </button>
           </div>
@@ -89,13 +104,16 @@ const HomePage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {products.map((product) => (
             <ProductCard
+              id={product.id}
               key={product.id}
               name={product.name}
               type={product.type}
               image={product.image}
-              price={product.price}
-              discount_percent={product.discount_percent}
-              price_before_discount={product.price_before_discount}
+              price={
+                product.price - product.price * (product.sale_percent / 100)
+              }
+              discount_percent={product.sale_percent}
+              price_before_discount={product.price}
               is_new_product={product.id % 2 === 0}
             />
           ))}

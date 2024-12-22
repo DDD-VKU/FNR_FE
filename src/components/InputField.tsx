@@ -39,12 +39,15 @@ const InputField: React.FC<InputFieldProps> = ({
           className="mt-1 p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black break-words"
           required={isRequired}
           name={name}
+          value={defaultValue}
         />
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
       </>
     ) : (
       <select
         defaultValue={defaultValue}
+        name={name}
+        onChange={onChange}
         className="mt-1 p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black break-words"
       >
         {options &&

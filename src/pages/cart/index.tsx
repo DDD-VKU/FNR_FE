@@ -14,6 +14,7 @@ import Cart from "./components/Cart";
 import { DECREMENT_CART, INCREMENT_CART } from "@/redux/slices/cartSlice";
 import { useUpdateCartMutation } from "@/redux/api/cartApi";
 import toast from "react-hot-toast";
+import { rerdirectTo } from "@/utils/appUtils";
 
 const CartPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -66,7 +67,6 @@ const CartPage: React.FC = () => {
   const auth = useSelector((state: AppState) => state.auth);
 
   useEffect(() => {
-    console.log(auth);
     if (!auth.isAuthenticated) {
       Router.push("/auth/login");
     }
@@ -78,7 +78,7 @@ const CartPage: React.FC = () => {
       <Cart
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
-        onCheckout={() => route.push("/checkout")}
+        onCheckout={() => rerdirectTo("/checkout")}
       />
       <FeatureCard />
       <Footer />

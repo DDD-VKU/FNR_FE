@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/utils/types";
 import { SET_CART } from "@/redux/slices/cartSlice";
 import Link from "next/link";
+import { rerdirectTo } from "@/utils/appUtils";
 
 interface CartItem {
   id: number;
@@ -122,13 +123,13 @@ const ShoppingCart = () => {
           <div className="flex space-x-2">
             <button
               className="flex-1 border border-gray-500 text-gray-700 py-2 rounded-lg hover:bg-gray-100"
-              onClick={() => router.push("/cart")}
+              onClick={() => rerdirectTo("/cart")}
             >
               Cart
             </button>
             <button
               className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-              onClick={() => router.push("/checkout")}
+              onClick={() => rerdirectTo("/checkout")}
             >
               Checkout
             </button>

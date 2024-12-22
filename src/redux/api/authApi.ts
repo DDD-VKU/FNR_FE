@@ -33,7 +33,7 @@ export const authApi = createApi({
           Authorization: `Bearer ${Cookies.get("token")}`,
         },
         url: "/check-token",
-        method: "POST",
+        method: "GET",
       }),
     }),
   }),

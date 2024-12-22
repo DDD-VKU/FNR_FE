@@ -5,6 +5,7 @@ import { authApi } from "./api/authApi";
 import { productApi } from "./api/productApi";
 import { cartApi } from "./api/cartApi";
 import { customerApi } from "./api/customerApi";
+import { orderApi } from "./api/orderApi";
 
 export default configureStore({
   reducer: {
@@ -14,13 +15,15 @@ export default configureStore({
     [productApi.reducerPath]: productApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(
       authApi.middleware,
       productApi.middleware,
       cartApi.middleware,
-      customerApi.middleware
+      customerApi.middleware,
+      orderApi.middleware
     );
   },
 });
