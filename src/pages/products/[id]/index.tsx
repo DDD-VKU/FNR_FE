@@ -6,9 +6,18 @@ import Header from "@/pages/layouts/Header";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useGetProductsByIdQuery } from "@/redux/api/productApi";
-import { IProduct } from "@/utils/types";
+import {
+  AppState,
+  CartAction,
+  ICartItemResquest,
+  IProduct,
+} from "@/utils/types";
 import RelatedProduct from "@/components/RelatedProduct";
 import Loading from "@/components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { useUpdateCartMutation } from "@/redux/api/cartApi";
+import { ADD_TO_CART } from "@/redux/slices/cartSlice";
 // import { ICategories} from "@/utils/types";
 const ProductDetail = () => {
   const id = useRouter().query.id;
@@ -33,7 +42,38 @@ const ProductDetail = () => {
     console.log("Category ID:", categoryId);
   }, [product, categoryId]);
 
+  const authState = useSelector((state: AppState) => state.auth);
+  const dispatch = useDispatch();
+  const [updateCart] = useUpdateCartMutation();
   if (isLoading) return <Loading />;
+  const handleAddToCart = async (product: ICartItemResquest) => {
+    try {
+      if (!authState.isAuthenticated) {
+        toast.error("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng");
+        return;
+      }
+      const res = await updateCart(product);
+      if (res.data) {
+        dispatch(
+          ADD_TO_CART({
+            price: product.price ?? 0,
+            quantity: product.quantity ?? 0,
+            product: {
+              id: product.product_id,
+              name: "",
+              products_images: { images: [] },
+              price: product.price,
+            },
+          })
+        );
+        toast.success("Thêm sản phẩm vào giỏ hàng thành công");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Thêm sản phẩm vào giỏ hàng không thành công");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -193,7 +233,7 @@ const ProductDetail = () => {
               {product?.name}
             </h1>
             <p className="text-[#9F9F9F] text-[24px]">
-              Rs&nbsp;{product?.products_prices?.price}
+              $&nbsp;{product?.products_prices?.price}
             </p>
             <div className="flex items-center space-x-2">
               <div className="text-yellow-500 text-xl">★ ★ ★ ★ ★</div>
@@ -239,7 +279,20 @@ const ProductDetail = () => {
                 min={1}
                 placeholder="1"
               />
-              <button className=" px-6 py-4 rounded-lg border border-black">
+              <button
+                className=" px-6 py-4 rounded-lg border border-black"
+                onClick={() =>
+                  handleAddToCart({
+                    product_id: product?.id,
+                    action: CartAction.ADD,
+                    quantity: 1,
+                    price:
+                      product?.products_prices?.price -
+                      product?.products_prices?.price *
+                        (product?.products_prices?.sale_percent / 100),
+                  })
+                }
+              >
                 Add To Cart
               </button>
               <button className=" px-6 py-4 rounded-lg border border-black">

@@ -61,7 +61,7 @@ const ComparePage: React.FC = () => {
                 <h3 className="text-lg font-semibold mt-2">
                   {products[0].name}
                 </h3>
-                <p className="text-gray-600">Rs. {products[0].price}</p>
+                <p className="text-gray-600">$ {products[0].price}</p>
                 <div className="flex items-center mt-2">
                   <span className="text-yellow-500 text-lg">
                     ★ {products[0].rating}
@@ -90,7 +90,7 @@ const ComparePage: React.FC = () => {
                 <h3 className="text-lg font-semibold mt-2">
                   {products[1].name}
                 </h3>
-                <p className="text-gray-600">Rs. {products[1].price}</p>
+                <p className="text-gray-600">$ {products[1].price}</p>
                 <div className="flex items-center mt-2">
                   <span className="text-yellow-500 text-lg">
                     ★ {products[1].rating}

@@ -30,13 +30,14 @@ const Checkout: React.FC = () => {
               isRequired
               label="Country / Region"
               type="select"
-              defaultValue="Sri Lanka"
+              defaultValue="Vietnam"
               options={[
                 "Sri Lanka",
                 "United States",
                 "Canada",
                 "Australia",
                 "United Kingdom",
+                "Vietnam",
               ]}
             />
             <InputField label="Street address" isRequired />
@@ -46,11 +47,12 @@ const Checkout: React.FC = () => {
               type="select"
               defaultValue="Western Province"
               options={[
-                "Western Province",
-                "Central Province",
-                "Southern Province",
-                "Northern Province",
-                "Eastern Province",
+                "Hanoi",
+                "Ho Chi Minh",
+                "Da Nang",
+                "Can Tho",
+                "Binh Duong",
+                "Quang Nam",
               ]}
             />
             <InputField label="Email Address" isEmail />

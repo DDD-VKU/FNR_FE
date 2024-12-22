@@ -36,7 +36,7 @@ const CartItemRow: React.FC<{
         </div>
         <span className="font-medium">{item.name}</span>
       </div>
-      <div>Rs. {formatPrice(item.price)}</div>
+      <div>$ {formatPrice(item.price)}</div>
       <div className="flex items-center space-x-2">
         <button
           onClick={() =>
@@ -93,7 +93,7 @@ const CartItemRow: React.FC<{
         </button>
       </div>
       <div className="font-medium">
-        Rs. {formatPrice(item.price * item.quantity)}
+        $ {formatPrice(item.price * item.quantity)}
       </div>
       <button
         onClick={() => onRemoveItem(item.id!)}
