@@ -209,7 +209,7 @@ export enum CartAction {
 export enum TypePayment {
   CREDIT_CARD = "CREDIT_CARD",
   PAYPAL = "PAYPAL",
-  CASH = "CASH",
+  COD = "COD",
   BANK_TRANSFER = "BANK_TRANSFER",
 }
 
@@ -227,15 +227,17 @@ export interface ICreateOrder {
 }
 
 export interface ICreateAddress {
-  firstName: "";
-  lastName: "";
-  companyName: "";
-  country: "";
-  streetAddress: "";
-  city: "";
-  province: "";
-  zipCode: "";
-  phone: "";
-  email: "";
-  paymentMethod: "";
+  first_name: string;
+  last_name: string;
+  companyName?: string;
+  country: string;
+  streetAddress?: string;
+  city: string;
+  province: string;
+  zipcode: string;
+  phone: string;
+  email: string;
+  paymentMethod?: TypePayment;
 }
+
+// record of type must be same schena and name in input input=record=schema

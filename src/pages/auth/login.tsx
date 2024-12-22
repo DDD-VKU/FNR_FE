@@ -1,11 +1,8 @@
 import Footer from "@/pages/layouts/Footer";
 import Header from "@/pages/layouts/Header";
-// import { Input, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Image from "next/image";
-// import HttpsIcon from "@mui/icons-material/Https";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { AppState, ILogin, InputChange } from "@/utils/types";
@@ -21,10 +18,9 @@ const LoginPage = () => {
     email: "",
     password: "",
   };
+
   const [loginParams, setloginParams] = useState<ILogin>(initalState);
-  // const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  // const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginResponse] = useLoginMutation();
   const auth = useSelector((state: AppState) => state.auth);
@@ -41,7 +37,7 @@ const LoginPage = () => {
   };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
-    console.log(loginParams);
+    // console.log(loginParams);
     e.preventDefault();
     let valid = true;
 
