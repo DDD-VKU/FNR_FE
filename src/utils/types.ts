@@ -246,3 +246,15 @@ export interface ICustomerProfile {
   email: string;
   phone: string;
 }
+
+export interface IUpdateOrder {
+  id?: number;
+  status: OrderStatus;
+}
+
+export type OrderStatus =
+  | "PENDING"
+  | "PROCESSING"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED";

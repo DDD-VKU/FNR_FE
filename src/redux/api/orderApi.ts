@@ -1,4 +1,4 @@
-import { ICreateOrder } from "@/utils/types";
+import { ICreateOrder, IUpdateOrder } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 
@@ -25,7 +25,25 @@ export const orderApi = createApi({
         method: "GET",
       }),
     }),
+    adminGetOrders: builder.query<any, any>({
+      query: () => ({
+        url: "/admin",
+        method: "GET",
+      }),
+    }),
+    updateOrder: builder.mutation<any, IUpdateOrder>({
+      query: (body) => ({
+        url: ``,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useCreateOrderMutation, useGetOrdersQuery } = orderApi;
+export const {
+  useCreateOrderMutation,
+  useGetOrdersQuery,
+  useAdminGetOrdersQuery,
+  useUpdateOrderMutation,
+} = orderApi;
