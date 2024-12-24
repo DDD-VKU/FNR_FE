@@ -18,9 +18,15 @@ import {
   useUpdateOrderMutation,
 } from "@/redux/api/orderApi";
 import Loading from "@/components/Loading";
+import toast from "react-hot-toast";
 
 export default function OrdersPage() {
-  const { data: ordersResponse, isLoading, error } = useAdminGetOrdersQuery({});
+  const {
+    data: ordersResponse,
+    isLoading,
+    error,
+    refetch,
+  } = useAdminGetOrdersQuery({});
   const [allOrders, setAllOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
@@ -353,7 +359,15 @@ export default function OrdersPage() {
                   updateOrder({
                     id: selectedOrder.id,
                     status: selectedOrder.status,
-                  });
+                  })
+                    .unwrap()
+                    .then((result) => {
+                      toast.success("Order updated successfully!");
+                      refetch();
+                    })
+                    .catch((err) => {
+                      toast.error("Failed to update order");
+                    });
                   handleCloseModal();
                 }}
                 className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"

@@ -8,7 +8,7 @@ import FeatureCard from "@/components/FeatureCard";
 import HeadImage from "@/components/HeadImage";
 import { useGetProductsQuery } from "@/redux/api/productApi";
 import { useEffect, useState } from "react";
-import { IProductInShop, IProductItem } from "@/utils/types";
+import { IProductInShop } from "@/utils/types";
 import Loading from "@/components/Loading";
 
 const ProductPage = () => {
@@ -20,22 +20,35 @@ const ProductPage = () => {
   const [products, setProducts] = useState<IProductInShop[]>([]);
   const [page, setPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(8);
+  const [sortBy, setSortBy] = useState("default");
 
-  // Cập nhật danh sách sản phẩm khi nhận từ API
   useEffect(() => {
     if (productsResponse) {
       setProducts(productsResponse.data || []);
     }
   }, [productsResponse]);
 
-  //  Tính toán sản phẩm hiển thị theo trang
+  const sortProducts = (products: IProductInShop[]) => {
+    if (sortBy === "price") {
+      return [...products].sort((a, b) => a.price - b.price);
+    } else if (sortBy === "price_desc") {
+      return [...products].sort((a, b) => b.price - a.price);
+    } else if (sortBy === "name_asc") {
+      return [...products].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "name_desc") {
+      return [...products].sort((a, b) => b.name.localeCompare(a.name));
+    } else {
+      return products;
+    }
+  };
+
   const indexOfLastProduct = page * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
+  const currentProducts = sortProducts(products).slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
-  // Hàm kiểm tra là sản phẩm mới
+
   function isNewProduct(created_at: string): boolean {
     const currentDate = new Date();
     const sevenDaysAgo = new Date(
@@ -53,9 +66,20 @@ const ProductPage = () => {
     setPage(value);
   };
 
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortBy(e.target.value);
+    setPage(1);
+  };
+
+  const handleShowChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setProductsPerPage(Number(e.target.value));
+    setPage(1);
+  };
+
   if (isLoading) return <Loading />;
   if (isError)
     return <div>Error loading products. Please try again later.</div>;
+
   return (
     <>
       <Header />
@@ -99,9 +123,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="text-gray-500 text-center lg:text-left">
-            {/* Showing {currentProducts.length} of {products.length} products */}
-          </div>
+          <div className="text-gray-500 text-center lg:text-left"></div>
 
           <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <div className="flex items-center space-x-2">
@@ -109,8 +131,9 @@ const ProductPage = () => {
               <select
                 className="border border-gray-300 rounded p-2"
                 value={productsPerPage}
-                onChange={(e) => setProductsPerPage(Number(e.target.value))}
+                onChange={handleShowChange}
               >
+                <option value="8">8</option>
                 <option value="16">16</option>
                 <option value="32">32</option>
                 <option value="64">64</option>
@@ -118,11 +141,16 @@ const ProductPage = () => {
             </div>
             <div className="flex items-center space-x-2">
               <span>Sort by</span>
-              <select className="border border-gray-300 rounded p-2">
+              <select
+                className="border border-gray-300 rounded p-2"
+                value={sortBy}
+                onChange={handleSortChange}
+              >
                 <option value="default">Default</option>
-                <option value="popularity">Popularity</option>
-                <option value="rating">Rating</option>
-                <option value="price">Price</option>
+                <option value="price">Price (Low to High)</option>
+                <option value="price_desc">Price (High to Low)</option>
+                <option value="name_asc">Name (A-Z)</option>
+                <option value="name_desc">Name (Z-A)</option>
               </select>
             </div>
           </div>
@@ -147,16 +175,8 @@ const ProductPage = () => {
           ))}
         </div>
       </section>
-      {/* phân trang
-      <section className="flex justify-center items-center mt-12 mb-16">
-        <div className="App">
-          <Stack spacing={2}>
-            <Pagination count={10} variant="outlined" shape="rounded" />
-          </Stack>
-        </div>
-      </section> */}
 
-      {/* phân trang */}
+      {/* Pagination */}
       <section className="flex justify-center items-center mt-12 mb-16">
         <Stack spacing={2}>
           <Pagination

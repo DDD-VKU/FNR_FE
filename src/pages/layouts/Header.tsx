@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import ShoppingCart from "@/components/ShoppingCart";
 import { useRouter } from "next/router";
+import SearchBar from "@/components/SearchBar";
 
 const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggleMobileNav = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
@@ -81,7 +83,7 @@ const Header = () => {
                 alt="account"
               />
             </Link>
-            <Link href="">
+            <button onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Image
                 src={"/assets/icons/akar-icons_search.svg"}
                 width={28}
@@ -89,7 +91,10 @@ const Header = () => {
                 unoptimized
                 alt="search"
               />
-            </Link>
+            </button>
+            {isSearchOpen && (
+              <SearchBar onClose={() => setIsSearchOpen(false)} />
+            )}
             <Link href="/wishlist">
               <Image
                 src={"/assets/icons/akar-icons_heart.svg"}

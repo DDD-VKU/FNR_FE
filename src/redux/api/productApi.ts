@@ -96,10 +96,16 @@ export const productApi = createApi({
         method: "DELETE",
       }),
     }),
+
+    searchProduct: builder.query<any, any>({
+      query: (name) => ({
+        url: `/search/${name}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const {} = productApi;
 export const {
   useGetProductsQuery,
   useGetProductsByIdQuery,
@@ -111,4 +117,5 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useSearchProductQuery,
 } = productApi;
