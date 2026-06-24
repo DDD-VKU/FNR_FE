@@ -16,6 +16,7 @@ import {
 import {
   useAdminGetOrdersQuery,
   useUpdateOrderMutation,
+  useDeleteOrderMutation,
 } from "@/redux/api/orderApi";
 import Loading from "@/components/Loading";
 import toast from "react-hot-toast";
@@ -36,6 +37,21 @@ export default function OrdersPage() {
   const [limit, setLimit] = useState(10);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [updateOrder] = useUpdateOrderMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
+
+  const handleDeleteOrder = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      deleteOrder(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Order deleted successfully!");
+          refetch();
+        })
+        .catch((err) => {
+          toast.error("Failed to delete order");
+        });
+    }
+  };
 
   const statusOptions = [
     "DELIVERED",
@@ -178,8 +194,14 @@ export default function OrdersPage() {
                   <Button size="small" onClick={() => handleViewOrder(order)}>
                     View
                   </Button>
-                  <Button size="small">Edit</Button>
-                  <Button size="small" color="error">
+                  <Button size="small" onClick={() => handleViewOrder(order)}>
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    color="error"
+                    onClick={() => handleDeleteOrder(order.id)}
+                  >
                     Delete
                   </Button>
                 </TableCell>

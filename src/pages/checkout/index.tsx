@@ -23,6 +23,7 @@ import {
 import { useRouter } from "next/router";
 import { CLEAR_CART } from "@/redux/slices/cartSlice";
 import Loading from "@/components/Loading";
+import { cartApi } from "@/redux/api/cartApi";
 
 const Checkout: React.FC = () => {
   const InitialStateForm: ICreateAddress = {
@@ -124,7 +125,6 @@ const Checkout: React.FC = () => {
         .unwrap()
         .then((res) => {
           if (res.status == 201) {
-            toast.success("Order placed successfully");
             // push order
             localStorage.setItem("addressId", res.data.id);
             const orderBody: ICreateOrder = {
@@ -141,26 +141,31 @@ const Checkout: React.FC = () => {
             createOrderRespon(orderBody)
               .unwrap()
               .then((res) => {
-                if (res.status == 201) {
+                if (res.status == 200 || res.status == 201) {
                   toast.success("Order placed successfully");
                   dispatch(CLEAR_CART());
+                  dispatch(cartApi.util.resetApiState());
                   route.push("/");
+                } else {
+                  toast.error(res.message || "Failed to place order.");
+                  setIsLoading(false);
                 }
               })
               .catch((error) => {
                 toast.error("An error occurred. Please try again.");
+                setIsLoading(false);
               });
           } else {
-            toast.error("Cannot create order");
+            toast.error("Cannot create order address");
+            setIsLoading(false);
           }
         })
         .catch((error) => {
           toast.error("An error occurred. Please try again.");
           console.error(error);
+          setIsLoading(false);
         });
-      setIsLoading(false);
     } else {
-      if (isLoading == true) setIsLoading(false);
       toast.error("Please fill in all required fields");
     }
   };
@@ -316,10 +321,11 @@ const Checkout: React.FC = () => {
             </p>
 
             <button
-              className="mt-4 w-full py-3 bg-black text-white font-semibold rounded-md hover:bg-gray-800"
+              className="mt-4 w-full py-3 bg-black text-white font-semibold rounded-md hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
               type="submit"
+              disabled={isLoading}
             >
-              Place order
+              {isLoading ? "Processing..." : "Place order"}
             </button>
           </div>
         </div>

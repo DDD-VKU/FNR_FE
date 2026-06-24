@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import CustomerProfile from "./components/CustomerProfile";
 import OrderHistory from "./components/OrderHistory";
 import Header from "../layouts/Header";
@@ -10,21 +9,39 @@ import Loading from "@/components/Loading";
 import { useGetOrdersQuery } from "@/redux/api/orderApi";
 
 const AccountPage = () => {
+  const token = Cookies.get("token");
+
   useEffect(() => {
-    const token = Cookies.get("token");
     if (!token) {
       window.location.href = "/auth/login";
     }
-  });
-  const { data: userData, isLoading, isError } = useCheckTokenQuery({});
-  const { data: orderData, isLoading: orderLoading } = useGetOrdersQuery({});
-  if (isLoading || orderLoading) return <Loading />;
+  }, [token]);
 
-  const orderHistory = orderData.data;
+  const { data: userData, isLoading, isError } = useCheckTokenQuery({}, { skip: !token });
+  const { data: orderData, isLoading: orderLoading } = useGetOrdersQuery({}, { skip: !token });
+
+  useEffect(() => {
+    if (isError) {
+      Cookies.remove("token");
+      window.location.href = "/auth/login";
+    }
+  }, [isError]);
+
+  if (!token || isLoading || orderLoading) return <Loading />;
+
+  if (isError || !userData || !orderData) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Phiên đăng nhập hết hạn hoặc xảy ra lỗi. Đang chuyển hướng...
+      </div>
+    );
+  }
+
+  const orderHistory = orderData?.data || [];
   return (
     <>
       <Header />
-      <CustomerProfile customer={userData.customer} />
+      <CustomerProfile customer={userData?.customer} />
       <OrderHistory orders={orderHistory} />
       <Footer />
     </>

@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: "FNR-FE",
-            script: "yarn",
+            script: "pnpm",
             args: "dev"
         }
 

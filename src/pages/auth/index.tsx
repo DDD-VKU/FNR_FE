@@ -13,7 +13,7 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGIN_SUCCESS } from "@/redux/slices/authSlice";
+import { LOGIN_SUCCESS, LOGOUT } from "@/redux/slices/authSlice";
 import { TextField } from "@mui/material";
 
 const LoginPage = () => {
@@ -84,10 +84,13 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
+    const token = Cookies.get("token");
+    if (auth.isAuthenticated && token) {
       Router.push("/");
+    } else if (auth.isAuthenticated && !token) {
+      dispatch(LOGOUT());
     }
-  }, [auth.isAuthenticated]);
+  }, [auth.isAuthenticated, dispatch]);
 
   return (
     <>
